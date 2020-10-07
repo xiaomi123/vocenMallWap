@@ -60,9 +60,10 @@
           </div>
         </div>
       </template>
-      <template v-else-if="tabCurrent == 2">
-        <div class="list-item ub ub-ver" v-for="(item,index) in searchList">
-          <template v-if="categoryName.indexOf('离合器') > -1">
+      <template v-else-if="tabCurrent == 1">
+        <div class="title ub ub-ac" @click="flod(1)"><span class="ub ub-f1">离合器套装</span><van-icon name="arrow" class="ub" /></div>
+        <div v-show="lhqShow">
+          <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset">
             <div class="ub" @click="detail_1(item)">
               <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
               <div  class="ub ub-f1 ub-ver">
@@ -82,8 +83,11 @@
             </div>
             <div class="ub" style="margin-top: 0.5rem;">分离轴承：{{item.轴承型号}}</div>
             <div class="ub">规格：{{item.产品规格}}</div>
-          </template>
-          <template v-if="categoryName.indexOf('点火线圈') > -1">
+          </div>
+        </div>
+        <div class="title ub ub-ac" @click="flod(2)"><span class="ub ub-f1">点火线圈</span><van-icon name="arrow" class="ub" /></div>
+        <div v-show="dhxqShow">
+          <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset1">
             <div class="ub" @click="detail_1(item)">
               <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
               <div  class="ub ub-f1 ub-ver">
@@ -100,8 +104,11 @@
               <div class="ub" style="margin-right: 1rem;">排量：{{item.排量}}</div>
               <div class="ub">规格：{{item.规格}}</div>
             </div>
-          </template>
-          <template v-if="categoryName.indexOf('氧传感') > -1">
+          </div>
+        </div>
+        <div class="title ub ub-ac" @click="flod(3)"><span class="ub ub-f1">氧传感器</span><van-icon name="arrow" class="ub" /></div>
+        <div v-show="ycgqShow">
+          <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset2">
             <div class="ub" @click="detail_1(item)">
               <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
               <div  class="ub ub-f1 ub-ver">
@@ -119,7 +126,7 @@
             </div>
             <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
             <div class="">规格：{{item.名称}}</div>
-          </template>
+          </div>
         </div>
       </template>
       <div v-show="showEmpty" style="text-align: center;">暂无适配产品信息</div>
@@ -242,7 +249,11 @@
           EngineModel : '' //发动机型号
         },
         showModelInfoByVinCode : false,
-        cartTotal : 0 //购物车数量
+        activeNames: ['1'],
+        cartTotal : 0, //购物车数量
+        lhqShow : true,
+        dhxqShow : false,
+        ycgqShow : false
       }
     },
     mounted: function() {
@@ -256,16 +267,11 @@
         this_.chexingObj = this_.$route.query.obj != undefined ? this_.$route.query.obj : "";
         this_.showNavImg();
         if(this_.tabCurrent == 0){ //vin码
-          this_.keyWords = this_.$route.query.words;
+         this_.keyWords = this_.$route.query.words;
           this_.vinCodePros();
-        }else if(this_.tabCurrent == 2){
+        }else if(this_.tabCurrent == 1){
            this_.attrKey = this_.$route.query.words;
-          if(this_.categoryName.indexOf('离合器') > -1){
-            this_.placeholderTxt = "车型/发动机型号/编码";
-          }else{
-            this_.placeholderTxt = "车型/发动机型号/OE号/编码";
-          }
-          this_.carsPros();
+          this_.attrSearch();
         }
       });
     },
@@ -335,88 +341,25 @@
           }
         });
       },
-      //按车型匹配产品
-      carsPros(){
+      //按属性查询
+      attrSearch(){
         let this_ = this;
-        this_.tabCurrent = 0;
-        this_.bus.$emit('loading', true);
-        this_.$api.post({
-          url : this_.$apiUrl.api.ProductByVehicle,
-          params :{
-            engineModel : this_.tabCurrent == 2 ? this_.keyWords : "", //发动机型号
-            brand : this_.chexingObj.brand != undefined ? this_.chexingObj.brand : "", //品牌
-            models : this_.chexingObj.models != undefined ? this_.chexingObj.models : "", //车型
-            series : this_.chexingObj.series != undefined ? this_.chexingObj.series : "",  //车系
-            newFactory : this_.chexingObj.newFactory != undefined ? this_.chexingObj.newFactory : "",  //厂商
-            displacement : this_.chexingObj.displacement != undefined ? this_.chexingObj.displacement : "",  //排量
-            chassisCode : this_.chexingObj.chassisCode != undefined ? this_.chexingObj.chassisCode : "", //底盘号
-            year : this_.chexingObj.year != undefined ? this_.chexingObj.year : "",  //年份
-            powerKw : this_.chexingObj.powerKw != undefined ? this_.chexingObj.powerKw : "",  //功率
-            categoryName : this_.categoryName != undefined ? this_.categoryName : ""  //分类品类
-          },
-          success : function(res){
-            console.log(res);
-            if(res.State){
-              if(res.centent.plist != ""){
-                let result = JSON.parse(res.centent.plist);
-                this_.getPorductPics(result);
-              }else{
-                this_.showEmpty = true;
-              }
-            }
-            this_.bus.$emit('loading', false);
+        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        this_.bus.$emit('loading', true)
+        this_.$api.get({
+          url: this_.$apiUrl.api.Multiple + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
+          params: {},
+          success: function (data) {
+            console.log(data);
+            this_.tabCurrent = 1;
+            this_.searchList = data;
+          	this_.bus.$emit('loading', false);
           }
-        })
+        });
+
       },
-      // 按OE码查询产品
-      // byOemNo(){
-      //   let this_ = this;
-      //   this_.bus.$emit('loading', true);
-      //   this_.$api.post({
-      //     url : this_.$apiUrl.api.ProductByOemNo,
-      //     params :{
-      //       oemNo : this_.keyWords,
-      //       categoryName : this_.categoryName
-      //     },
-      //     success : function(res){
-      //       console.log(res);
-      //       if(res.State){
-      //         if(res.centent.plist != ""){
-      //           let result = JSON.parse(res.centent.plist);
-      //           this_.getPorductPics(result);
-      //         }else{
-      //           this_.showEmpty = !this_.showEmpty;
-      //         }
-      //       }
-      //       this_.bus.$emit('loading', false);
-      //     }
-      //   })
-      // },
-      //按产品编号查询产品
-      // byProductNo(){
-      //   let this_ = this;
-      //   this_.bus.$emit('loading', true);
-      //   this_.$api.post({
-      //     url : this_.$apiUrl.api.ProductsByProductNo,
-      //     params :{
-      //       productNo : this_.keyWords,
-      //       categoryName : this_.categoryName
-      //     },
-      //     success : function(res){
-      //       console.log(res);
-      //       if(res.State){
-      //        if(res.centent.plist != ""){
-      //          let result = JSON.parse(res.centent.plist);
-      //          this_.getPorductPics(result);
-      //        }else{
-      //          this_.showEmpty = !this_.showEmpty;
-      //        }
-      //       }
-      //       this_.bus.$emit('loading', false);
-      //     }
-      //   })
-      // },
-      //获取产品缩略图
+
+      //查询产品缩略图
       getPorductPics(res){
         let this_ = this;
         let api = "";
@@ -492,25 +435,6 @@
             }
           }
         });
-        // this_.$api.get({
-        //   url: api,
-        //   params: {},
-        //   success: function (data) {
-        //     //console.log("---------产品缩略图-----------");
-        //     //console.log(data);
-        //     if(data.State){
-        //       let infos = data.centent;
-        //       for(let i = 0; i < this_.proList.length; i++){
-        //         for(let m = 0; m < infos.length; m++){
-        //           if(infos[m].mb001 == this_.proList[i].prod[5]){
-        //             this_.$set(this_.proList[i], 'titlepicurl', infos[m].picurl);
-        //             this_.$set(this_.proList[i], 'params', infos[m].data);
-        //           }
-        //         }
-        //       }
-        //     }
-        //   }
-        // });
       },
       onSelect(evt) {
         this.show = false;
@@ -654,82 +578,12 @@
       search(){
         if(this.attrKey != ""){
           this.searchList = [];
-          if(this.categoryName.indexOf('离合器') > -1){
-            this.getLiheqi();
-          }else if(this.categoryName.indexOf('点火线圈') > -1){
-            this.getDhxq();
-          }else if(this.categoryName.indexOf('氧传感') > -1){
-            this.getYchuan();
-          }
+          this.attrSearch();
         }else{
           this.bus.$emit('tipShow', "请输入查询条件");
         }
       },
-      //属性-离合器
-      getLiheqi(){
-        let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true)
-        this_.$api.get({
-          url: this_.$apiUrl.api.GetLiheqi + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
-          params: {},
-          success: function (data) {
-            console.log(data);
-            this_.tabCurrent = 2;
-            if(data.length != 0){
-              this_.searchList = data;
-            }
-          	this_.bus.$emit('loading', false);
-          }
-        });
-      },
-      //属性-点火线圈
-      getDhxq(){
-        let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true);
-        this_.$api.get({
-          url: this_.$apiUrl.api.GetDhxq + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
-          params: {},
-          success: function (data) {
-            console.log("点火线圈");
-            console.log(data);
-            this_.tabCurrent = 2;
-            if(data.length != 0){
-              this_.searchList = data;
-            }
-          	this_.bus.$emit('loading', false);
 
-          }
-        });
-      },
-      //属性-氧传感
-      getYchuan(){
-        let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true);
-        this_.$api.get({
-          url: this_.$apiUrl.api.GetYchuan + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
-          params: {},
-          success: function (data) {
-            console.log("氧传感");
-            console.log(data);
-            this_.tabCurrent = 2;
-            if(data.length != 0){
-              this_.searchList = data;
-            }
-          	this_.bus.$emit('loading', false);
-
-          }
-        });
-      },
-      //tab查询分类
-      // changeTab(e){
-      //   this.tabCurrent = e;
-      //   this.keyWords = "";
-      //   this.showModelInfoByEngineModel = false;
-      //   this.showModelInfoByVinCode = false;
-      // },
       //产品详情
       detail(list){
         //console.log(list);
@@ -737,7 +591,17 @@
       },
       //属性-详情
       detail_1(list){
+        console.log(list);
         this.$router.push({path:'/proSearch/detail', query:{obj:"",mb001:list.mb001,title:this.$route.query.title}});
+      },
+      flod(e){
+        if(e == 1){
+          this.lhqShow = !this.lhqShow;
+        }else if(e == 2){
+          this.dhxqShow = !this.dhxqShow;
+        }else if(e == 3){
+          this.ycgqShow = !this.ycgqShow;
+        }
       }
     }
   }
@@ -770,5 +634,12 @@
     box-shadow: 0px 0px 21px 0px rgba(228,228,228,0.71);
     padding: 0.5rem;
     border-radius: 2rem;
+  }
+  .title{
+    border-bottom: 1px solid #DEDEDE;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 </style>

@@ -14,7 +14,7 @@
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
         </div>
-        <div class="right" v-show="isShow">
+        <div class="right">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
         </div>
       </div>
@@ -31,20 +31,6 @@
           </van-collapse-item>
         </template>
       </van-collapse>
-      <!-- <div class="detail-table">
-      	<div class="detail-tr">
-      		<div class="detail-th">品牌</div>
-          <div class="detail-th">车型</div>
-          <div class="detail-th">年份</div>
-          <div class="detail-th">排量</div>
-      	</div>
-        <div class="detail-tr" v-for="(item,index) in tablepara">
-          <div class="detail-td">{{item.brand}}</div>
-          <div class="detail-td">{{item.models}}</div>
-          <div class="detail-td">{{item.producedYear}}—{{item.idlingYear}}</div>
-          <div class="detail-td">{{item.displacement}}</div>
-        </div>
-      </div>-->
     </div>
 
     <div class="uinn bg-white">
@@ -55,7 +41,7 @@
       </div>
     </div>
     <!-- 购物车-->
-    <router-link :to="{path: '/proSearch/cart'}" v-if="isMall">
+    <router-link :to="{path: '/proSearch/cart'}">
       <div class="fixed-btn"><van-icon name="cart-o" :badge="cartTotal" size="30" color="#ff0000" /></div>
     </router-link>
   </div>
@@ -66,7 +52,7 @@ export default {
   name: 'proDetail',
   data () {
     return {
-    	userInfo:{},
+    	userInfo:JSON.parse(sessionStorage.getItem('userinfo')),
       imgUrl : "",
       swiper : [], //轮播
       activeNames: ['1'],
@@ -75,9 +61,9 @@ export default {
       cartList : {},
       tablepara : [], //适用车型
       api : "",
-      isShow : false,
+      //isShow : false,
       cartTotal : 0 ,//购物车数量
-      isMall:true,//用于商城进入购物车隐藏
+      //isMall:true,//用于商城进入购物车隐藏
     }
   },
   mounted: function () {
@@ -85,23 +71,13 @@ export default {
       let this_ = this;
       this_.imgUrl = Consts.apiConfig.imgPath;
       document.title = this_.$route.query.title;
-      this_.cartList = this_.$route.query.obj;
-      if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
-
+      if(this_.$route.query.obj != ""){
+        this_.cartList = this_.$route.query.obj;
       }else{
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        if(this_.userInfo.dataset[0].mr003.indexOf('弘途耐用') > -1 || this_.userInfo.dataset[0].mr003.indexOf('江陵耐用') > -1){
-            this_.isShow = !this_.isShow;
-        }
+        this_.init_1();
       }
       this_.init();
-      if(this_.$route.query.productId == 'no'){
-        this_.isShow = false;
-        this_.isMall = false;
-      }else{
-        this_.getParmas(); //适配车型
-      }
-
+      this_.getParmas(); //适配车型
     })
   },
   created(){
@@ -139,12 +115,23 @@ export default {
         }
       });
     },
+    init_1(){
+      let this_ = this;
+      this_.$api.get({
+        url: this_.$apiUrl.api.ProductMB001+'?mb001='+this_.$route.query.mb001+'&c_id='+this_.userInfo.dataset[0].c_id+'&c_ma001='+this_.userInfo.dataset[0].ma001+'&ma017='+this_.userInfo.dataset[0].ma017+'&dpt='+this_.userInfo.dataset[0].dpt+'&ma075='+this_.userInfo.dataset[0].ma075,
+        params: {},
+        success: function (data) {
+          console.log(data);
+          this_.cartList = data[0];
+        }
+      });
+    },
     getParmas(){
       let this_ = this;
       this_.$api.post({
-        url: this_.$apiUrl.api.VehicleByProductId,
+        url: this_.$apiUrl.api.VehicleByProductNo,
         params: {
-          productId : this_.$route.query.productId
+          productNo : this_.$route.query.mb001
         },
         success: function (data) {
           console.log(data);

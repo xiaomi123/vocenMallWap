@@ -188,29 +188,7 @@
         document.title = this_.$route.query.title;
         sessionStorage.setItem('brandType',this_.$route.query.type);
         this_.loadSwiper();
-        // if(this_.$route.query.type == 3){
-        //   this_.swiperList = [{
-        //     id: '002',
-        //     imgUrl: require("../assets/images/lhq/img_proSearch_banner01.jpg")
-        //   },{
-        //     id: '003',
-        //     imgUrl: require("../assets/images/lhq/img_proSearch_banner02.jpg")
-        //   },{
-        //     id: '004',
-        //     imgUrl: require("../assets/images/lhq/img_proSearch_banner03.jpg")
-        //   }]
-        // }else if(this_.$route.query.type == 4){
-        //   this_.swiperList = [{
-        //     id: '002',
-        //     imgUrl: require("../assets/images/lhq/h_img_proSearch_banner01.jpg")
-        //   },{
-        //     id: '003',
-        //     imgUrl: require("../assets/images/lhq/h_img_proSearch_banner02.jpg")
-        //   },{
-        //     id: '004',
-        //     imgUrl: require("../assets/images/lhq/h_img_proSearch_banner03.jpg")
-        //   }]
-        // }
+
         //sessionStorage.clear();
         if(sessionStorage.getItem('epcrode') != null){
           this_.mb001 = sessionStorage.getItem('epcrode');
@@ -282,7 +260,7 @@
           url : this_.$apiUrl.api.ProductCategoryByUsr,
           params :{},
           success : function(res){
-            //console.log(res);
+            console.log(res);
             if(res.code == 200){
               let a = res.data[2].categoryName+","+res.data[3].categoryName;
               this_.cateListText = [res.data[4].categoryName,res.data[1].categoryName,a];
@@ -489,24 +467,16 @@
       //查询
       winProduct(e){
         if(e == 0 && this.keyWords != ""){
-          this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:this.tabCurrent,categoryName:"",mb001:this.mb001,type:e}});
+          this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:e,categoryName:"",mb001:this.mb001}});
         }else if(e == 1 && this.attrKey != ""){
-          this.$router.push({path:'/proSearch/products', query: {words:this.attrKey,type:this.tabCurrent,categoryName:"",mb001:this.mb001,type:e}});
+          this.$router.push({path:'/proSearch/products1', query: {words:this.attrKey,type:e,categoryName:"",mb001:this.mb001}});
         }else{
           this.bus.$emit('tipShow', "请输入查询条件");
         }
       },
       //点击产品类别
       openWin(e){
-        let name = '';
-        if(e == 0){
-          name = "离合器三件套";
-        }else if(e == 1){
-          name = "点火线圈";
-        }else if(e == 2){
-          name = "氧传感器";
-        }
-        this.$router.push({path:'/proSearch/products',query:{mb001:this.mb001,title:this.$route.query.title,categoryName:name}});
+        this.$router.push({path:'/proSearch/products', query: {words:"",type:2,categoryName:this.cateListText[e],mb001:this.mb001}});
       },
     }
   }

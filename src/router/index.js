@@ -28,6 +28,7 @@ import LhqList from '@/components/proSearch/lhqList'//离合器查询
 import DhxqList from '@/components/proSearch/dhxqList'//点火线圈查询
 import YcgqList from '@/components/proSearch/ycgqList'//氧传感器查询
 import SproList from '@/components/proSearch/products'//VIN码查询产品
+import SproList1 from '@/components/proSearch/products1'//VIN码查询产品
 import ModelList from '@/components/proSearch/modelList'//车型列表
 import ProductDetail from '@/components/proSearch/detail'//详情
 import SCart from '@/components/proSearch/cart'//购物车
@@ -162,8 +163,12 @@ const router = new Router({
       component: YcgqList,
     },{
 		path : '/proSearch/products',
-		name : 'sproduct',
+		name : 'sproduct',  
 		component : SproList
+	},{
+		path : '/proSearch/products1',
+		name : 'sproList1',  
+		component : SproList1
 	},{
     path : '/proSearch/modelList',
     name : 'modelList',
