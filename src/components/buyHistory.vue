@@ -12,7 +12,7 @@
   			<input type="text" v-model="note" placeholder="产品名称/产品编号/oem" class="serchNote" />
   			<span @click="toSearch()">查询</span>
   		</div>
-  		
+
   		<div class="product_cont">
 	  	  <ul class="product_list">
 	  	  	<li v-for="(item,index) in proList" @click="toDetail(item)">
@@ -30,7 +30,11 @@
   	  </div>
   	  <p  v-if="proList.length == 0 && isLoad" class="com_noData">暂无数据</p>
   	</div>
-  	<footer-view></footer-view>
+  	<footer-view v-if="isLy"></footer-view>
+
+    <!--查询系统底部footer内容开始-->
+    <sfooter-view v-else></sfooter-view>
+    <!--查询系统底部footer内容结束-->
   </div>
 </template>
 
@@ -50,9 +54,20 @@ export default {
     	dptIndex:'',//选中品牌
     	isInit:true,//判断是否初始化
     	isLoad:false,
+      isLy:true,//判断是否从查询系统进入
     }
   },
-  
+ mounted: function() {
+    this.$nextTick(function() {
+      let this_ = this;
+      if(!this_.$utils.check.isEmpty(this_.$route.query.type)){
+        if(this_.$route.query.type == '1'){
+          this_.isLy = false;
+        }
+      }
+
+    });
+  },
   methods:{
   	//初始化日期
   	initDate:function(){
@@ -60,18 +75,18 @@ export default {
       //时间插件
 			let today = new Date();
 			let optDate = {
-				preset: 'date', //日期   
-				theme: 'android-ics light', //皮肤样式   
-				display: 'modal', //显示方式    
-				mode: 'scroller', //日期选择模式  
+				preset: 'date', //日期
+				theme: 'android-ics light', //皮肤样式
+				display: 'modal', //显示方式
+				mode: 'scroller', //日期选择模式
 				lang: 'zh',
 				showNow: false,
 			};
 			let optDate2 = {
-				preset: 'date', //日期   
-				theme: 'android-ics light', //皮肤样式   
-				display: 'modal', //显示方式    
-				mode: 'scroller', //日期选择模式  
+				preset: 'date', //日期
+				theme: 'android-ics light', //皮肤样式
+				display: 'modal', //显示方式
+				mode: 'scroller', //日期选择模式
 				lang: 'zh',
 				showNow: false,
 				//minDate: new Date(today.getFullYear(), today.getMonth(), (today.getDate())), `
@@ -89,13 +104,13 @@ export default {
 			this_.sdt = startDate;
 			this_.edt = endDate;
   	},
-  	
+
   	//点击查询
   	toSearch:function(){
   		let this_ = this;
   		this_.buyHistoryQty(this_.dptIndex,$("#start_time").val(),$("#end_time").val());
   	},
-  	
+
   	//品牌tab切换
   	changetab:function(index){
   		let this_ = this;
@@ -125,16 +140,16 @@ export default {
         }
       });
   	},
-  	
+
   	//跳转详情
   	toDetail:function(item){
   		let this_ = this;
   		if(item.imgqty>0){
   			this_.$router.push({path:'/proDetail', query: {ma001:item.mb005,mb001:item.mb001,mb002:item.mb002}});
   		}
-  		
+
   	},
-  	
+
   }
 }
 </script>

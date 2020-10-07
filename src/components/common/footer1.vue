@@ -3,6 +3,7 @@
 <div class="com_footer">
 	<ul class="com_footList clearfix">
 		<li><router-link :to="{path: '/lhqSearch'}"><i class="home"></i>首页</router-link></li>
+    <li><router-link :to="{path: '/buyHistory', query:{'type':'1'}}"><i class="cart"></i>进货记录</router-link></li>
 		<li class="cart"><router-link :to="{path: '/proSearch/cart'}"><em v-if="cartTotal>0">{{cartTotal}}</em><i class="cart"></i>购物车</router-link></li>
 		<li><router-link :to="{path: '/proSearch/userCenter/index'}"><i class="user"></i>个人中心</router-link></li>
 	</ul>
@@ -51,6 +52,6 @@ export default {
 </script>
 <style scoped>
   .com_footList>li{
-    width: 33.33%;
+    width: 25%;
   }
 </style>
