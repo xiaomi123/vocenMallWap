@@ -262,7 +262,7 @@
         this_.imgUrl = Consts.apiConfig.imgPath;
         document.title = this_.$route.query.title;
         this_.tabCurrent = this_.$route.query.type;
-       
+
         this_.categoryName = this_.$route.query.categoryName;
         this_.chexingObj = this_.$route.query.obj != undefined ? this_.$route.query.obj : "";
         this_.showNavImg();
@@ -526,10 +526,10 @@
               if(type == 1){
                 this_.isMask = !this_.isMask;
               }
-              this_.bus.$emit('loading', false);
             }else{
               this_.bus.$emit('tipShow', data.centent);
             }
+            this_.bus.$emit('loading', false);
           }
         });
       },

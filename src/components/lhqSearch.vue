@@ -424,10 +424,11 @@
               if(type == 1){
                 this_.isMask = !this_.isMask;
               }
-              this_.bus.$emit('loading', false);
+              
             }else{
               this_.bus.$emit('tipShow', data.centent);
             }
+            this_.bus.$emit('loading', false);
           }
         });
       },
