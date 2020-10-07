@@ -1,0 +1,134 @@
+<template>
+  <div class="wxlogin_container">
+    <!--主要内容开始-->
+    <div class="wxlogin_main">
+
+      <div class="login_content wxlogin_cont" v-if="isLogin">
+        <p style="">首次登陆需录入订单平台手机号和密码，绑定后即可直接登陆</p>
+        <ul class="login_list">
+          <li>
+            <i><img src="../assets/images/common/icon_loginList3.png" alt="" /></i>
+            <input type="text" placeholder="请输入用户名" v-model="userForm.name" />
+          </li>
+          <li>
+            <i><img src="../assets/images/common/icon_loginList4.png" alt="" /></i>
+            <input type="password" placeholder="请输入密码" v-model="userForm.passWord" />
+          </li>
+        </ul>
+        <input type="button" value="登录" class="login_btn" @click="login()" />
+      </div>
+
+    </div>
+    <!--主要内容结束-->
+  </div>
+</template>
+
+<script>
+  import md5 from 'js-md5';
+  export default {
+    name: 'LhqSearch',
+    data() {
+      return {
+        userForm: {
+          name: '',
+          passWord: ''
+        },
+        isLogin: true
+      }
+    },
+    mounted: function() {
+      this.$nextTick(function() {
+        let this_ = this;
+        if (this_.$utils.check.isEmpty(this_.$route.query.openid)) {
+          this_.bus.$emit('tipShow', "未获取到用户信息");
+        } else {
+          this_.weChartLogin();
+        }
+
+      });
+    },
+    methods: {
+      weChartLogin: function() {
+        let this_ = this;
+        this_.$api.get({
+          url: this_.$apiUrl.api.WeChatLogin + '?openid=' + this_.$route.query.openid + '&type=' + this_.$route.query.type,
+          params: {},
+          success: function(data) {
+            if (data.State) {
+              sessionStorage.setItem("token", data.centent.Token); //存入token
+              let userdata = {
+                dataset: data.centent.userinfo.dataset,
+                dataset1: (data.centent.userinfo.dataset1).concat(data.centent.userinfo.dataset2)
+              };
+              sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
+              this_.$router.push('/index');
+            } else {
+              this_.isLogin = true;
+            }
+
+          }
+        });
+      },
+
+      //用户名密码登陆
+      login: function() {
+        let this_ = this;
+        this_.bus.$emit('loading', true);
+
+        this_.$api.get({
+          url: this_.$apiUrl.api.getLogin + '?name=' + this_.userForm.name,
+          params: {},
+          success: function(data) {
+            if (data.State) {
+              let mdPasswd = md5(this_.userForm.passWord + data.centent.code).toUpperCase(); //md5加密
+              this_.$api.post({
+                url: this_.$apiUrl.api.WeChatLogin,
+                params: {
+                  'loginname': this_.userForm.name,
+                  'password': mdPasswd,
+                  'openid': this_.$route.query.openid,
+                  'type': this_.$route.query.type
+                },
+                success: function(data) {
+                  this_.bus.$emit('loading', false);
+                  if (data.State) {
+                    this_.weChartLogin();
+                  } else {
+                    this_.bus.$emit('tipShow', data.Message);
+                  }
+
+                }
+              });
+            } else {
+              this_.bus.$emit('tipShow', data.Message);
+            }
+
+          }
+        });
+
+      },
+
+    }
+  }
+</script>
+<style scoped>
+  .wxlogin_main {
+    width: 100%;
+    margin-top: -130%;
+  }
+
+  .wxlogin_container {
+    width: 100%;
+    padding-top: 177.73%;
+    background: url(../assets/images/common/bg_login.jpg)no-repeat;
+    background-size: 100%;
+    background-color: #320830;
+  }
+
+  .wxlogin_cont>p {
+    padding-top: 1rem;
+    font-size: 1.3rem;
+    color: #1097f6;
+    line-height: 2rem;
+  }
+</style>

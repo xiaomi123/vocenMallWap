@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/VocenOrder/!svn/ver/120/m/vocenShop/build
+END
+vue-loader.conf.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/build/vue-loader.conf.js
+END
+logo.png
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/build/logo.png
+END
+webpack.base.conf.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/build/webpack.base.conf.js
+END
+webpack.dev.conf.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/build/webpack.dev.conf.js
+END
+build.js
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/build/build.js
+END
+utils.js
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/VocenOrder/!svn/ver/22/m/vocenShop/build/utils.js
+END
+check-versions.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/VocenOrder/!svn/ver/120/m/vocenShop/build/check-versions.js
+END
+webpack.prod.conf.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/build/webpack.prod.conf.js
+END

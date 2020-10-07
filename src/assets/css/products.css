@@ -1,0 +1,177 @@
+.proSearch_container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #fff;
+}
+
+.proSearch_banner {
+  margin-bottom: 1rem;
+}
+
+.proSearch_main {
+  padding: 1rem 4%;
+}
+.list-item:first-child{
+  padding-top: 0;
+}
+.list-item{
+  border-bottom: 1px solid #EEEEEE;
+  padding: 1rem 0;
+}
+
+
+
+/*搜索框*/
+.lhq_header {
+  width: 100%;
+  padding: 1rem 3.5%;
+  background-color: #fff;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.lhq_header>.tag-item>p {
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 20%;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.lhq_header>.tag-item>p>em {
+  position: absolute;
+  right: 22%;
+  top: 0.95rem;
+  padding: 0 0.5rem;
+  font-size: 1.25rem;
+  color: #9f9f9f;
+  font-weight: bold;
+}
+
+.lhq_header>.tag-item>p>input {
+  display: block;
+  width: 100%;
+  /* height: 3.3rem; */
+  height: 4rem;
+  padding: 0.5rem 0;
+  font-size: 1.3rem;
+  color: #555;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lhq_header>.tag-item>p>span {
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  width: 20%;
+  /* height: 3.45rem;
+  line-height: 3.45rem; */
+  height: 4rem;
+  line-height: 4rem;
+  font-size: 1.3rem;
+  color: #fff;
+  text-align: center;
+  background-color: #0066CC;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  -webkit-border-top-right-radius: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.dialog{
+  height: 100vh;
+  background-color: #FFFFFF;
+}
+.dialog-nav{
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid #eee;
+  line-height: 40px;
+}
+.dialog-nav em{
+  width: 3rem;
+  text-align: center;
+}
+.dialog-title{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding-right: 10%;
+}
+.dialog-content{
+  /* padding: 1rem; */
+}
+.dialog-content .img-box{
+  width: 100%;
+  height: 24rem;
+}
+.dialog-grid{
+  padding: 1rem;
+}
+.van-hairline--left::after{
+  border: 0 solid #DDDDDD;
+  border-left-width: 1px;
+}
+.dialog-btn{
+  width: 80%;
+  margin: 1.5rem auto 0 auto;
+}
+
+.cropper{
+  width: 100%;
+  height: 24rem;
+}
+.show-preview{
+  flex: 1;
+  -webkit-flex: 1;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.preview{
+    overflow: hidden;
+    border-radius: 50%;
+    border:1px solid #cccccc;
+    background: #cccccc;
+    margin-left: 40px;
+  }
+.tab-list{
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  font-size: 1.5rem;
+}
+.tab-list li{
+  display: block;
+  float: left;
+  /* background-color: red; */
+  padding: 0.5rem 0.625rem;
+  margin-right: 0.5rem;
+}
+.tab-list li.active{
+  color: red;
+}
+
+/* 产品列表 */
+.pro-title{
+  font-size: 1.5rem;
+  font-weight: 700;
+}

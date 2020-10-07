@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/VocenOrder/!svn/ver/35/m/vocenShop/config
+END
+dev.env.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/VocenOrder/!svn/ver/35/m/vocenShop/config/dev.env.js
+END
+index.js
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/VocenOrder/!svn/ver/19/m/vocenShop/config/index.js
+END
+prod.env.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/VocenOrder/!svn/ver/18/m/vocenShop/config/prod.env.js
+END
