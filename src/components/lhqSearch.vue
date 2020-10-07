@@ -10,14 +10,11 @@
     </div>
 
     <div class="proSearch_banner" v-if="swiperList.length>0">
-      <swiper :options="swiperOption" class="swiper-container">
-        <!-- slides -->
-        <swiper-slide class="swiper-item" v-for='item of swiperList' :key='item.id'>
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+        <van-swipe-item v-for='item of swiperList' :key='item.id'>
           <img class='swiper-img' :src='item.imgUrl' alt="" />
-        </swiper-slide>
-        <!-- Optional controls ,显示小点-->
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+        </van-swipe-item>
+      </van-swipe>
     </div>
 
     <!--查询录入框内容开始-->
