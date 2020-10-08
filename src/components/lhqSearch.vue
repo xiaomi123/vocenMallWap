@@ -1,7 +1,7 @@
 <template>
   <div class="proSearch_container">
     <div class="login-btn" v-show="isLogin">
-      <router-link :to="{path:'/', query:{target:'search'}}" style="color: #0057ED;">立即登录>></router-link>
+      <router-link :to="{path:'/wxlogin', query:{target:'search',openid:this.$route.query.openid,type:this.$route.query.type}}" style="color: #0057ED;">立即登录>></router-link>
       <!-- <van-button type="info" size="mini" @click="login()">立即登录</van-button> -->
     </div>
     <div class="text-info" v-show="showText">
@@ -26,7 +26,8 @@
             <input type="text" placeholder="请输入17位VIN码" v-model="keyWords" />
             <input id="upload_file" type="file"  accept="image/*" @change="fileChange($event)" multiple style="display: none">
             <input id="camera_file" type="file"  accept="image/*" capture="camera" @change="camera($event)" multiple style="display: none">
-            <img class="icon-scanner" src="../assets/images/common/scanner.png" @click="show = true" />
+            <!-- <img class="icon-scanner" src="../assets/images/common/scanner.png" @click="show = true" /> -->
+            <img class="icon-scanner" src="../assets/images/common/scanner.png" @click="btnShow()" />
             <span @click="winProduct(0)">查询</span>
           </p>
           <label style="color: #666666;">VIN码：如LFV3B28R1C3080426</label>
@@ -214,6 +215,16 @@
             this_.weChartLogin();
           }
         }else{
+          //已登陆
+          let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
+          //判断是否含有弘途和江陵品牌
+          if(!this_.$utils.check.isEmpty(userdata)){
+            if((userdata.dataset[0].mr003.indexOf('弘途耐用') == -1) && (userdata.dataset[0].mr003.indexOf('江陵耐用') == -1)){
+              this_.showTextDesc = "您已登录，但未代理该品牌车系";
+              this_.showText = true;
+            }
+          }
+
           this_.isShowFooter = !this_.isShowFooter;
         }
         // if(this_.$utils.check.isEmpty(sessionStorage.getItem("token"))){
@@ -279,7 +290,8 @@
               sessionStorage.setItem("token", data.centent.Token); //存入token
               let userdata = {
                 dataset: data.centent.userinfo.dataset,
-                dataset1: (data.centent.userinfo.dataset1).concat(dataset2)
+                dataset1: data.centent.userinfo.dataset,
+                //dataset1: (data.centent.userinfo.dataset1).concat(dataset2)
               };
               //判断品牌是否存在
               dataset2.forEach((item,index) => {
@@ -328,6 +340,10 @@
             } else{
               this_.isLogin = true;
               this_.isShowFooter = false;
+
+              this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
+              this_.showText = true;
+
             }
           }
         });
@@ -424,7 +440,7 @@
               if(type == 1){
                 this_.isMask = !this_.isMask;
               }
-              
+
             }else{
               this_.bus.$emit('tipShow', data.centent);
             }
@@ -464,6 +480,10 @@
       },
       //查询
       winProduct(e){
+        if(this.isLogin){
+          this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          return false;
+        }
         if(e == 0 && this.keyWords != ""){
           this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:e,categoryName:"",mb001:this.mb001}});
         }else if(e == 1 && this.attrKey != ""){
@@ -474,8 +494,20 @@
       },
       //点击产品类别
       openWin(e){
+        if(this.isLogin){
+          this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          return false;
+        }
         this.$router.push({path:'/proSearch/products', query: {words:"",type:2,categoryName:this.cateListText[e],mb001:this.mb001}});
       },
+      //vin点击小摄像头事件
+      btnShow(){
+        if(this.isLogin){
+          this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          return false;
+        }
+        this.show = true;
+      }
     }
   }
 </script>

@@ -4,7 +4,8 @@
     <div class="wxlogin_main">
 
       <div class="login_content wxlogin_cont" v-if="isLogin">
-        <p style="">首次登陆需录入订单平台手机号和密码，绑定后即可直接登陆</p>
+        <p v-if="isSearch">本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询。</p>
+        <p v-else>首次登陆需录入订单平台手机号和密码，绑定后即可直接登陆</p>
         <ul class="login_list">
           <li>
             <i><img src="../assets/images/common/icon_loginList3.png" alt="" /></i>
@@ -33,7 +34,8 @@
           name: '',
           passWord: ''
         },
-        isLogin: true
+        isLogin: true,
+        isSearch:false,//判断是否为查询系统进入
       }
     },
     mounted: function() {
@@ -43,6 +45,9 @@
           this_.bus.$emit('tipShow', "未获取到用户信息");
         } else {
           this_.weChartLogin();
+        }
+        if(!this_.$utils.check.isEmpty(this_.$route.query.target)){
+          this_.isSearch = true;
         }
 
       });
@@ -56,12 +61,69 @@
           success: function(data) {
             if (data.State) {
               sessionStorage.setItem("token", data.centent.Token); //存入token
-              let userdata = {
-                dataset: data.centent.userinfo.dataset,
-                dataset1: (data.centent.userinfo.dataset1).concat(data.centent.userinfo.dataset2)
-              };
-              sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
-              this_.$router.push('/index');
+
+              if(this_.isSearch){
+                //查询系统登陆
+                let dataset2 = data.centent.userinfo.dataset2;
+                let userdata = {
+                  dataset: data.centent.userinfo.dataset,
+                  dataset1: data.centent.userinfo.dataset,
+                  //dataset1: (data.centent.userinfo.dataset1).concat(dataset2)
+                };
+
+                //判断品牌是否存在
+                dataset2.forEach((item,index) => {
+                  if(this_.$route.query.type == 4){
+                    if(item.mr003 == "弘途耐用"){
+                      userdata.dataset[0].dpt = item.dpt;
+                      userdata.dataset[0].kf = item.kf;
+                      userdata.dataset[0].ma001 = item.ma001;
+                      userdata.dataset[0].ma002 = item.ma002;
+                      userdata.dataset[0].ma007 = item.ma007;
+                      userdata.dataset[0].ma015 = item.ma015;
+                      userdata.dataset[0].ma016 = item.ma016;
+                      userdata.dataset[0].ma017 = item.ma017;
+                      userdata.dataset[0].ma027 = item.ma027;
+                      userdata.dataset[0].ma075 = item.ma075;
+                      userdata.dataset[0].ma085 = item.ma085;
+                      userdata.dataset[0].mr003 = item.mr003;
+                      userdata.dataset[0].yw = item.yw;
+
+                    }
+                  }else if(this_.$route.query.type == 3){
+                    if(item.mr003 == "江陵耐用"){
+                      userdata.dataset[0].dpt = item.dpt;
+                      userdata.dataset[0].kf = item.kf;
+                      userdata.dataset[0].ma001 = item.ma001;
+                      userdata.dataset[0].ma002 = item.ma002;
+                      userdata.dataset[0].ma007 = item.ma007;
+                      userdata.dataset[0].ma015 = item.ma015;
+                      userdata.dataset[0].ma016 = item.ma016;
+                      userdata.dataset[0].ma017 = item.ma017;
+                      userdata.dataset[0].ma027 = item.ma027;
+                      userdata.dataset[0].ma075 = item.ma075;
+                      userdata.dataset[0].ma085 = item.ma085;
+                      userdata.dataset[0].mr003 = item.mr003;
+                      userdata.dataset[0].yw = item.yw;
+                    }
+                  }
+                })
+                if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
+
+                  sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
+                }
+
+                this_.$router.push('/lhqSearch');
+              }else{
+                //订单系统登陆
+                let userdata = {
+                  dataset: data.centent.userinfo.dataset,
+                  dataset1: (data.centent.userinfo.dataset1).concat(data.centent.userinfo.dataset2)
+                };
+                sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
+                this_.$router.push('/index');
+              }
+
             } else {
               this_.isLogin = true;
             }
