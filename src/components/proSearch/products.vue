@@ -170,7 +170,7 @@
                 :mask="false"
                 length="17"
               />
-              <van-button class="dialog-btn" type="danger" size="small" block @click="searchByVin()">查看解码消息</van-button>
+              <van-button class="dialog-btn" type="danger" size="small" block @click="searchByVin1()">查看解码消息</van-button>
             </div>
           </div>
       </div>
@@ -251,7 +251,7 @@
         this_.imgUrl = Consts.apiConfig.imgPath;
         document.title = this_.$route.query.title;
         this_.tabCurrent = this_.$route.query.type;
-       
+
         this_.categoryName = this_.$route.query.categoryName;
         this_.chexingObj = this_.$route.query.obj != undefined ? this_.$route.query.obj : "";
         this_.showNavImg();
@@ -649,6 +649,10 @@
           this.bus.$emit('tipShow', "请输入查询条件");
         }
 
+      },
+      searchByVin1(){
+        this.proList = [];
+        this.vinCodePros();
       },
       //按属性查询
       search(){

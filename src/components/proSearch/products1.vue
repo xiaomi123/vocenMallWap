@@ -177,7 +177,7 @@
                 :mask="false"
                 length="17"
               />
-              <van-button class="dialog-btn" type="danger" size="small" block @click="searchByVin()">查看解码消息</van-button>
+              <van-button class="dialog-btn" type="danger" size="small" block @click="searchByVin1()">查看解码消息</van-button>
             </div>
           </div>
       </div>
@@ -573,6 +573,10 @@
           this.bus.$emit('tipShow', "请输入查询条件");
         }
 
+      },
+      searchByVin1(){
+        this.proList = [];
+        this.vinCodePros();
       },
       //按属性查询
       search(){

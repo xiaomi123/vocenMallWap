@@ -100,7 +100,7 @@
                 :mask="false"
                 length="17"
               />
-              <van-button class="dialog-btn" type="danger" size="small" block @click="winProduct(1)">查看解码消息</van-button>
+              <van-button class="dialog-btn" type="danger" size="small" block @click="jiema()">查看解码消息</van-button>
             </div>
           </div>
       </div>
@@ -491,6 +491,10 @@
         }else{
           this.bus.$emit('tipShow', "请输入查询条件");
         }
+      },
+      //查看解码
+      jiema(){
+        this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:0,categoryName:"",mb001:this.mb001}});
       },
       //点击产品类别
       openWin(e){
