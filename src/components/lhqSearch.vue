@@ -324,7 +324,7 @@
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
               }else{
-                this_.showTextDesc = "您已登录，但未代理该品牌车系";
+                this_.showTextDesc = "您已登录，但未代理该品牌";
                 this_.showText = true;
               }
             } else{
