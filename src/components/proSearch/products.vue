@@ -71,6 +71,7 @@
                     <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
                     <div class="ub">发动机：{{item.参数一}}</div>
                     <div class="ub">参数：{{item.参数二}}</div>
+                    <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
                   </div>
                   <div class="ub ub-pc ub-ac">
                     <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
@@ -89,17 +90,15 @@
               <div  class="ub ub-f1 ub-ver">
                 <div class="ub">
                   <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
-                    <div class="ub">OEM：{{item.oem}}</div>
+                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
                     <div class="ub">发动机：{{item.发动机型号}}</div>
+                    <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="ub">
-              <div class="ub" style="margin-right: 1rem;">排量：{{item.排量}}</div>
-              <div class="ub">规格：{{item.规格}}</div>
-            </div>
+            <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
+            <div class="">规格：{{item.规格}}</div>
           </template>
           <template v-if="categoryName.indexOf('氧传感') > -1">
             <div class="ub" @click="detail_1(item)">
@@ -109,7 +108,8 @@
                   <div class="ub ub-f1 ub-ver">
                     <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
                     <div class="ub">发动机：{{item.发动机型号}}</div>
-                    <div class="ub">参数：{{item.线长}}</div>
+                    <div class="ub">总长度：{{item.线长}}</div>
+                    <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
                   </div>
                   <div class="ub ub-pc ub-ac">
                     <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">{{item.产品编号}}</span>
@@ -132,37 +132,27 @@
     </router-link>
 
     <!-- 遮罩层-->
-    <van-overlay :show="isMask" @click="isMask = false">
-      <div class="dialog" @click.stop>
+    <!-- <van-overlay :show="isMask" @click="isMask = false"> -->
+      <div class="dialog" v-if="isMask">
           <header class="dialog-nav">
             <em class="iconfont" @click="closeDialog()">&#xe601;</em>
             <h1 class="dialog-title">VIN码识别</h1>
           </header>
           <div class="dialog-content">
-            <div class="cropper">
-              <vueCropper
-              				ref="cropper"
-              				:img="option.img"
-              				:outputSize="option.size"
-              				:outputType="option.outputType"
-                      :info="option.info"
-                      :full="option.full"
-                      :canMove="option.canMove"
-                      :canMoveBox="option.canMoveBox"
-                      :original="option.original"
-                      :autoCrop="option.autoCrop"
-                      :autoCropWidth="option.autoCropWidth"
-                      :autoCropHeight="option.autoCropHeight"
-                      :fixedBox="option.fixedBox"
-                      :mode="option.mode"
-                      @imgLoad="imgLoad"
-              			></vueCropper>
-            </div>
-            <input type="button" class="oper" style="font-size:1.5rem;margin:3px 5px;" value="放大" title="放大" @click="changeScale(1)">
-            <input type="button" class="oper" style="font-size:1.5rem;margin:3px 5px;" value="缩小" title="缩小" @click="changeScale(-1)">
-            <input type="button" class="oper" style="font-size:3rem;margin:3px 5px;" value="↺" title="左旋转" @click="rotateLeft">
-            <input type="button" class="oper" style="font-size:3rem;margin:3px 5px;" value="↻" title="右旋转" @click="rotateRight">
-            <div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div>
+            <crop
+                style="width:100%;height: 24rem;"
+                v-model="option.crop"
+                :defaultImgUrl="option.img"
+                :angle="15"
+                :color=option.color
+                :shape=option.shape
+                @imgLoaded="imgLoaded"
+                :revokeBtn="true"
+                :penBtn="true"
+                :rotation="option.rotation"
+              >
+              </crop>
+            <!-- <div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div> -->
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;">请核查识别结果与图片数据是否一致</div>
               <van-password-input
@@ -174,7 +164,7 @@
             </div>
           </div>
       </div>
-    </van-overlay>
+    <!-- </van-overlay> -->
 
   </div>
 </template>
@@ -182,13 +172,13 @@
 <script>
   import Consts from '../../api/const.js'
   import {Swiper,SwiperSlide } from 'vue-awesome-swiper'
-  import { VueCropper }  from 'vue-cropper'
+  import { crop } from "vue-cropblg"
   import 'swiper/swiper-bundle.css'
   export default {
     components: {
       Swiper,
       SwiperSlide,
-      VueCropper
+      crop
     },
     name: 'LhqSearch',
     data() {
@@ -201,21 +191,13 @@
           name: '上传VIN图片'
         }],
         isMask : false,
-        crap: false,
         option:{
-          img: '',
-          size: 1,
-          info:true,
-          full: false,
-          outputType: 'png',
-          fixedBox: true,
-          original: false,
-          canMove: true,
-          canMoveBox: true,
-          autoCrop: true,
-          autoCropWidth: 250,
-          autoCropHeight: 100,
-          mode : "cover"
+          img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
+          zuobiao: [50, 50, 20, 0],
+          color:'#f14864',
+          crop:{},
+          shape: 'rect', //截图形状
+          rotation: 0
         },
         tabCurrent : 0,
         keyWords : "",
@@ -343,6 +325,7 @@
         this_.$api.post({
           url : this_.$apiUrl.api.ProductByVehicle,
           params :{
+            openid : sessionStorage.getItem('openid'),
             engineModel : this_.tabCurrent == 2 ? this_.keyWords : "", //发动机型号
             brand : this_.chexingObj.brand != undefined ? this_.chexingObj.brand : "", //品牌
             models : this_.chexingObj.models != undefined ? this_.chexingObj.models : "", //车型
@@ -355,7 +338,7 @@
             categoryName : this_.categoryName != undefined ? this_.categoryName : ""  //分类品类
           },
           success : function(res){
-            console.log(res);
+            console.log(JSON.parse(res.centent.plist));
             if(res.State){
               if(res.centent.plist != ""){
                 let result = JSON.parse(res.centent.plist);
@@ -368,54 +351,6 @@
           }
         })
       },
-      // 按OE码查询产品
-      // byOemNo(){
-      //   let this_ = this;
-      //   this_.bus.$emit('loading', true);
-      //   this_.$api.post({
-      //     url : this_.$apiUrl.api.ProductByOemNo,
-      //     params :{
-      //       oemNo : this_.keyWords,
-      //       categoryName : this_.categoryName
-      //     },
-      //     success : function(res){
-      //       console.log(res);
-      //       if(res.State){
-      //         if(res.centent.plist != ""){
-      //           let result = JSON.parse(res.centent.plist);
-      //           this_.getPorductPics(result);
-      //         }else{
-      //           this_.showEmpty = !this_.showEmpty;
-      //         }
-      //       }
-      //       this_.bus.$emit('loading', false);
-      //     }
-      //   })
-      // },
-      //按产品编号查询产品
-      // byProductNo(){
-      //   let this_ = this;
-      //   this_.bus.$emit('loading', true);
-      //   this_.$api.post({
-      //     url : this_.$apiUrl.api.ProductsByProductNo,
-      //     params :{
-      //       productNo : this_.keyWords,
-      //       categoryName : this_.categoryName
-      //     },
-      //     success : function(res){
-      //       console.log(res);
-      //       if(res.State){
-      //        if(res.centent.plist != ""){
-      //          let result = JSON.parse(res.centent.plist);
-      //          this_.getPorductPics(result);
-      //        }else{
-      //          this_.showEmpty = !this_.showEmpty;
-      //        }
-      //       }
-      //       this_.bus.$emit('loading', false);
-      //     }
-      //   })
-      // },
       //获取产品缩略图
       getPorductPics(res){
         let this_ = this;
@@ -438,8 +373,8 @@
         let eprcodes = res.map(item => item.prod[5]).join(',')
         this_.proList = res;
         //是否存在用户信息
-        console.log("用户信息");
-        console.log(JSON.parse(sessionStorage.getItem("userinfo")));
+        //console.log("用户信息");
+        //console.log(JSON.parse(sessionStorage.getItem("userinfo")));
         let params_data = {};
         if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
           params_data = {
@@ -477,7 +412,6 @@
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
           success: function (data) {
-            console.log("---------产品缩略图-----------");
             console.log(data);
             if(data.State){
               let infos = data.centent;
@@ -492,25 +426,6 @@
             }
           }
         });
-        // this_.$api.get({
-        //   url: api,
-        //   params: {},
-        //   success: function (data) {
-        //     //console.log("---------产品缩略图-----------");
-        //     //console.log(data);
-        //     if(data.State){
-        //       let infos = data.centent;
-        //       for(let i = 0; i < this_.proList.length; i++){
-        //         for(let m = 0; m < infos.length; m++){
-        //           if(infos[m].mb001 == this_.proList[i].prod[5]){
-        //             this_.$set(this_.proList[i], 'titlepicurl', infos[m].picurl);
-        //             this_.$set(this_.proList[i], 'params', infos[m].data);
-        //           }
-        //         }
-        //       }
-        //     }
-        //   }
-        // });
       },
       onSelect(evt) {
         this.show = false;
@@ -594,7 +509,10 @@
         this_.bus.$emit('loading', true);
         this_.$api.post({
           url: this_.$apiUrl.api.VinOCR,
-          params: imgcode,
+          params: {
+            imgcode : imgcode,
+            openid : sessionStorage.getItem('openid')
+          },
           success: function (data) {
             console.log(data);
             if(data.State){
@@ -613,31 +531,13 @@
       closeDialog(){
         this.isMask = !this.isMask;
       },
-      //放大/缩小
-      changeScale(num) {
-        console.log(this.option.img)
-        num = num || 1;
-        this.$refs.cropper.changeScale(num);
-      },
-      //坐旋转
-      rotateLeft() {
-        this.$refs.cropper.rotateLeft();
-      },
-      //右旋转
-      rotateRight() {
-        this.$refs.cropper.rotateRight();
+      imgLoaded(){
+          console.log('图片加载完成~');
       },
       //获取截图的base64 数据
       getCutImg(){
         let this_ = this;
-        this.$refs.cropper.getCropData((data) => {
-          let imgcode = data.split(',')[1];
-          this_.getVinCode(imgcode,2);
-        })
-      },
-      imgLoad (msg) {
-        // console.log('imgLoad')
-        // console.log(msg)
+        this_.getVinCode(imgcode,2);
       },
       //vincode查询
       searchByVin(){
@@ -651,6 +551,7 @@
 
       },
       searchByVin1(){
+        this.closeDialog();
         this.proList = [];
         this.vinCodePros();
       },
@@ -675,7 +576,7 @@
         this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
         this_.bus.$emit('loading', true)
         this_.$api.get({
-          url: this_.$apiUrl.api.GetLiheqi + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
+          url: this_.$apiUrl.api.GetLiheqi + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
           params: {},
           success: function (data) {
             console.log(data);
@@ -693,7 +594,7 @@
         this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
         this_.bus.$emit('loading', true);
         this_.$api.get({
-          url: this_.$apiUrl.api.GetDhxq + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
+          url: this_.$apiUrl.api.GetDhxq + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
           params: {},
           success: function (data) {
             console.log("点火线圈");
@@ -713,7 +614,7 @@
         this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
         this_.bus.$emit('loading', true);
         this_.$api.get({
-          url: this_.$apiUrl.api.GetYchuan + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
+          url: this_.$apiUrl.api.GetYchuan + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
           params: {},
           success: function (data) {
             console.log("氧传感");
@@ -727,16 +628,8 @@
           }
         });
       },
-      //tab查询分类
-      // changeTab(e){
-      //   this.tabCurrent = e;
-      //   this.keyWords = "";
-      //   this.showModelInfoByEngineModel = false;
-      //   this.showModelInfoByVinCode = false;
-      // },
       //产品详情
       detail(list){
-        //console.log(list);
         this.$router.push({path:'/proSearch/detail', query:{obj:list.params,mb001:list.prod[5],title:this.$route.query.title}});
       },
       //属性-详情

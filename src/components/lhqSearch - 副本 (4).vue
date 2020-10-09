@@ -53,14 +53,6 @@
           <p>燃油泵总成<br>正在开发中...</p>
           <router-link to="/proSearch/lhqList">燃油泵总成</router-link>
         </li>
-        <li class='shuibeng'>
-          <p>水泵<br>正在开发中...</p>
-          <router-link to="/proSearch/lhqList">水泵</router-link>
-        </li>
-        <li class='chouzheng'>
-          <p>轴承<br>正在开发中...</p>
-          <router-link to="/proSearch/lhqList">轴承</router-link>
-        </li>
       </ul>
       <p class="proSearch_tip">
         <i class="iconfont">&#xe604;</i></br>
@@ -70,8 +62,8 @@
     <!--主要内容结束-->
 
     <!-- 遮罩层-->
-    <!-- <van-overlay :show="isMask" @click="isMask = false"> -->
-      <div class="dialog" v-if="isMask">
+    <van-overlay :show="isMask" @click="isMask = false">
+      <div class="dialog" @click.stop>
           <header class="dialog-nav">
             <em class="iconfont" @click="closeDialog()">&#xe601;</em>
             <h1 class="dialog-title">VIN码识别</h1>
@@ -89,10 +81,22 @@
                 :penBtn="true"
                 :rotation="option.rotation"
               >
+                <template slot="defaultImgUrl">
+                        <img :src="option.img" style="width:100%" />
+                      </template>
               </crop>
-            <!--<div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div> -->
+
+              <!-- <img :src="option.img" /> -->
+            <!-- <div class="cropper">
+
+            </div>
+            <input type="button" class="oper" style="font-size:1.5rem;margin:3px 5px;" value="放大" title="放大" @click="changeScale(1)">
+            <input type="button" class="oper" style="font-size:1.5rem;margin:3px 5px;" value="缩小" title="缩小" @click="changeScale(-1)">
+            <input type="button" class="oper" style="font-size:3rem;margin:3px 5px;" value="↺" title="左旋转" @click="rotateLeft">
+            <input type="button" class="oper" style="font-size:3rem;margin:3px 5px;" value="↻" title="右旋转" @click="rotateRight">
+            <div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div> -->
             <div class="dialog-grid">
-              <div style="color: red;text-align: center;margin-bottom: 1rem;font-size: 0.875rem;">请核查识别结果与图片数据是否一致</div>
+              <div style="color: red;text-align: center;margin-bottom: 1rem;">请核查识别结果与图片数据是否一致</div>
               <van-password-input
                 :value="keyWords"
                 :mask="false"
@@ -102,7 +106,7 @@
             </div>
           </div>
       </div>
-    <!-- </van-overlay> -->
+    </van-overlay>
     <!--底部footer内容开始-->
   	<sfooter-view v-if="isShowFooter"></sfooter-view>
   	<!--底部footer内容结束-->
@@ -111,13 +115,11 @@
 
 <script>
   import {Swiper,SwiperSlide } from 'vue-awesome-swiper'
-  import { crop } from "vue-cropblg";
   import 'swiper/swiper-bundle.css'
   export default {
     components: {
       Swiper,
-      SwiperSlide,
-      crop
+      SwiperSlide
     },
     name: 'LhqSearch',
     data() {
@@ -149,12 +151,19 @@
           name: '上传VIN图片'
         }],
         isMask : false,
+
+        crap: false,
         option:{
           img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
           zuobiao: [50, 50, 20, 0],
           color:'#f14864',
+          imgWatermark: '', //图片水印
+          textWatermark: '', //文字水印
           crop:{},
+          cropAction: false,
+          imageData: null,
           shape: 'rect', //截图形状
+          rangeValue: 50,
           rotation: 0
         },
         // tabList : ["VIN码","按属性"], //查询分类
@@ -407,11 +416,14 @@
             alert('请选择3M以内的图片！');
             return false;
         }
+        //var render = new FileReader();
         render.readAsDataURL(img1);
         render.onload = (e) => {
             var imgcode = e.target.result.split(',')[1];
-            this_.option.img = e.target.result;
-            this_.getVinCode(imgcode,1);
+
+            this_.isMask = !this_.isMask;
+            //this_.option.img = e.target.result;
+            //this_.getVinCode(imgcode,1);
         }
       },
       //上传图片获取VINCode
@@ -444,11 +456,17 @@
         this.isMask = !this.isMask;
       },
       imgLoaded(){
-          console.log('图片加载完成~');
+         // eslint-disable-next-line
+          console.log('图片加载完成~')
+
       },
       //获取截图的base64 数据
       getCutImg(){
         let this_ = this;
+        this.$refs.cropper.getCropData((data) => {
+          let imgcode = data.split(',')[1];
+          this_.getVinCode(imgcode,2);
+        })
       },
       //查询
       winProduct(e){

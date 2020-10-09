@@ -100,6 +100,14 @@
   background: url(../images/lhq/img_proSearch_qyb.png)no-repeat center top;
   background-size: 100%;
 }
+.proSearch_list>li.shuibeng {
+  background: url(../images/lhq/img_proSearch_shuibeng.png)no-repeat center top;
+  background-size: 100%;
+}
+.proSearch_list>li.chouzheng {
+  background: url(../images/lhq/img_proSearch_zhoucheng.png)no-repeat center top;
+  background-size: 100%;
+}
 
 .proSearch_tip {
   font-size: 1.2rem;
@@ -185,6 +193,10 @@
 .dialog{
   height: 100vh;
   background-color: #FFFFFF;
+  position: fixed;
+  top:0;
+  bottom: 0;
+  width: 100%;
 }
 .dialog-nav{
   display: flex;

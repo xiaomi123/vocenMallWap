@@ -99,6 +99,10 @@
 .dialog{
   height: 100vh;
   background-color: #FFFFFF;
+  position: fixed;
+  top:0;
+  bottom: 0;
+  width: 100%;
 }
 .dialog-nav{
   display: flex;

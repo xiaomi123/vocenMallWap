@@ -13,6 +13,7 @@
         <div class="left">
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
+          <p style="color: red;">价格：{{info.currentprice}}</p>
         </div>
         <div class="right">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
@@ -98,6 +99,7 @@ export default {
           mb001 : this_.$route.query.mb001
         },
         success: function (data) {
+          console.log("清醒");
           console.log(data);
           if(data.State){
             if(data.centent.length !=0){

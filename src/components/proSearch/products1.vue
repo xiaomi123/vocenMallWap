@@ -61,71 +61,77 @@
         </div>
       </template>
       <template v-else-if="tabCurrent == 1">
-        <div class="title ub ub-ac" @click="flod(1)"><span class="ub ub-f1">离合器套装</span><van-icon name="arrow" class="ub" /></div>
-        <div v-show="lhqShow">
-          <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset">
-            <div class="ub" @click="detail_1(item)">
-              <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-              <div  class="ub ub-f1 ub-ver">
-                <div class="ub">
-                  <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
-                    <div class="ub">发动机：{{item.参数一}}</div>
-                    <div class="ub">参数：{{item.参数二}}</div>
-                  </div>
-                  <div class="ub ub-pc ub-ac">
-                    <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
-                    {{item.mb001.substring(item.mb001.length - 3)}}
-                    </span>
+        <div v-if="searchList.dataset.length > 0">
+          <div class="title ub ub-ac" @click="flod(1)"><span class="ub ub-f1">离合器套装</span><van-icon name="arrow" class="ub" /></div>
+          <div v-show="lhqShow">
+            <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset">
+              <div class="ub" @click="detail_1(item)">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div  class="ub ub-f1 ub-ver">
+                  <div class="ub">
+                    <div class="ub ub-f1 ub-ver">
+                      <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
+                      <div class="ub">发动机：{{item.参数一}}</div>
+                      <div class="ub">参数：{{item.参数二}}</div>
+                      <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
+                    </div>
+                    <div class="ub ub-pc ub-ac">
+                      <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
+                      {{item.mb001.substring(item.mb001.length - 3)}}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="ub" style="margin-top: 0.5rem;">分离轴承：{{item.轴承型号}}</div>
+              <div class="ub">规格：{{item.产品规格}}</div>
             </div>
-            <div class="ub" style="margin-top: 0.5rem;">分离轴承：{{item.轴承型号}}</div>
-            <div class="ub">规格：{{item.产品规格}}</div>
           </div>
         </div>
-        <div class="title ub ub-ac" @click="flod(2)"><span class="ub ub-f1">点火线圈</span><van-icon name="arrow" class="ub" /></div>
-        <div v-show="dhxqShow">
-          <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset1">
-            <div class="ub" @click="detail_1(item)">
-              <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-              <div  class="ub ub-f1 ub-ver">
-                <div class="ub">
-                  <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
-                    <div class="ub">OEM：{{item.oem}}</div>
-                    <div class="ub">发动机：{{item.发动机型号}}</div>
+        <div v-if="searchList.dataset1.length > 0">
+          <div class="title ub ub-ac" @click="flod(2)"><span class="ub ub-f1">点火线圈</span><van-icon name="arrow" class="ub" /></div>
+          <div v-show="dhxqShow">
+            <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset1">
+              <div class="ub" @click="detail_1(item)">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div  class="ub ub-f1 ub-ver">
+                  <div class="ub">
+                    <div class="ub ub-f1 ub-ver">
+                      <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
+                      <div class="ub">发动机：{{item.发动机型号}}</div>
+                      <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="ub">
-              <div class="ub" style="margin-right: 1rem;">排量：{{item.排量}}</div>
+              <div class="ub">OEM：{{item.oem}}</div>
               <div class="ub">规格：{{item.规格}}</div>
             </div>
           </div>
         </div>
-        <div class="title ub ub-ac" @click="flod(3)"><span class="ub ub-f1">氧传感器</span><van-icon name="arrow" class="ub" /></div>
-        <div v-show="ycgqShow">
-          <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset2">
-            <div class="ub" @click="detail_1(item)">
-              <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-              <div  class="ub ub-f1 ub-ver">
-                <div class="ub">
-                  <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
-                    <div class="ub">发动机：{{item.发动机型号}}</div>
-                    <div class="ub">参数：{{item.线长}}</div>
-                  </div>
-                  <div class="ub ub-pc ub-ac">
-                    <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">{{item.产品编号}}</span>
+        <div v-if="searchList.dataset2.length > 0">
+          <div class="title ub ub-ac" @click="flod(3)"><span class="ub ub-f1">氧传感器</span><van-icon name="arrow" class="ub" /></div>
+          <div v-show="ycgqShow">
+            <div class="list-item ub ub-ver" v-for="(item,index) in searchList.dataset2">
+              <div class="ub" @click="detail_1(item)">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div  class="ub ub-f1 ub-ver">
+                  <div class="ub">
+                    <div class="ub ub-f1 ub-ver">
+                      <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
+                      <div class="ub">发动机：{{item.发动机型号}}</div>
+                      <div class="ub">总长度：{{item.线长}}</div>
+                      <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
+                    </div>
+                    <div class="ub ub-pc ub-ac">
+                      <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">{{item.产品编号}}</span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
+              <div class="">规格：{{item.名称}}</div>
             </div>
-            <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
-            <div class="">规格：{{item.名称}}</div>
           </div>
         </div>
       </template>
@@ -139,37 +145,27 @@
     </router-link>
 
     <!-- 遮罩层-->
-    <van-overlay :show="isMask" @click="isMask = false">
-      <div class="dialog" @click.stop>
+    <!-- <van-overlay :show="isMask" @click="isMask = false"> -->
+      <div class="dialog" v-if="isMask">
           <header class="dialog-nav">
             <em class="iconfont" @click="closeDialog()">&#xe601;</em>
             <h1 class="dialog-title">VIN码识别</h1>
           </header>
           <div class="dialog-content">
-            <div class="cropper">
-              <vueCropper
-              				ref="cropper"
-              				:img="option.img"
-              				:outputSize="option.size"
-              				:outputType="option.outputType"
-                      :info="option.info"
-                      :full="option.full"
-                      :canMove="option.canMove"
-                      :canMoveBox="option.canMoveBox"
-                      :original="option.original"
-                      :autoCrop="option.autoCrop"
-                      :autoCropWidth="option.autoCropWidth"
-                      :autoCropHeight="option.autoCropHeight"
-                      :fixedBox="option.fixedBox"
-                      :mode="option.mode"
-                      @imgLoad="imgLoad"
-              			></vueCropper>
-            </div>
-            <input type="button" class="oper" style="font-size:1.5rem;margin:3px 5px;" value="放大" title="放大" @click="changeScale(1)">
-            <input type="button" class="oper" style="font-size:1.5rem;margin:3px 5px;" value="缩小" title="缩小" @click="changeScale(-1)">
-            <input type="button" class="oper" style="font-size:3rem;margin:3px 5px;" value="↺" title="左旋转" @click="rotateLeft">
-            <input type="button" class="oper" style="font-size:3rem;margin:3px 5px;" value="↻" title="右旋转" @click="rotateRight">
-            <div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div>
+            <crop
+                style="width:100%;height: 24rem;"
+                v-model="option.crop"
+                :defaultImgUrl="option.img"
+                :angle="15"
+                :color=option.color
+                :shape=option.shape
+                @imgLoaded="imgLoaded"
+                :revokeBtn="true"
+                :penBtn="true"
+                :rotation="option.rotation"
+              >
+            </crop>
+            <!-- <div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div> -->
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;">请核查识别结果与图片数据是否一致</div>
               <van-password-input
@@ -181,7 +177,7 @@
             </div>
           </div>
       </div>
-    </van-overlay>
+    <!-- </van-overlay> -->
 
   </div>
 </template>
@@ -189,13 +185,13 @@
 <script>
   import Consts from '../../api/const.js'
   import {Swiper,SwiperSlide } from 'vue-awesome-swiper'
-  import { VueCropper }  from 'vue-cropper'
+  import { crop } from "vue-cropblg"
   import 'swiper/swiper-bundle.css'
   export default {
     components: {
       Swiper,
       SwiperSlide,
-      VueCropper
+      crop
     },
     name: 'LhqSearch',
     data() {
@@ -210,19 +206,12 @@
         isMask : false,
         crap: false,
         option:{
-          img: '',
-          size: 1,
-          info:true,
-          full: false,
-          outputType: 'png',
-          fixedBox: true,
-          original: false,
-          canMove: true,
-          canMoveBox: true,
-          autoCrop: true,
-          autoCropWidth: 250,
-          autoCropHeight: 100,
-          mode : "cover"
+          img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
+          zuobiao: [50, 50, 20, 0],
+          color:'#f14864',
+          crop:{},
+          shape: 'rect', //截图形状
+          rotation: 0
         },
         tabCurrent : 0,
         keyWords : "",
@@ -347,7 +336,7 @@
         this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
         this_.bus.$emit('loading', true)
         this_.$api.get({
-          url: this_.$apiUrl.api.Multiple + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003,
+          url: this_.$apiUrl.api.Multiple + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
           params: {},
           success: function (data) {
             console.log(data);
@@ -537,37 +526,18 @@
       closeDialog(){
         this.isMask = !this.isMask;
       },
-      //放大/缩小
-      changeScale(num) {
-        console.log(this.option.img)
-        num = num || 1;
-        this.$refs.cropper.changeScale(num);
-      },
-      //坐旋转
-      rotateLeft() {
-        this.$refs.cropper.rotateLeft();
-      },
-      //右旋转
-      rotateRight() {
-        this.$refs.cropper.rotateRight();
-      },
+     imgLoaded(){
+         console.log('图片加载完成~');
+     },
       //获取截图的base64 数据
       getCutImg(){
         let this_ = this;
-        this.$refs.cropper.getCropData((data) => {
-          let imgcode = data.split(',')[1];
-          this_.getVinCode(imgcode,2);
-        })
-      },
-      imgLoad (msg) {
-        // console.log('imgLoad')
-        // console.log(msg)
+        this_.getVinCode(imgcode,2);
       },
       //vincode查询
       searchByVin(){
         if(this.keyWords != ""){
           this.proList = [];
-          //this.closeDialog();
           this.vinCodePros();
         }else{
           this.bus.$emit('tipShow', "请输入查询条件");
@@ -575,6 +545,7 @@
 
       },
       searchByVin1(){
+        this.closeDialog();
         this.proList = [];
         this.vinCodePros();
       },
