@@ -459,7 +459,11 @@
         if(e == 0 && this.keyWords != ""){
           this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:e,categoryName:"",mb001:this.mb001}});
         }else if(e == 1 && this.attrKey != ""){
-          this.$router.push({path:'/proSearch/products1', query: {words:this.attrKey,type:e,categoryName:"",mb001:this.mb001}});
+          if(this.attrKey.length >= 2){
+            this.$router.push({path:'/proSearch/products1', query: {words:this.attrKey,type:e,categoryName:"",mb001:this.mb001}});
+          }else{
+            this.bus.$emit('tipShow', "至少输入2位");
+          }
         }else{
           this.bus.$emit('tipShow', "请输入查询条件");
         }

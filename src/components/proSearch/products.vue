@@ -1,13 +1,13 @@
 <template>
-  <div class="proSearch_container">
-    <div class="proSearch_banner">
+  <div class="proSearch_container" style="position: initial;">
+    <div class="proSearch_banner" ref="headCont">
      <img :src="categoryBanner">
     </div>
 
     <!--查询录入框内容开始-->
 
 
-    <div class="lhq_header">
+    <div class="lhq_header" ref="sysLeft">
       <div class="clearfix tag-item" style="margin-bottom: 1rem;">
         <p>
           <input type="text" placeholder="请输入VIN码" v-model="keyWords" />
@@ -249,6 +249,9 @@
           }
           this_.carsPros();
         }
+
+        window.addEventListener('scroll',this_.handleScroll,true);
+
       });
     },
     created(){
@@ -259,9 +262,36 @@
       });
       this_.cartTotal = sessionStorage.getItem('cartTotal');
     },
+    destroyed: function(){
+    	let this_ = this;
+      window.removeEventListener('scroll', this_.handleScroll,true)
+    },
     methods: {
       lhqSearch: function() {
         let this_ = this;
+      },
+      //滚动监听
+      handleScroll:function(){
+      	let this_ = this;
+      	let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      	let offTop = this_.$refs.sysLeft.offsetTop;
+      	let h = document.documentElement.clientHeight || document.body.clientHeight;
+      	if(scrollTop > offTop){
+      		this_.$refs.sysLeft.style.position = 'fixed';
+      		this_.$refs.sysLeft.style.top = '0px';
+      		this_.$refs.sysLeft.style.left = '0px';
+      		this_.$refs.sysLeft.style.width = '100%';
+      		this_.$refs.sysLeft.style.overflowY = 'auto';
+          this_.$refs.sysLeft.style.zIndex = '9';
+      	}else{
+      		this_.$refs.sysLeft.style.position = 'initial';
+      		this_.$refs.sysLeft.style.top = '0px';
+      		this_.$refs.sysLeft.style.left = '0px';
+      		this_.$refs.sysLeft.style.width = '100%';
+      		this_.$refs.sysLeft.style.overflowY = 'initial';
+          this_.$refs.sysLeft.style.zIndex = 'auto';
+      	}
+
       },
       //显示对应的品类图
       showNavImg(){
@@ -558,13 +588,17 @@
       //按属性查询
       search(){
         if(this.attrKey != ""){
-          this.searchList = [];
-          if(this.categoryName.indexOf('离合器') > -1){
-            this.getLiheqi();
-          }else if(this.categoryName.indexOf('点火线圈') > -1){
-            this.getDhxq();
-          }else if(this.categoryName.indexOf('氧传感') > -1){
-            this.getYchuan();
+          if(this.attrKey.length >= 2){
+            this.searchList = [];
+            if(this.categoryName.indexOf('离合器') > -1){
+              this.getLiheqi();
+            }else if(this.categoryName.indexOf('点火线圈') > -1){
+              this.getDhxq();
+            }else if(this.categoryName.indexOf('氧传感') > -1){
+              this.getYchuan();
+            }
+          }else{
+            this.bus.$emit('tipShow', "至少输入2位");
           }
         }else{
           this.bus.$emit('tipShow', "请输入查询条件");

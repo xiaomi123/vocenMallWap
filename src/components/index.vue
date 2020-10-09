@@ -21,7 +21,7 @@
 	  	</div>
   	</div>
   	<!--header内容结束-->
-  	
+
   	<!--搜索弹层内容开始-->
   	<div class="index_toSearch" v-show="searchDia">
   		<div class="index_searchCont">
@@ -35,7 +35,7 @@
 	  			<span @click="searchDia=false" v-show="!seaCan">取消</span>
 	  		</div>
 	  		<!--查询固定header内容结束-->
-	  		
+
 	  		<!--历史查询记录内容开始-->
 	  		<div class="serch_history" v-show="!searchPl && hisRecord.length>0">
 	  			<h2>历史搜索 </h2>
@@ -44,7 +44,7 @@
 		  		</ul>
 	  		</div>
 	  		<!--历史查询记录内容结束-->
-	  		
+
 	  		<!--查询结果内容开始-->
 	  		<div v-show="searchPl">
 		  		<ul class="index_searchList" v-if="searchData.length>0">
@@ -62,16 +62,16 @@
 		  		<p v-else class="com_noData">暂无数据</p>
 	  		</div>
 	  		<!--查询结果内容结束-->
-	  		
+
   		</div>
   	</div>
   	<!--搜索弹层内容结束-->
-    
-  	
+
+
   	<!--批量导入内容开始-->
 		<!--<p class="index_batch"><router-link :to="{path: '/batchIn'}"><i class="iconfont">&#xe605;</i></br>批量导入</router-link></p>-->
 		<!--批量导入内容结束-->
-		
+
 		<!--设置密码弹层开始-->
 		<div class="setPass_dialog" v-show="setShow">
 			<div class="index_setPass">
@@ -91,11 +91,11 @@
 					<input type="button" value="稍后设置" />
 					<input type="button" value="确定" @click="toSetPass()" />
 				</div>
-				
+
 			</div>
 		</div>
 		<!--设置密码弹层结束-->
-		
+
 		<!--送积分弹层内容开始-->
 		<div class="give_mask" v-show="giveShow">
 			<div class="give_dialog">
@@ -113,7 +113,7 @@
 			</div>
 		</div>
 		<!--送积分弹层内容结束-->
-  	
+
   	<!--主要内容开始-->
   	<div class="index_main">
   		<!--nav内容开始-->
@@ -126,7 +126,7 @@
   			</li>
   		</ul>
   		<!--nav内容结束-->
-  		
+
   		<!--活动内容开始-->
   		<div class="index_ativity" v-show="tabArr[tabIndex] == '活动'">
   			<h2 v-if="activeData.length>0"><i></i>活动</h2>
@@ -139,7 +139,7 @@
   			</ul>
   		</div>
   		<!--活动内容结束-->
-  		
+
   		<!--产品分类内容开始-->
   		<div class="index_sort clearfix" ref="sysSort" v-show="tabArr[tabIndex] == '产品'">
   			<div class="index_sort_left" ref="sysLeft">
@@ -164,11 +164,11 @@
 	  					</li>
 	  				</ul>
   				</div>
-  				
+
   			</div>
   		</div>
   		<!--产品分类内容结束-->
-  		
+
   	</div>
   	<!--主要内容结束-->
   	<footer-view></footer-view>
@@ -213,33 +213,33 @@ export default {
     this.$nextTick(function () {
       let this_ = this;
       this_.bus.$emit('footer', true);//底部footer
-      
+
       //送积分弹层
       if(this_.userInfo.dataset[0].give == 1){
       	//this_.giveShow = true;
       	this_.userInfo.dataset[0].give = 0;
 				sessionStorage.setItem("userinfo",JSON.stringify(this_.userInfo)); //存入修改用户名后userInfo
       }
-      
+
       //header中tab切换记录
       if(!this_.$utils.check.isEmpty(sessionStorage.getItem("tabIndex"))){
       	this_.tabIndex = sessionStorage.getItem("tabIndex");
       }
-      
+
       //系统分类滚动监听
       if(this_.tabIndex == 1){
       	window.addEventListener('scroll',this_.handleScroll,true);
       }
       this_.getMsgNum();//未读消息
-      
+
       //历史搜索记录
       if(!this_.$utils.check.isEmpty(JSON.parse(localStorage.getItem("hisRecord")))){
       	this_.hisRecord = JSON.parse(localStorage.getItem("hisRecord")).reverse().slice(0,10);
       }
-      
-      
-      
-      
+
+
+
+
     })
   },
   destroyed: function(){
@@ -257,13 +257,13 @@ export default {
 			    this_.searchTime = setTimeout(() => {
 			      this_.seachQuery(curVal);
 			    }, 1000);
-	      
+
 	      }
   		}else{
   			this_.seaCan = false;
   			this_.searchData = [];
   		}
-    	
+
     },
     giveShow(curVal, oldVal){
     	let this_ = this;
@@ -281,7 +281,7 @@ export default {
   		let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   		let offTop = this_.$refs.sysSort.offsetTop-this_.$refs.headCont.offsetHeight-30;
   		let h = document.documentElement.clientHeight || document.body.clientHeight;
-  		
+console.log(offTop+";scrollTop"+scrollTop);
   		if(scrollTop > offTop){
   			this_.$refs.sysLeft.style.position = 'fixed';
   			this_.$refs.sysLeft.style.top = this_.$refs.headCont.offsetHeight+30 + 'px';
@@ -299,9 +299,9 @@ export default {
   			this_.$refs.sysLeft.style.height = 'initial';
   			this_.$refs.sysLeft.style.overflowY = 'initial';
   		}
-  		
+
   	},
-  	
+
   	//系统分类锚点连接
   	toSystem:function(selector,index){
   		let this_ = this;
@@ -311,7 +311,7 @@ export default {
       document.body.scrollTop = anchor.offsetTop - this_.$refs.headCont.offsetHeight-30;
       document.documentElement.scrollTop = anchor.offsetTop - this_.$refs.headCont.offsetHeight-30;
   	},
-  	
+
   	//tab切换
   	tabSwitch:function(index){
   		let this_ = this;
@@ -329,7 +329,7 @@ export default {
   			this_.$refs.sysLeft.style.overflowY = 'initial';
   		}
   	},
-  	
+
   	//品牌tab切换
   	changetab:function(index){
   		let this_ = this;
@@ -337,7 +337,7 @@ export default {
   		this_.getCate(index);//品类列表
   		this_.activeShow(index);//活动图片展示
   	},
-  	
+
   	//获取品类列表
   	getCate:function(index){
   		let this_ = this;
@@ -363,7 +363,7 @@ export default {
       					}else {
       						sortItem[j].imgSrc = require('../assets/images/miniCar/img_index_pro' + sortItem[j].num + '.jpg');
       					}
-	        			
+
 	        		}else{
 	        			if(sortItem[j].num == '1030'){
 	        				if(this_.userInfo.dataset[0].ma017 == '210' || this_.userInfo.dataset[0].ma017 == '213'){
@@ -381,7 +381,7 @@ export default {
         }
       });
   	},
-  	
+
   	//首页搜索
   	toSearch:function(){
   		let this_ = this;
@@ -393,9 +393,9 @@ export default {
   		this_.$nextTick( () =>{
         this_.$refs.searchEl.focus();
 			});
-  		
+
   	},
-  	
+
   	//点击搜索关键字查询
   	keySearch:function(){
   		let this_ = this;
@@ -409,30 +409,30 @@ export default {
       		this_.$router.push({path: '/searchList',query: {name: '全部'}});
         }
       });
-  		
+
   	},
-  	
+
   	//搜索弹层--搜索框获取焦点
   	/*keyChange:function(){
   		let this_ = this;
   		let searchTime;
   		if(!this_.$utils.check.isEmpty(this_.keyTxt)){
   			this_.seaCan = true;
-  			
+
   			if(this_.$utils.check.searchLength(this_.keyTxt)>=3){
-  				
+
   				clearTimeout(searchTime);
 	    		searchTime = setTimeout(function(){
 	    			console.log(this_.keyTxt)
 	    			this_.seachQuery(this_.keyTxt);
-	    			
+
 	    		},1000);
   			}
   		}else{
   			this_.seaCan = false;
   		}
   	},*/
-  	
+
   	//站内查询
   	seachQuery:function(keyWord){
   		let this_ = this;
@@ -451,7 +451,7 @@ export default {
         }
       });
   	},
-  	
+
   	//清空搜索关键字
   	clearKey:function(){
   		let this_ = this;
@@ -463,7 +463,7 @@ export default {
         this_.$refs.searchEl.focus();
 			});
   	},
-  	
+
   	//活动展示
   	activeShow:function(index){
   		let this_ = this;
@@ -493,25 +493,25 @@ export default {
       				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx7602.jpg'),'name':'中网格栅','num':'1075'});
       				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx76.jpg'),'name':'元宝梁','num':'1062'});
       				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx642.jpg'),'name':'锁块','num':'1086'});
-      				
+
       			}else{
       				//日系
       				if(this_.userInfo.dataset1[index].mr003 == "沃森代理(日系)"){
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs7601.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs7602.jpg'),'name':'散热器','num':'1045'});
-      					
+
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs71.jpg'),'name':'方向机','num':'1040'});
       				}else if(this_.userInfo.dataset1[index].mr003 == "秀泰代理(日系)"){
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7601.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7602.jpg'),'name':'散热器','num':'1045'});
-      					
+
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt71.jpg'),'name':'方向机','num':'1040'});
       				}else{
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan05.jpg'),'name':'暖风机','num':'1044'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan02.jpg'),'name':'','num':''});
       				}
       			}
-      			
+
       		}else{
       			//微车
       			if(this_.userInfo.dataset1[index].dpt.search("吉利") != -1){
@@ -526,7 +526,7 @@ export default {
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar03.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar04.jpg')});
       				}
-      				
+
       			}else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
       					//沃森
@@ -540,15 +540,15 @@ export default {
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar05.jpg'),'name':'喇叭','num':'0087'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar01.jpg')});
       				}
-      				
+
       			}
       		}
-        	
+
         }
       });
-      
+
   	},
-  	
+
   	//活动-新品热品跳转
   	toProduct:function(item){
   		let this_ = this;
@@ -560,9 +560,9 @@ export default {
   			this_.$router.push({path:'/product', query: {num:item.num,name:item.name,code:code}});
   		}*/
   		this_.$router.push({path:'/product', query: {num:item.num,name:item.name}});
-  		
+
   	},
-  	
+
   	//活动-活动产品跳转
     toActivity:function(item){
     	let this_ = this;
@@ -571,14 +571,14 @@ export default {
     		this_.$router.push({path:'/activity/specialPrice', query: {a_id:item.a_id}});
     	}else if(item.a_type_no == '2'){
     		//秒杀
-    		
+
     	}else if(item.a_type_no == '3'){
     		//满减
     		this_.$router.push({path:'/activity/fullReduce', query: {a_id:item.a_id}});
     	}
-    	
+
     },
-  	
+
   	//未读消息数量
   	getMsgNum:function(){
   		let this_ = this;
@@ -594,7 +594,7 @@ export default {
         }
       });
   	},
-  	
+
   	//设置密码
   	toSetPass:function(){
   		let this_ = this;
@@ -608,7 +608,7 @@ export default {
   			this_.bus.$emit('tipShow', "两次密码不一致");
   			return false;
   		}
-  		
+
   		//获取guid
   		this_.$api.get({
         url: this_.$apiUrl.api.getLogin + '?name='+this_.userInfo.dataset[0].c_login,
@@ -624,20 +624,19 @@ export default {
 			        success: function (data) {
 			        	this_.bus.$emit('loading', false);
 			        	this_.bus.$emit('tipOk', data.Message);
-			        	
+
 			        }
 			      });
-        		
-        		
+
+
         	}else{
         		this_.bus.$emit('tipShow', data.Message);
         	}
         }
       });
-  		
+
   	}
-  	
+
   }
 }
 </script>
-
