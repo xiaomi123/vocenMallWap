@@ -2394,3 +2394,12 @@ body{
   /* top: 0.6rem; */
   top: 18%;
 }
+
+.com_footList>li>a>i.record{
+  background:url("../images/common/icon_index_bottom05.png")no-repeat center center;
+  background-size: 100%;
+}
+.com_footList>li>a.router-link-active>i.record{
+  background:url("../images/common/icon_index_bottom15.png")no-repeat center center;
+  background-size: 100%;
+}
