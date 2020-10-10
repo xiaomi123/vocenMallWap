@@ -13,7 +13,7 @@
         <div class="left">
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
-          <p style="color: red;">价格：{{info.currentprice}}</p>
+          <p style="color: red;">价格：{{cartList.price}}</p>
         </div>
         <div class="right">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>

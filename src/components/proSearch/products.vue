@@ -71,7 +71,7 @@
                     <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
                     <div class="ub">发动机：{{item.参数一}}</div>
                     <div class="ub">参数：{{item.参数二}}</div>
-                    <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
+                    <div class="ub" style="color: red;">价格：{{item.价格}}</div>
                   </div>
                   <div class="ub ub-pc ub-ac">
                     <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
@@ -92,7 +92,7 @@
                   <div class="ub ub-f1 ub-ver">
                     <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
                     <div class="ub">发动机：{{item.发动机型号}}</div>
-                    <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
+                    <div class="ub" style="color: red;">价格：{{item.价格}}</div>
                   </div>
                   <div class="ub ub-pc ub-ac">
                     <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
@@ -100,7 +100,7 @@
                     </span>
                   </div>
                 </div>
-                
+
               </div>
             </div>
             <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
@@ -115,7 +115,7 @@
                     <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
                     <div class="ub">发动机：{{item.发动机型号}}</div>
                     <div class="ub">总长度：{{item.线长}}</div>
-                    <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
+                    <div class="ub" style="color: red;">价格：{{item.价格}}</div>
                   </div>
                   <div class="ub ub-pc ub-ac">
                     <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">{{item.产品编号}}</span>
