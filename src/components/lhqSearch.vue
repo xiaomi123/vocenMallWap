@@ -47,8 +47,8 @@
       <h2 class="clearfix"><i class="iconfont">&#xe619;</i>耐用品系列<span>点击下方图标按品类查询<i class="iconfont">&#xe7d3;</i></span></h2>
       <ul class="proSearch_list clearfix">
         <li class='lhq' @click="openWin(0)"><div>离合器套装</div></li>
-        <li class='dhxq' @click="openWin(1)"><div>点火线圈</div></li>
         <li class='ycg' @click="openWin(2)"><div>氧传感器</div></li>
+        <li class='dhxq' @click="openWin(1)"><div>点火线圈</div></li>
         <li class='qyb'>
           <p>燃油泵总成<br>正在开发中...</p>
           <router-link to="/proSearch/lhqList">燃油泵总成</router-link>

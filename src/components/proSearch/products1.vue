@@ -101,6 +101,11 @@
                       <div class="ub">发动机：{{item.发动机型号}}</div>
                       <div class="ub" style="color: red;">价格：{{item.currentprice}}</div>
                     </div>
+                    <div class="ub ub-pc ub-ac">
+                      <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
+                      {{item.mb001.substring(item.mb001.length - 3)}}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
