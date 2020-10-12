@@ -493,4 +493,8 @@
 </script>
 <style scoped>
   @import "../assets/css/lhqSearch.css";
+  .text-info .text{
+    font-size:1.3rem;
+    color:#cb5f37;
+  }
 </style>

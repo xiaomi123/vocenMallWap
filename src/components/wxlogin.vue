@@ -1,10 +1,13 @@
 <template>
   <div class="wxlogin_container">
     <!--主要内容开始-->
-    <div class="wxlogin_main">
+    <div class="wxlogin_main" :style="isSearch?'margin-top:-150%':'-130%'">
 
       <div class="login_content wxlogin_cont" v-if="isLogin">
-        <p v-if="isSearch">本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询。</p>
+        <p v-if="isSearch">
+          本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询。
+          <span class="search_tel">如需申请成为授权客户，请联系官方客服电话：<a href="tel:4008813500" v-if="this.$route.query.type == 3">4008813500</a><a href="tel:4008813500" v-if="this.$route.query.type == 4"></a></span>
+        </p>
         <p v-else>首次登陆需录入订单平台手机号和密码，绑定后即可直接登陆</p>
         <ul class="login_list">
           <li>
@@ -48,6 +51,12 @@
         }
         if(!this_.$utils.check.isEmpty(this_.$route.query.target)){
           this_.isSearch = true;
+          if(this_.$route.query.type == 3){
+            document.title = '江陵';
+          }else if(this_.$route.query.type == 4){
+            document.title = '弘途';
+          }
+
         }
 
       });
@@ -192,5 +201,15 @@
     font-size: 1.3rem;
     color: #1097f6;
     line-height: 2rem;
+  }
+
+  .search_tel{
+    font-size:1.3rem;
+  }
+  .search_tel a{
+    color:#1097f6;
+    padding:0.6rem 0 0.6rem 1.8rem;
+    background:url(../assets/images/lhq/icon_lhq_tel.png)no-repeat left center;
+    background-size:1.8rem 1.8rem;
   }
 </style>
