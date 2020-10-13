@@ -2,24 +2,18 @@
   <div class="proSearch_container">
     <div class="login-btn" v-show="isLogin">
       <router-link :to="{path:'/wxlogin', query:{target:'search',openid:this.$route.query.openid,type:this.$route.query.type}}" style="color: #0057ED;">立即登录>></router-link>
-      <!-- <van-button type="info" size="mini" @click="login()">立即登录</van-button> -->
     </div>
     <div class="text-info" v-show="showText">
       <span class="text">{{showTextDesc}}</span>
-      <!-- <span @click="auth();" style="color: #0057ED;">授权登录>></span> -->
     </div>
-
     <div class="proSearch_banner" v-if="swiperList.length>0">
-      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" style="height: 17rem;">
         <van-swipe-item v-for='item of swiperList' :key='item.id'>
           <img class='swiper-img' :src='item.imgUrl' alt="" />
         </van-swipe-item>
       </van-swipe>
     </div>
-
     <!--查询录入框内容开始-->
-
-
     <div class="lhq_header">
       <div class="clearfix tag-item" style="margin-bottom: 1rem;">
           <p>
@@ -90,7 +84,7 @@
                 :rotation="option.rotation"
               >
               </crop>
-            <!--<div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div> -->
+            <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getCutImg()">开始识别</van-button></div>
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;font-size: 0.875rem;">请核查识别结果与图片数据是否一致</div>
               <van-password-input
@@ -111,7 +105,7 @@
 
 <script>
   import {Swiper,SwiperSlide } from 'vue-awesome-swiper'
-  import { crop } from "vue-cropblg";
+  import { crop } from "vue-cropblg"
   import 'swiper/swiper-bundle.css'
   export default {
     components: {
@@ -122,23 +116,6 @@
     name: 'LhqSearch',
     data() {
       return {
-        swiperOption: {
-          // 参数选项,显示小点
-          pagination: '.swiper-pagination',
-          //循环
-          loop: true,
-          //每张播放时长3秒，自动播放
-          autoplay: true,
-          autoplay: {
-            disableOnInteraction: false
-          },
-          disableOnInteraction: false,
-          observer: true, //修改swiper自己或子元素时，自动初始化swiper
-          observeParents: true, //修改swiper的父元素时，自动初始化swiper
-          //滑动速度
-          speed: 1000,
-          delay: 1000
-        },
         //三张轮播，使用变量循环
         swiperList: [],
         /*actionsheet*/
@@ -156,6 +133,7 @@
           crop:{},
           shape: 'rect', //截图形状
           rotation: 0
+
         },
         // tabList : ["VIN码","按属性"], //查询分类
         // tabCurrent : 0,
@@ -210,7 +188,7 @@
           //判断是否含有弘途和江陵品牌
           if(!this_.$utils.check.isEmpty(userdata)){
             if((userdata.dataset[0].mr003.indexOf('弘途耐用') == -1) && (userdata.dataset[0].mr003.indexOf('江陵耐用') == -1)){
-              this_.showTextDesc = "您已登录，但未代理该品牌车系";
+              this_.showTextDesc = "您已登录，但未代理该品牌";
               this_.showText = true;
             }
           }
@@ -403,8 +381,8 @@
         let img1 = event.target.files[0];
         let type = img1.type;//文件的类型，判断是否是图片
         let size = img1.size;//文件的大小，判断图片的大小
-        if(size > 3145728){
-            alert('请选择3M以内的图片！');
+        if(size > 5242880){
+            alert('请选择5M以内的图片！');
             return false;
         }
         render.readAsDataURL(img1);
@@ -446,9 +424,9 @@
       imgLoaded(){
           console.log('图片加载完成~');
       },
-      //获取截图的base64 数据
+      //重新识别
       getCutImg(){
-        let this_ = this;
+        this.getVinCode(this.option.img);
       },
       //查询
       winProduct(e){

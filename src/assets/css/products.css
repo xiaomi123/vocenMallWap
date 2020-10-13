@@ -34,6 +34,9 @@
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
+.lhq_header>.tag-item{
+  margin-bottom: 1rem;
+}
 .lhq_header>.tag-item>p {
   position: relative;
   padding-left: 1rem;
@@ -179,4 +182,46 @@
 .pro-title{
   font-size: 1.5rem;
   font-weight: 700;
+}
+.umar-r{
+  margin-right: 1rem;
+}
+.resize-desc{
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+  background-color: #EFEFF4;
+}
+.resize-desc>.button{
+  margin-left: 1.5rem;
+  border-radius: 0.5rem;
+}
+.text-red{
+  color: red;
+}
+.erpcode-box{
+  border:2px solid #0066CC;
+  padding: 0.4rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0066CC;
+}
+.umar-tb{
+  margin: 0.3rem 0;
+}
+.img-mask{
+  width: 5rem;
+  height: 5rem;
+  background: rgba(0,0,0,0.35);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ub-pra{
+  position: relative;
 }

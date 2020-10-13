@@ -8,7 +8,7 @@
 
 
     <div class="lhq_header" ref="sysLeft">
-      <div class="clearfix tag-item" style="margin-bottom: 1rem;">
+      <div class="clearfix tag-item">
         <p>
           <input type="text" placeholder="请输入VIN码" v-model="keyWords" />
           <input id="upload_file" type="file"  accept="image/*" @change="fileChange($event)" multiple style="display: none">
@@ -24,6 +24,11 @@
           <span @click="search()">查询</span>
         </p>
       </div>
+      <div>
+        <template v-for="(item,index) in cateList" >
+          <van-tag class="umar-r" round :size="item.size" :color="item.color" @click="tapTag(item,index)">{{item.name}}</van-tag>
+        </template>
+      </div>
     </div>
     <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" @select="onSelect"></van-action-sheet>
     <!--查询录入框内容结束-->
@@ -38,93 +43,117 @@
     <!--主要内容开始-->
     <div class="proSearch_main">
       <template v-if="tabCurrent == 0">
-        <div class="list-item ub" v-for="(list,index) in proList">
-          <img :src="imgUrl+list.titlepicurl" class="ub ub-img1 imgwh" @click="detail(list)" />
-          <div  class="ub ub-f1 ub-ver">
-            <div class="ub" @click="detail(list)">
+        <div>{{dataPage.length}}</div>
+        <div class="list-item ub ub-ver" v-for="(list,index) in dataPage">
+          <!-- <img :src="imgUrl+list.titlepicurl" class="ub ub-img1 imgwh" @click="detail(list)" /> -->
+          <div class="ub ub-pra">
+            <img :src="imgUrl+list.titlepicurl" class="ub ub-img1 imgwh" />
+            <div class="img-mask" @click="imgPreview(list.titlepicurl)">查看</div>
+            <div class="ub ub-f1" @click="detail(list)">
               <div class="ub ub-f1 ub-ver">
                 <div class="ub pro-title">{{list.prod[4]}}{{list.prod[1]}}</div>
-                <div class="ub" style="margin: 1rem 0;font-size: 1rem;">品号：{{list.prod[5]}}</div>
-                <div class="ub" v-if="list.prod[1].indexOf('点火线圈') > -1" style="margin: 1rem 0;font-size: 1rem;">电压：{{list.spec[1]}}</div>
-              </div>
-              <div class="ub ub-pc ub-ac">
-                <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
-                {{list.prod[5].substring(list.prod[5].length - 3)}}
-                </span>
+                <div class="ub">品号：{{list.prod[5]}}</div>
+                <div class="ub" v-if="list.prod[1].indexOf('离合器') > -1">直径：{{list.customFields[0]}}&nbsp;齿数：{{list.customFields[1]}}</div>
+                <div class="ub" v-if="list.prod[1].indexOf('氧传感') > -1">总长度：{{list.spec[0]}}</div>
               </div>
             </div>
-            <div class="ub ub-ac" v-if="isCart">
-              <div class="ub ub-f1" style="color: #FF0000;">价格：{{list.params.price}}</div>
-              <div class="ub ub-f1" style="width: 40%;"><cart-view :cartList="list.params" :num="0" :name="0"></cart-view></div>
+            <div class="ub ub-pc ub-ac">
+              <span class="erpcode-box">
+              {{list.prod[5].substring(list.prod[5].length - 3)}}
+              </span>
             </div>
           </div>
+          <!-- <div  class="ub ub-f1 ub-ver"> -->
+          <div class="ub umar-tb" v-if="list.prod[1].indexOf('离合器') > -1">分离轴承：{{list.customFields[2]}}</div>
+          <div class="ub ub-ac" v-if="isCart">
+            <div class="ub ub-f1" style="color: #FF0000;">价格：{{list.params.price}}</div>
+            <div class="ub ub-pe" style="width: 40%;"><cart-view :cartList="list.params" :num="0" :name="0"></cart-view></div>
+          </div>
+          <template v-for="(list,index) in buyRecord">
+            <div class="text-red" v-if="list.prod[5] == list.th004">{{list.date}}购买了{{list.qty}}个</div>
+          </template>
+          <!-- </div> -->
         </div>
       </template>
       <template v-else-if="tabCurrent == 2">
-        <div class="list-item ub ub-ver" v-for="(item,index) in searchList">
+        <div class="list-item ub ub-ver" v-for="(item,index) in dataPage">
           <template v-if="categoryName.indexOf('离合器') > -1">
-            <div class="ub" @click="detail_1(item)">
-              <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-              <div  class="ub ub-f1 ub-ver">
-                <div class="ub">
-                  <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车型}}</div>
-                    <div class="ub">发动机：{{item.参数一}}</div>
-                    <div class="ub">参数：{{item.参数二}}</div>
-                    <div class="ub" style="color: red;">价格：{{item.价格}}</div>
-                  </div>
-                  <div class="ub ub-pc ub-ac">
-                    <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
-                    {{item.mb001.substring(item.mb001.length - 3)}}
-                    </span>
-                  </div>
+            <div class="ub ub-ver ub-pra" @click="detail_1(item)">
+              <div class="ub ub-f1">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div class="img-mask" @click="imgPreview(item.titlepicurl)"  @click.stop>查看</div>
+                <div  class="ub ub-ver ub-f1">
+                  <div class="ub pro-title">{{item.车型}}</div>
+                  <div class="ub">品号：{{item.mb001}}</div>
+                </div>
+                <div class="ub ub-pc ub-ac">
+                  <span class="erpcode-box">
+                  {{item.mb001.substring(item.mb001.length - 3)}}
+                  </span>
                 </div>
               </div>
             </div>
-            <div class="ub" style="margin-top: 0.5rem;">分离轴承：{{item.轴承型号}}</div>
+            <div class="ub">
+              <em>发动机：{{item.参数一}}</em>&nbsp;&nbsp;
+              <em>{{item.参数二}}</em>&nbsp;&nbsp;
+              <em class="text-red">价格：{{item.价格}}</em>
+            </div>
+            <div class="ub">分离轴承：{{item.轴承型号}}</div>
             <div class="ub">规格：{{item.产品规格}}</div>
+            <template v-for="(list,index) in buyRecord">
+              <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
+            </template>
           </template>
           <template v-if="categoryName.indexOf('点火线圈') > -1">
-            <div class="ub" @click="detail_1(item)">
-              <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-              <div  class="ub ub-f1 ub-ver">
-                <div class="ub">
-                  <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
-                    <div class="ub">发动机：{{item.发动机型号}}</div>
-                    <div class="ub" style="color: red;">价格：{{item.价格}}</div>
-                  </div>
-                  <div class="ub ub-pc ub-ac">
-                    <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">
-                    {{item.mb001.substring(item.mb001.length - 3)}}
-                    </span>
-                  </div>
+            <div class="ub ub-ver ub-pra" @click="detail_1(item)">
+              <div class="ub">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div class="img-mask" @click="imgPreview(item.titlepicurl)" @click.stop>查看</div>
+                <div class="ub ub-f1 ub-ver">
+                  <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
                 </div>
-
+                <div class="ub ub-pc ub-ac">
+                  <span class="erpcode-box">
+                  {{item.mb001.substring(item.mb001.length - 3)}}
+                  </span>
+                </div>
               </div>
+              <div>
+                <em>品号：{{item.mb001}}</em>&nbsp;&nbsp;
+                <em>发动机：{{item.发动机型号}}</em>
+              </div>
+              <div class="ub text-red">价格：{{item.价格}}</div>
+              <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
+              <div class="ub">规格：{{item.规格}}</div>
+              <template v-for="(list,index) in buyRecord">
+                <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
+              </template>
             </div>
-            <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
-            <div class="">规格：{{item.规格}}</div>
           </template>
           <template v-if="categoryName.indexOf('氧传感') > -1">
-            <div class="ub" @click="detail_1(item)">
-              <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-              <div  class="ub ub-f1 ub-ver">
-                <div class="ub">
-                  <div class="ub ub-f1 ub-ver">
-                    <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
-                    <div class="ub">发动机：{{item.发动机型号}}</div>
-                    <div class="ub">总长度：{{item.线长}}</div>
-                    <div class="ub" style="color: red;">价格：{{item.价格}}</div>
-                  </div>
-                  <div class="ub ub-pc ub-ac">
-                    <span style="border:2px solid #333333;padding: 0.4rem;font-size: 1.5rem;font-weight: bold;">{{item.产品编号}}</span>
-                  </div>
+            <div class="ub ub-ver ub-pra" @click="detail_1(item)">
+              <div class="ub">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div class="img-mask" @click="imgPreview(item.titlepicurl)" @click.stop>查看</div>
+                <div class="ub ub-f1 ub-ver">
+                  <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
+                  <div class="ub">品号：{{item.mb001}}</div>
+                </div>
+                <div class="ub ub-pc ub-ac">
+                  <span class="erpcode-box">{{item.产品编号}}</span>
                 </div>
               </div>
+              <div class="ub ub-ver umar-tb">
+                <div class="ub">发动机：{{item.发动机型号}}</div>
+                <div class="ub">总长度：{{item.线长}}</div>
+                <div class="ub text-red">价格：{{item.价格}}</div>
+                <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
+                <div class="">规格：{{item.名称}}</div>
+                <template v-for="(list,index) in buyRecord">
+                  <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
+                </template>
+              </div>
             </div>
-            <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
-            <div class="">规格：{{item.名称}}</div>
           </template>
         </div>
       </template>
@@ -159,6 +188,7 @@
               >
               </crop>
             <!-- <div style="font-size: 1.4rem;">识别错了？请重新调整图片位置，然后<van-button type="warning" size="small" @click="getCutImg()" style="margin-left: 1.5rem;border-radius: 0.5rem;">开始识别</van-button></div> -->
+            <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getCutImg()">开始识别</van-button></div>
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;">请核查识别结果与图片数据是否一致</div>
               <van-password-input
@@ -179,6 +209,7 @@
   import Consts from '../../api/const.js'
   import {Swiper,SwiperSlide } from 'vue-awesome-swiper'
   import { crop } from "vue-cropblg"
+  import { ImagePreview } from 'vant'
   import 'swiper/swiper-bundle.css'
   export default {
     components: {
@@ -189,6 +220,11 @@
     name: 'LhqSearch',
     data() {
       return {
+        cateList : [
+          {name:"离合器套装",color:"#969799",size:"large"},
+          {name:"氧传感器",color:"#969799",size:"large"},
+          {name:"点火线圈",color:"#969799",size:"large"},
+        ],
         /*actionsheet*/
         show: false,
         actions: [{
@@ -230,7 +266,10 @@
           EngineModel : '' //发动机型号
         },
         showModelInfoByVinCode : false,
-        cartTotal : 0 //购物车数量
+        cartTotal : 0, //购物车数量
+        buyRecord :[], //购买记录
+        dataPage:[],//分页展示数据
+        pages:20,
       }
     },
     mounted: function() {
@@ -247,16 +286,58 @@
           this_.keyWords = this_.$route.query.words;
           this_.vinCodePros();
         }else if(this_.tabCurrent == 2){
-           this_.attrKey = this_.$route.query.words;
-          if(this_.categoryName.indexOf('离合器') > -1){
-            this_.placeholderTxt = "车型/发动机型号/编码";
-          }else{
-            this_.placeholderTxt = "车型/发动机型号/OE号/编码";
-          }
+          this_.attrKey = this_.$route.query.words;
+          this_.showPlaceHolderText();
           this_.carsPros();
         }
-
         window.addEventListener('scroll',this_.handleScroll,true);
+
+        //判断滚动条到底部分页加载
+        window.onscroll = function(){
+          //变量scrollTop是滚动条滚动时，距离顶部的距离
+          var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+          //变量windowHeight是可视区的高度
+          var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+          //变量scrollHeight是滚动条的总高度
+          var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+          //滚动条到底部的条件
+          if(scrollTop+windowHeight==scrollHeight){
+            //写后台加载数据的函数
+            console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
+            if(this_.tabCurrent == 0){
+              for(let i=0;i<this_.pages;i++){
+                if(this_.dataPage.length<this_.proList.length){
+                  //console.log(this_.proList)
+                  this_.dataPage.push(this_.proList[this_.dataPage.length]);
+                }
+              }
+            }else if(this_.tabCurrent == 1){
+              if(this.categoryName.indexOf('离合器') > -1){
+                for(let i=0;i<this_.pages;i++){
+                  if(this_.dataPage.length<this_.searchList.length){
+                    //console.log(this_.proList)
+                    this_.dataPage.push(this_.searchList[this_.dataPage.length]);
+                  }
+                }
+              }else if(categoryName.indexOf('点火线圈') > -1){
+                for(let i=0;i<this_.pages;i++){
+                  if(this_.dataPage.length<this_.searchList.length){
+                    //console.log(this_.proList)
+                    this_.dataPage.push(this_.searchList[this_.dataPage.length]);
+                  }
+                }
+              }else if(categoryName.indexOf('氧传感') > -1){
+                for(let i=0;i<this_.pages;i++){
+                  if(this_.dataPage.length<this_.searchList.length){
+                    //console.log(this_.proList)
+                    this_.dataPage.push(this_.searchList[this_.dataPage.length]);
+                  }
+                }
+              }
+            }
+
+          }
+        }
 
       });
     },
@@ -328,7 +409,7 @@
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName,
           params: {},
           success: function (data) {
-            console.log(data);
+            console.log(JSON.parse(data.centent.plist));
             if(data.State){
               this_.tabCurrent = 0;
               //车型信息
@@ -344,6 +425,8 @@
               this_.showModelInfoByVinCode = true;
               if(data.centent.plist != "" && data.centent.plist != null){
                 let result = JSON.parse(data.centent.plist);
+                this_.dataPage = [];
+                this_.getMb001s(result);
                 this_.getPorductPics(result);
               }else{
                 this_.showEmpty = true;
@@ -353,16 +436,17 @@
           }
         });
       },
-      //按车型匹配产品
+      //按品类查询
       carsPros(){
         let this_ = this;
+        //console.log(this_.categoryName);
         this_.tabCurrent = 0;
         this_.bus.$emit('loading', true);
         this_.$api.post({
           url : this_.$apiUrl.api.ProductByVehicle,
           params :{
             openid : sessionStorage.getItem('openid'),
-            engineModel : this_.tabCurrent == 2 ? this_.keyWords : "", //发动机型号
+            engineModel : "", //发动机型号
             brand : this_.chexingObj.brand != undefined ? this_.chexingObj.brand : "", //品牌
             models : this_.chexingObj.models != undefined ? this_.chexingObj.models : "", //车型
             series : this_.chexingObj.series != undefined ? this_.chexingObj.series : "",  //车系
@@ -378,6 +462,7 @@
             if(res.State){
               if(res.centent.plist != ""){
                 let result = JSON.parse(res.centent.plist);
+                this_.getMb001s(result);
                 this_.getPorductPics(result);
               }else{
                 this_.showEmpty = true;
@@ -392,6 +477,7 @@
         let this_ = this;
         let api = "";
         let a = this_.$route.query.mb001.split(''); //[1,2];//
+
         res.forEach(item => {
           let str = item.prod[5].split('');
           if(item.prod[1] == '离合器三件套' && sessionStorage.getItem('brandType') == 4){//宏途
@@ -408,9 +494,7 @@
         })
         let eprcodes = res.map(item => item.prod[5]).join(',')
         this_.proList = res;
-        //是否存在用户信息
-        //console.log("用户信息");
-        //console.log(JSON.parse(sessionStorage.getItem("userinfo")));
+
         let params_data = {};
         if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
           params_data = {
@@ -444,6 +528,9 @@
             };
           }
         }
+        /*this_.dataPage = this_.proList.slice(0,this_.pages);
+        console.log("111111111111");
+        console.log(this_.dataPage);*/
         this_.$api.post({
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
@@ -459,7 +546,143 @@
                   }
                 }
               }
+
             }
+          }
+        });
+      },
+      //按属性查询
+      search(){
+        if(this.attrKey != ""){
+          if(this.attrKey.length >= 2){
+            this.searchList = [];
+            this.dataPage = [];
+            if(this.categoryName.indexOf('离合器') > -1){
+              this.getLiheqi();
+            }else if(this.categoryName.indexOf('点火线圈') > -1){
+              this.getDhxq();
+            }else if(this.categoryName.indexOf('氧传感') > -1){
+              this.getYchuan();
+            }
+          }else{
+            this.bus.$emit('tipShow', "至少输入2位");
+          }
+        }else{
+          this.bus.$emit('tipShow', "请输入查询条件");
+        }
+      },
+      //属性-离合器
+      getLiheqi(){
+        let this_ = this;
+        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        this_.bus.$emit('loading', true)
+        this_.$api.get({
+          url: this_.$apiUrl.api.GetLiheqi + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
+          params: {},
+          success: function (data) {
+            console.log(data);
+            this_.tabCurrent = 2;
+            if(data.length != 0){
+              this_.searchList = data;
+              this_.dataPage = this_.searchList.slice(0,this_.pages);
+              this_.getAttrMb001(data);
+            }
+          	this_.bus.$emit('loading', false);
+          }
+        });
+      },
+      //属性-点火线圈
+      getDhxq(){
+        let this_ = this;
+        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        this_.bus.$emit('loading', true);
+        this_.$api.get({
+          url: this_.$apiUrl.api.GetDhxq + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
+          params: {},
+          success: function (data) {
+            console.log("点火线圈");
+            console.log(data);
+            this_.tabCurrent = 2;
+            if(data.length != 0){
+              this_.searchList = data;
+              this_.dataPage = this_.searchList.slice(0,this_.pages);
+              this_.getAttrMb001(data);
+            }
+          	this_.bus.$emit('loading', false);
+
+          }
+        });
+      },
+      //属性-氧传感
+      getYchuan(){
+        let this_ = this;
+        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        this_.bus.$emit('loading', true);
+        this_.$api.get({
+          url: this_.$apiUrl.api.GetYchuan + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
+          params: {},
+          success: function (data) {
+            console.log("氧传感");
+            console.log(data);
+            this_.tabCurrent = 2;
+            if(data.length != 0){
+              this_.searchList = data;
+              this_.dataPage = this_.searchList.slice(0,this_.pages);
+              this_.getAttrMb001(data);
+            }
+          	this_.bus.$emit('loading', false);
+
+          }
+        });
+      },
+      //属性购买记录
+      getAttrMb001(res){
+        let eprcodes = res.map(item => item.mb001).join(',');
+        //this.searchList = res;
+        this.getBuyRecord(eprcodes,2);
+      },
+      //获取vincode查询数据的品号
+      getMb001s(res){
+        let this_ = this;
+        let api = "";
+        let a = this_.$route.query.mb001.split(''); //[1,2];//
+        res.forEach(item => {
+          let str = item.prod[5].split('');
+          if(item.prod[1] == '离合器三件套' && sessionStorage.getItem('brandType') == 4){//宏途
+            str[0] = 1; str[1] = 2; str[2] = 8; str[3] = 8;
+            item.prod[1] = "离合器套装";
+          }else if(item.prod[1] == '离合器三件套' && sessionStorage.getItem('brandType') == 3){//江陵
+            str[0] = 1; str[1] = 3; str[2] = 3; str[3] = 0;
+            item.prod[1] = "离合器套装";
+          }else{
+            str[0] = a[0];
+            str[1] = a[1];
+          }
+          item.prod[5] = str.join('');
+        })
+        let eprcodes = res.map(item => item.prod[5]).join(',');
+        this_.getBuyRecord(eprcodes,1);
+      },
+      //最近购买记录列表
+      getBuyRecord(mb001s,type){
+        let this_ = this;
+        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        this_.bus.$emit('loading', true);
+        this_.$api.post({
+          url: this_.$apiUrl.api.RecentSale,
+          params: {
+            dpt : 'PTYW',
+            mb001 : mb001s,
+            ma001 : this_.userInfo.dataset[0].ma001
+          },
+          success: function (data) {
+            console.log("购买记录");
+            console.log(data);
+            if(data.length != 0){
+              this_.buyRecord = data;
+            }
+          	this_.bus.$emit('loading', false);
+
           }
         });
       },
@@ -526,8 +749,8 @@
         let type = img1.type;//文件的类型，判断是否是图片
         let size = img1.size;//文件的大小，判断图片的大小
 
-        if(size > 3145728){
-            alert('请选择3M以内的图片！');
+        if(size > 5242880){
+            alert('请选择5M以内的图片！');
             return false;
         }
         var render = new FileReader();
@@ -570,10 +793,9 @@
       imgLoaded(){
           console.log('图片加载完成~');
       },
-      //获取截图的base64 数据
+      //重新识别VIN图片
       getCutImg(){
-        let this_ = this;
-        this_.getVinCode(imgcode,2);
+        this.getVinCode(this.option.img,2);
       },
       //vincode查询
       searchByVin(){
@@ -591,83 +813,6 @@
         this.proList = [];
         this.vinCodePros();
       },
-      //按属性查询
-      search(){
-        if(this.attrKey != ""){
-          if(this.attrKey.length >= 2){
-            this.searchList = [];
-            if(this.categoryName.indexOf('离合器') > -1){
-              this.getLiheqi();
-            }else if(this.categoryName.indexOf('点火线圈') > -1){
-              this.getDhxq();
-            }else if(this.categoryName.indexOf('氧传感') > -1){
-              this.getYchuan();
-            }
-          }else{
-            this.bus.$emit('tipShow', "至少输入2位");
-          }
-        }else{
-          this.bus.$emit('tipShow', "请输入查询条件");
-        }
-      },
-      //属性-离合器
-      getLiheqi(){
-        let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true)
-        this_.$api.get({
-          url: this_.$apiUrl.api.GetLiheqi + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
-          params: {},
-          success: function (data) {
-            console.log(data);
-            this_.tabCurrent = 2;
-            if(data.length != 0){
-              this_.searchList = data;
-            }
-          	this_.bus.$emit('loading', false);
-          }
-        });
-      },
-      //属性-点火线圈
-      getDhxq(){
-        let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true);
-        this_.$api.get({
-          url: this_.$apiUrl.api.GetDhxq + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
-          params: {},
-          success: function (data) {
-            console.log("点火线圈");
-            console.log(data);
-            this_.tabCurrent = 2;
-            if(data.length != 0){
-              this_.searchList = data;
-            }
-          	this_.bus.$emit('loading', false);
-
-          }
-        });
-      },
-      //属性-氧传感
-      getYchuan(){
-        let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true);
-        this_.$api.get({
-          url: this_.$apiUrl.api.GetYchuan + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid'),
-          params: {},
-          success: function (data) {
-            console.log("氧传感");
-            console.log(data);
-            this_.tabCurrent = 2;
-            if(data.length != 0){
-              this_.searchList = data;
-            }
-          	this_.bus.$emit('loading', false);
-
-          }
-        });
-      },
       //产品详情
       detail(list){
         this.$router.push({path:'/proSearch/detail', query:{obj:list.params,mb001:list.prod[5],title:this.$route.query.title}});
@@ -675,6 +820,40 @@
       //属性-详情
       detail_1(list){
         this.$router.push({path:'/proSearch/detail', query:{obj:"",mb001:list.mb001,title:this.$route.query.title}});
+      },
+      //搜索框placeholderText
+      showPlaceHolderText(){
+        if(this.categoryName.indexOf('离合器') > -1){
+          this.placeholderTxt = "车型/发动机型号/编码";
+        }else{
+          this.placeholderTxt = "车型/发动机型号/OE号/编码";
+        }
+      },
+      //品类查询
+      tapTag(e,index){
+        for(let i = 0; i < this.cateList.length; i++){
+          if(i == index){
+            this.cateList[i].color = "#0066CC";
+            if(index == 0){
+              this.categoryName = "离合器三件套";
+            }else if(index == 1){
+              this.categoryName = "前氧传感器,后氧传感器";
+            }else if(index == 2){
+              this.categoryName = "点火线圈";
+            }
+            this.proList = [];
+            this.dataPage = [];
+            this.showPlaceHolderText();
+            this.carsPros();
+          }else{
+            this.cateList[i].color = "#969799";
+          }
+        }
+
+      },
+      //预览图片
+      imgPreview(e){
+        ImagePreview([''+this.imgUrl + e+'']);
       }
     }
   }
@@ -685,13 +864,17 @@
     height: 17rem;
   }
   .imgwh{
-    width: 10rem;
-    height: 10rem;
+   /* width: 10rem;
+    height: 10rem; */
+    width: 5rem;
+    height: 5rem;
     margin-right: 1rem;
   }
   .imgwh1{
-    width: 7rem;
-    height: 7rem;
+    /* width: 7rem;
+    height: 7rem; */
+    width: 5rem;
+    height: 5rem;
     margin-right: 1rem;
   }
   .list-item span{

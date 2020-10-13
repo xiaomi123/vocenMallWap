@@ -53,6 +53,7 @@ export default {
     VehiclePropertyByengineModel : "queryVehiclePropertyByengineModel", //发动机型号
     ProductMB001 : "ProductMB001", //查询产品的详情
     VehicleByProductNo : "queryVehicleByProductNo", //适配车型
-    Multiple : 'Multiple' //首页按属性查询
+    Multiple : "Multiple", //首页按属性查询
+    RecentSale : "RecentSale" //最近购买记录
   }
 }
