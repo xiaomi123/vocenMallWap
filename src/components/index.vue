@@ -159,7 +159,8 @@
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
-	  							{{item.name}}
+	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (item.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  {{item.name}}
 	  						</router-link>
 	  					</li>
 	  				</ul>
@@ -281,7 +282,7 @@ export default {
   		let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   		let offTop = this_.$refs.sysSort.offsetTop-this_.$refs.headCont.offsetHeight-30;
   		let h = document.documentElement.clientHeight || document.body.clientHeight;
-console.log(offTop+";scrollTop"+scrollTop);
+      //sconsole.log(offTop+";scrollTop"+scrollTop);
   		if(scrollTop > offTop){
   			this_.$refs.sysLeft.style.position = 'fixed';
   			this_.$refs.sysLeft.style.top = this_.$refs.headCont.offsetHeight+30 + 'px';

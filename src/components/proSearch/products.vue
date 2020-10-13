@@ -528,8 +528,8 @@
             };
           }
         }
-        /*this_.dataPage = this_.proList.slice(0,this_.pages);
-        console.log("111111111111");
+        this_.dataPage = this_.proList.slice(0,this_.pages);
+        /*console.log("111111111111");
         console.log(this_.dataPage);*/
         this_.$api.post({
           url: this_.$apiUrl.api.ProductDetails,
