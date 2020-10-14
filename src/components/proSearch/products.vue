@@ -512,42 +512,53 @@
         this_.dataPage = this_.proList.slice(0,this_.pages);
 
         let params_data = {};
-        if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
-          params_data = {
-            mb001 : eprcodes,
-            ma017 : "",
-            ma075 : "",
-            c_id : "",
-            dpt : "",
-            c_ma001 : ""
-          };
-        }else{
-          this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-          if(this_.userInfo.dataset[0].mr003.indexOf('弘途耐用') > -1 || this_.userInfo.dataset[0].mr003.indexOf('江陵耐用') > -1){
-              params_data = {
-                mb001 : eprcodes,
-                ma017 : this_.userInfo.dataset[0].ma017,
-                ma075 : this_.userInfo.dataset[0].ma075,
-                c_id : this_.userInfo.dataset[0].c_id,
-                dpt : this_.userInfo.dataset[0].dpt,
-                c_ma001 : this_.userInfo.dataset[0].ma001
-              };
-              this_.isCart = !this_.isCart;
-          }else{
-            params_data = {
-              mb001 : eprcodes,
-              ma017 : "",
-              ma075 : "",
-              c_id : "",
-              dpt : "",
-              c_ma001 : ""
-            };
-          }
-        }
+        params_data = {
+          mb001 : eprcodes,
+          ma017 : "",
+          ma075 : "",
+          c_id : "",
+          dpt : "",
+          c_ma001 : ""
+        };
+        // if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
+        //   params_data = {
+        //     mb001 : eprcodes,
+        //     ma017 : "",
+        //     ma075 : "",
+        //     c_id : "",
+        //     dpt : "",
+        //     c_ma001 : ""
+        //   };
+        // }else{
+        //   this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        //   if(this_.userInfo.dataset[0].mr003.indexOf('弘途耐用') > -1 || this_.userInfo.dataset[0].mr003.indexOf('江陵耐用') > -1){
+        //       params_data = {
+        //         mb001 : eprcodes,
+        //         ma017 : this_.userInfo.dataset[0].ma017,
+        //         ma075 : this_.userInfo.dataset[0].ma075,
+        //         c_id : this_.userInfo.dataset[0].c_id,
+        //         dpt : this_.userInfo.dataset[0].dpt,
+        //         c_ma001 : this_.userInfo.dataset[0].ma001
+        //       };
+        //       this_.isCart = !this_.isCart;
+        //   }else{
+        //     params_data = {
+        //       mb001 : eprcodes,
+        //       ma017 : "",
+        //       ma075 : "",
+        //       c_id : "",
+        //       dpt : "",
+        //       c_ma001 : ""
+        //     };
+        //   }
+        // }
+        
+        console.log(params_data);
         this_.$api.post({
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
           success: function (data) {
+            console.log("33333333333333");
             console.log(data);
             if(data.State){
               let infos = data.centent;

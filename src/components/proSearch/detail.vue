@@ -93,27 +93,36 @@ export default {
       let this_ = this;
       console.log(this_.$route.query.mb001);
       this_.bus.$emit('loading', true);
-      this_.$api.post({
-        url: this_.$apiUrl.api.ProductDetails,
-        params: {
-          mb001 : this_.$route.query.mb001
-        },
+      this_.$api.get({
+        url: this_.$apiUrl.api.ProductImage + "?mb001=" + this_.$route.query.mb001,
+        params: {},
         success: function (data) {
           console.log("清醒");
           console.log(data);
-          if(data.State){
-            if(data.centent.length !=0){
-              this_.swiper = data.centent[0].sliderpics.split(',');
-              this_.info = data.centent[0];
-              this_.$nextTick(function(){
-                let img_list = document.querySelector('#cvs').getElementsByTagName('img');
-                for(let i = 0; i < img_list.length; i++){
-                  this_.pics.push(this_.imgUrl + img_list[i].attributes[0].value);
-                }
-              })
-            }
-            this_.bus.$emit('loading', false);
+          if(data.content.length !=0){
+            this_.swiper = data.content[0].sliderpics.split(',');
+            this_.info = data.content[0];
+            this_.$nextTick(function(){
+              let img_list = document.querySelector('#cvs').getElementsByTagName('img');
+              for(let i = 0; i < img_list.length; i++){
+                this_.pics.push(this_.imgUrl + img_list[i].attributes[0].value);
+              }
+            })
           }
+          this_.bus.$emit('loading', false);
+          // if(data.State){
+          //   if(data.cented.length !=0){
+          //     this_.swiper = data.centent[0].sliderpics.split(',');
+          //     this_.info = data.centent[0];
+          //     this_.$nextTick(function(){
+          //       let img_list = document.querySelector('#cvs').getElementsByTagName('img');
+          //       for(let i = 0; i < img_list.length; i++){
+          //         this_.pics.push(this_.imgUrl + img_list[i].attributes[0].value);
+          //       }
+          //     })
+          //   }
+          //   this_.bus.$emit('loading', false);
+          // }
         }
       });
     },
