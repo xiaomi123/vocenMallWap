@@ -125,6 +125,7 @@
                 this_.$router.push('/lhqSearch');
               }else{
                 //订单系统登陆
+                let dataset2 = data.centent.userinfo.dataset2;
                 let userdata = {
                   dataset: data.centent.userinfo.dataset,
                   dataset1: (data.centent.userinfo.dataset1).concat(data.centent.userinfo.dataset2)
