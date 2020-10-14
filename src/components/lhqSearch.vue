@@ -91,6 +91,8 @@
                 :value="keyWords"
                 :mask="false"
                 length="17"
+                :focused="showKeyboard"
+                @focus="showKeyboard = true"
               />
               <van-button class="dialog-btn" type="danger" size="small" block @click="jiema()">查看解码消息</van-button>
             </div>
@@ -126,6 +128,7 @@
           name: '上传VIN图片'
         }],
         isMask : false,
+        showKeyboard: false,
         option:{
           img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
           zuobiao: [50, 50, 20, 0],
