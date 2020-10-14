@@ -43,18 +43,16 @@
     <!--主要内容开始-->
     <div class="proSearch_main">
       <template v-if="tabCurrent == 0">
-        <div>{{dataPage.length}}</div>
-        <div class="list-item ub ub-ver" v-for="(list,index) in dataPage">
-          <!-- <img :src="imgUrl+list.titlepicurl" class="ub ub-img1 imgwh" @click="detail(list)" /> -->
+        <div class="list-item ub ub-ver ub-pra" v-for="(list,index) in dataPage">
           <div class="ub ub-pra">
-            <img :src="imgUrl+list.titlepicurl" class="ub ub-img1 imgwh" />
-            <div class="img-mask" @click="imgPreview(list.titlepicurl)">查看</div>
+           <template v-if="list.prod[5].indexOf('开发中') == -1">
+             <img :src="imgUrl+list.titlepicurl" class="ub ub-img1 imgwh" />
+             <div class="img-mask" @click="imgPreview(list.titlepicurl)">查看</div>
+           </template>
             <div class="ub ub-f1" @click="detail(list)">
               <div class="ub ub-f1 ub-ver">
                 <div class="ub pro-title">{{list.prod[4]}}{{list.prod[1]}}</div>
                 <div class="ub">品号：{{list.prod[5]}}</div>
-                <div class="ub" v-if="list.prod[1].indexOf('离合器') > -1">直径：{{list.customFields[0]}}&nbsp;齿数：{{list.customFields[1]}}</div>
-                <div class="ub" v-if="list.prod[1].indexOf('氧传感') > -1">总长度：{{list.spec[0]}}</div>
               </div>
             </div>
             <div class="ub ub-pc ub-ac">
@@ -63,25 +61,32 @@
               </span>
             </div>
           </div>
-          <!-- <div  class="ub ub-f1 ub-ver"> -->
-          <div class="ub umar-tb" v-if="list.prod[1].indexOf('离合器') > -1">分离轴承：{{list.customFields[2]}}</div>
+          <div class="ub ub-ver" v-if="list.prod[1].indexOf('离合器') > -1">
+            <div class="ub">直径：{{list.customFields[0]}}&nbsp;齿数：{{list.customFields[1]}}</div>
+            <div class="ub">分离轴承：{{list.customFields[2]}}</div>
+          </div>
+          <div class="ub" v-if="list.prod[1].indexOf('氧传感') > -1">总长度：{{list.spec[0]}}</div>
           <div class="ub ub-ac" v-if="isCart">
             <div class="ub ub-f1" style="color: #FF0000;">价格：{{list.params.price}}</div>
             <div class="ub ub-pe" style="width: 40%;"><cart-view :cartList="list.params" :num="0" :name="0"></cart-view></div>
           </div>
-          <template v-for="(list,index) in buyRecord">
-            <div class="text-red" v-if="list.prod[5] == list.th004">{{list.date}}购买了{{list.qty}}个</div>
-          </template>
-          <!-- </div> -->
+          <div v-if="buyRecord.length != 0">
+            <template v-for="(item,index) in buyRecord">
+              <div class="text-red" v-if="list.prod[5] == item.th004">{{item.date}}购买了{{item.qty}}个</div>
+            </template>
+          </div>
+          <div class="list-item-mask" v-show="list.prod[5].indexOf('开发中') > -1"></div>
         </div>
       </template>
       <template v-else-if="tabCurrent == 2">
-        <div class="list-item ub ub-ver" v-for="(item,index) in dataPage">
+        <div class="list-item ub ub-ver ub-pra" v-for="(item,index) in dataPage">
           <template v-if="categoryName.indexOf('离合器') > -1">
             <div class="ub ub-ver ub-pra" @click="detail_1(item)">
               <div class="ub ub-f1">
-                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-                <div class="img-mask" @click="imgPreview(item.titlepicurl)"  @click.stop>查看</div>
+                <template v-show="item.mb001.indexOf('开发中') == -1">
+                  <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                  <div class="img-mask" @click="imgPreview(item.titlepicurl)"  @click.stop>查看</div>
+                </template>
                 <div  class="ub ub-ver ub-f1">
                   <div class="ub pro-title">{{item.车型}}</div>
                   <div class="ub">品号：{{item.mb001}}</div>
@@ -103,12 +108,15 @@
             <template v-for="(list,index) in buyRecord">
               <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
             </template>
+            <div class="list-item-mask" v-show="item.mb001.indexOf('开发中') > -1"></div>
           </template>
           <template v-if="categoryName.indexOf('点火线圈') > -1">
             <div class="ub ub-ver ub-pra" @click="detail_1(item)">
               <div class="ub">
-                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <template v-show="item.mb001.indexOf('开发中') == -1">
+                  <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
                 <div class="img-mask" @click="imgPreview(item.titlepicurl)" @click.stop>查看</div>
+                </template>
                 <div class="ub ub-f1 ub-ver">
                   <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
                 </div>
@@ -128,13 +136,16 @@
               <template v-for="(list,index) in buyRecord">
                 <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
               </template>
+              <div class="list-item-mask" v-show="item.mb001.indexOf('开发中') > -1"></div>
             </div>
           </template>
           <template v-if="categoryName.indexOf('氧传感') > -1">
             <div class="ub ub-ver ub-pra" @click="detail_1(item)">
               <div class="ub">
-                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <template v-show="item.mb001.indexOf('开发中') == -1">
+                  <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
                 <div class="img-mask" @click="imgPreview(item.titlepicurl)" @click.stop>查看</div>
+                </template>
                 <div class="ub ub-f1 ub-ver">
                   <div class="ub pro-title" style="margin-bottom: 0.5rem;">{{item.适用车型}}{{item.类型}}</div>
                   <div class="ub">品号：{{item.mb001}}</div>
@@ -152,6 +163,7 @@
                 <template v-for="(list,index) in buyRecord">
                   <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
                 </template>
+                <div class="list-item-mask" v-show="item.mb001.indexOf('开发中') > -1"></div>
               </div>
             </div>
           </template>
@@ -409,7 +421,7 @@
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName,
           params: {},
           success: function (data) {
-            console.log(JSON.parse(data.centent.plist));
+            console.log(data);
             if(data.State){
               this_.tabCurrent = 0;
               //车型信息
@@ -428,6 +440,7 @@
                 this_.dataPage = [];
                 this_.getMb001s(result);
                 this_.getPorductPics(result);
+                this_.showEmpty = false;
               }else{
                 this_.showEmpty = true;
               }
@@ -439,7 +452,7 @@
       //按品类查询
       carsPros(){
         let this_ = this;
-        //console.log(this_.categoryName);
+        console.log(this_.categoryName);
         this_.tabCurrent = 0;
         this_.bus.$emit('loading', true);
         this_.$api.post({
@@ -462,8 +475,10 @@
             if(res.State){
               if(res.centent.plist != ""){
                 let result = JSON.parse(res.centent.plist);
+                //this_.dataPage = [];
                 this_.getMb001s(result);
                 this_.getPorductPics(result);
+                this_.showEmpty = false;
               }else{
                 this_.showEmpty = true;
               }
@@ -494,6 +509,7 @@
         })
         let eprcodes = res.map(item => item.prod[5]).join(',')
         this_.proList = res;
+        this_.dataPage = this_.proList.slice(0,this_.pages);
 
         let params_data = {};
         if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
@@ -528,9 +544,6 @@
             };
           }
         }
-        this_.dataPage = this_.proList.slice(0,this_.pages);
-        /*console.log("111111111111");
-        console.log(this_.dataPage);*/
         this_.$api.post({
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
@@ -546,7 +559,6 @@
                   }
                 }
               }
-
             }
           }
         });
@@ -638,7 +650,6 @@
       //属性购买记录
       getAttrMb001(res){
         let eprcodes = res.map(item => item.mb001).join(',');
-        //this.searchList = res;
         this.getBuyRecord(eprcodes,2);
       },
       //获取vincode查询数据的品号
@@ -661,6 +672,7 @@
           item.prod[5] = str.join('');
         })
         let eprcodes = res.map(item => item.prod[5]).join(',');
+        console.log("eprcodes------------------>"+eprcodes);
         this_.getBuyRecord(eprcodes,1);
       },
       //最近购买记录列表
@@ -682,7 +694,6 @@
               this_.buyRecord = data;
             }
           	this_.bus.$emit('loading', false);
-
           }
         });
       },
