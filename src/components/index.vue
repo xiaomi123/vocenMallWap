@@ -159,7 +159,7 @@
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
-	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (item.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
+	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
                   {{item.name}}
 	  						</router-link>
 	  					</li>
@@ -237,9 +237,6 @@ export default {
       if(!this_.$utils.check.isEmpty(JSON.parse(localStorage.getItem("hisRecord")))){
       	this_.hisRecord = JSON.parse(localStorage.getItem("hisRecord")).reverse().slice(0,10);
       }
-
-
-
 
     })
   },
@@ -518,11 +515,11 @@ export default {
       			if(this_.userInfo.dataset1[index].dpt.search("吉利") != -1){
       				//吉利
       				if(this_.userInfo.dataset1[index].dpt.search("吉利-吉摩") != -1){
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg')});
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg')});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg'),'name':'皮带','num':'0140'});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else if(this_.userInfo.dataset1[index].dpt.search("吉利-沃森") != -1){
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs01.jpg')});
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs02.jpg')});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs01.jpg'),'name':'皮带','num':'0140'});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else{
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar03.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar04.jpg')});
