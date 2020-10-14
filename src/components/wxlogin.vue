@@ -117,14 +117,26 @@
                     }
                   }
                 })
+                
                 if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
-
                   sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
                 }
 
-                this_.$router.push('/lhqSearch');
+                var branType = '';
+                if(sessionStorage.getItem('brandType') != null){
+                  branType = sessionStorage.getItem('brandType');
+                }
+
+                var mb001 = '';
+                if(sessionStorage.getItem('epcrode') != null){
+                  mb001 = sessionStorage.getItem('epcrode');
+                }
+
+
+                this_.$router.push('/lhqSearch?type=' + branType + '&mb001=' + mb001 );
               }else{
                 //订单系统登陆
+                let dataset2 = data.centent.userinfo.dataset2;
                 let userdata = {
                   dataset: data.centent.userinfo.dataset,
                   dataset1: (data.centent.userinfo.dataset1).concat(data.centent.userinfo.dataset2)

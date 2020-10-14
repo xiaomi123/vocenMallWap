@@ -345,6 +345,7 @@ export default {
         params: {},
         success: function (data) {
         	this_.bus.$emit('loading', false);
+
         	for(var i=0;i<data.length;i++){
         		let sortItem = data[i].item;
         		for(var j=0;j<sortItem.length;j++){
@@ -356,7 +357,7 @@ export default {
       						}else if(this_.userInfo.dataset[0].ma017 == '201'){
       							sortItem[j].imgSrc = require('../assets/images/miniCar/img_index_prows' + sortItem[j].num + '.jpg');
       						}
-      					}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
+      					}else if(this_.userInfo.dataset[0].mr003.search("耐用") != -1){
       						sortItem[j].imgSrc = require('../assets/images/hongtu/img_index_pro' + sortItem[j].num + '.jpg');
       					}else {
       						sortItem[j].imgSrc = require('../assets/images/miniCar/img_index_pro' + sortItem[j].num + '.jpg');

@@ -8,8 +8,10 @@
 	<span >
 		<em :class="{oldPrice:proItem02.jj}" v-show="proItem02.jj">￥{{proItem02.backprice}}</em>
 		{{proItem02.jj?'降价￥'+proItem02.price:''}}
-		
+
 		<em :class="{oldPrice:proItem.tj}" v-show="proItem02.price!='0.00' && !proItem02.jj">￥{{proItem02.price}}</em>
+    <!-- <label v-if="userInfo.dataset[0].dpt.search('配件一部吉利') != -1">{{proItem02.tj?'集采价￥'+proItem02.aprice:''}}</label>
+    <label v-else>{{proItem02.tj?'特价￥'+proItem02.aprice:''}}</label> -->
 		{{proItem02.tj?'特价￥'+proItem02.aprice:''}}
 		{{proItem02.a_type_no=='2'?'限时秒杀':''}}
 		{{proItem02.a_type_no=='3'?'满减':''}}
@@ -64,10 +66,10 @@ export default {
 		  	if(mb003New.indexOf('（）') != -1){
 		  		mb003New = mb003New.replace('（）',"");
 		  	}
-		  	
+
 		  }
 		  this_.proItem.mb003New = mb003New;
-		 
+
 		  //显示价格
 		  this_.proItem.tj = false;
 		  this_.proItem.jj = false;
@@ -87,14 +89,14 @@ export default {
 		  		}
 		  	}
 			}
-		  
+
 		  //满减
 		  if(this_.proItem.a_type_no == '3'){
 		  	if(this_.$utils.check.isEmpty(this_.proItem.i_limit_qty)){
 		  		this_.proItem.i_limit_qty = '0';
 		  	}
 		  }
-		  
+
 		  //有最大限购
 		  this_.proItem.xg = false;
 	  	if(!this_.$utils.check.isEmpty(this_.proItem.i_quota_qty)){
@@ -105,7 +107,7 @@ export default {
 	  			this_.proItem.xg = true;
 	  		}
 	  	}
-	  	
+
 	  	//缺货提示文字
 	  	if(!this_.$utils.check.isEmpty(this_.proItem.s_is_sortage)){
 	  		if(this_.proItem.s_is_sortage == 'True'){
@@ -116,10 +118,10 @@ export default {
 		  		}
 	  		}
 	  	}
-	  	
+
 		  this_.proItem02 = this_.proItem;
   	}
-  	
+
   }
 }
 </script>

@@ -165,6 +165,10 @@
           sessionStorage.setItem('epcrode',this_.$route.query.mb001);
         }
 
+        if(!this_.$utils.check.isEmpty(this_.$route.query.nobank)){
+
+        }
+
         this_.auth(); //获取用户信息
         this_.category(); //产品分类
       });
@@ -189,11 +193,9 @@
           //已登陆
           let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
           //判断是否含有弘途和江陵品牌
-          if(!this_.$utils.check.isEmpty(userdata)){
-            if((userdata.dataset[0].mr003.indexOf('弘途耐用') == -1) && (userdata.dataset[0].mr003.indexOf('江陵耐用') == -1)){
-              this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请于您的专属客户联系。";
-              this_.showText = true;
-            }
+          if(this_.$utils.check.isEmpty(userdata)){
+            this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请于您的专属客服联系。";
+            this_.showText = true;
           }
 
           this_.isShowFooter = !this_.isShowFooter;
@@ -305,7 +307,7 @@
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
               }else{
-                this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请于您的专属客户联系。";
+                this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请于您的专属客服联系。";
                 this_.showText = true;
               }
             } else{
