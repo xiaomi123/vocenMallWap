@@ -10,9 +10,9 @@
 		{{proItem02.jj?'降价￥'+proItem02.price:''}}
 
 		<em :class="{oldPrice:proItem.tj}" v-show="proItem02.price!='0.00' && !proItem02.jj">￥{{proItem02.price}}</em>
-    <label v-if="userInfo.dataset[0].dpt.search('配件一部吉利') != -1">{{proItem02.tj?'集采价￥'+proItem02.aprice:''}}</label>
-    <label v-else>{{proItem02.tj?'特价￥'+proItem02.aprice:''}}</label>
-		<!-- {{proItem02.tj?'特价￥'+proItem02.aprice:''}} -->
+    <!-- <label v-if="userInfo.dataset[0].dpt.search('配件一部吉利') != -1">{{proItem02.tj?'集采价￥'+proItem02.aprice:''}}</label>
+    <label v-else>{{proItem02.tj?'特价￥'+proItem02.aprice:''}}</label> -->
+		{{proItem02.tj?'特价￥'+proItem02.aprice:''}}
 		{{proItem02.a_type_no=='2'?'限时秒杀':''}}
 		{{proItem02.a_type_no=='3'?'满减':''}}
 		<!--<i v-if="proItem02.a_type_no=='3' && proItem02.i_limit_qty != '0'">满{{proItem02.i_limit_qty}}可享受特价</i>-->
