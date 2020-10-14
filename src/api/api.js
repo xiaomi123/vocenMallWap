@@ -50,6 +50,7 @@ export default {
     VehicleByProductId : "queryVehicleByProductId", //获取车型信息
     ProductCategoryByUsr : "queryProductCategoryByUsr", //用户产品分类
     ProductDetails : "ProductDetails", //查看详情
+    ProductImage : "ProductImage", //详情页
     VehiclePropertyByengineModel : "queryVehiclePropertyByengineModel", //发动机型号
     ProductMB001 : "ProductMB001", //查询产品的详情
     VehicleByProductNo : "queryVehicleByProductNo", //适配车型
