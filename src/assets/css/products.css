@@ -1,3 +1,6 @@
+.proSearch_main{
+  font-size: 1.2rem;
+}
 .proSearch_container {
   position: fixed;
   width: 100%;
@@ -52,6 +55,7 @@
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  margin-left: 2.4rem;
 }
 
 .lhq_header>.tag-item>p>em {
@@ -99,6 +103,13 @@
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
+.lhq_header>.tag-item>.icon{
+  position: absolute;
+  top: 22%;
+  left: 0;
+  display: block;
+}
+
 .dialog{
   height: 100vh;
   background-color: #FFFFFF;
@@ -232,4 +243,13 @@
   left: 0;
   top: 0;
   bottom: 0;
+}
+.text-right{
+  text-align: right;
+}
+.text-primary{
+  color: #0066CC;
+}
+.cart-width{
+  width: 10rem;
 }

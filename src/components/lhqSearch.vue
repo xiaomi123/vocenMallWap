@@ -441,7 +441,8 @@
           this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:e,categoryName:"",mb001:this.mb001}});
         }else if(e == 1 && this.attrKey != ""){
           if(this.attrKey.length >= 2){
-            this.$router.push({path:'/proSearch/products1', query: {words:this.attrKey,type:e,categoryName:"",mb001:this.mb001}});
+            this.$router.push({path:'/proSearch/products', query: {words:this.attrKey,type:e,categoryName:"",mb001:this.mb001}});
+            // this.$router.push({path:'/proSearch/products1', query: {words:this.attrKey,type:e,categoryName:"",mb001:this.mb001}});
           }else{
             this.bus.$emit('tipShow', "至少输入2位");
           }
