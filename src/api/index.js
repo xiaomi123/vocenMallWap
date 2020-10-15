@@ -3,6 +3,9 @@ import Consts from './const.js'
 import utils from '@/util/util.js'
 import router from './../router/index.js'
 
+import Vue from 'vue'
+var bus_ = new Vue();
+
 export default {
   get: function(options) {
     options.method = 'GET'
@@ -67,6 +70,7 @@ function apiAxios(options) {
   if (options.type == 'file') {
     postOther = postOther;
   }
+
   axios({
     method: method,
     url: method === 'GET' ? encodeURI(url) : url,
@@ -81,6 +85,7 @@ function apiAxios(options) {
     timeout: timeout,
 
   }).then(res => {
+    bus_.$emit('loading', false);
     let resData = res.data
 
     if (options.success) {
@@ -91,6 +96,7 @@ function apiAxios(options) {
       options.compleled()
     }
   }).catch(err => {
+    bus_.$emit('loading', false);
     let res = err.response
     //console.log(err)
     if (res) {

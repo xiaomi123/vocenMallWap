@@ -165,10 +165,6 @@
           sessionStorage.setItem('epcrode',this_.$route.query.mb001);
         }
 
-        if(!this_.$utils.check.isEmpty(this_.$route.query.nobank)){
-
-        }
-
         this_.auth(); //获取用户信息
         this_.category(); //产品分类
       });
@@ -256,7 +252,6 @@
           url: this_.$apiUrl.api.WeChatLogin + '?openid=' + this_.$route.query.openid + '&type=' + this_.$route.query.type,
           params: {},
           success: function(data) {
-            console.log(data);
             this_.isShowFooter = !this_.isShowFooter;
             if (data.State) {
               let dataset2 = data.centent.userinfo.dataset2;
@@ -302,7 +297,8 @@
                     userdata.dataset[0].yw = item.yw;
                   }
                 }
-              })
+              });
+
               if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
