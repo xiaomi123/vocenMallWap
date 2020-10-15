@@ -28,7 +28,7 @@
       </div>
       <div class="clearfix tag-item">
         <p>
-          <input type="text" placeholder="车型/发动机型号/OE号/编码" v-model="attrKey" />
+          <input type="text" placeholder="车型/发动机型号/OE号/后三位编码" v-model="attrKey" />
           <span @click="winProduct(1)">查询</span>
         </p>
       </div>
@@ -72,7 +72,7 @@
           </header>
           <div class="dialog-content">
             <crop
-                style="width:100%;height: 24rem;"
+                style="width:100%;height: 16rem;"
                 v-model="option.crop"
                 :defaultImgUrl="option.img"
                 :angle="15"

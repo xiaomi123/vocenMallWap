@@ -56,7 +56,7 @@
               <div class="ub ub-f1 ub-ver">
                 <div class="ub pro-title">{{list.prod[4]}}</div>
                 <div class="ub" v-if="list.prod[1].indexOf('点火线圈') > -1">品名：{{list.prod[1].substr(0,4)}}&nbsp;&nbsp;品号：{{list.prod[5]}}</div>
-                <div class="ub" v-else>品名：{{list.prod[1].substr(0,4)}}&nbsp;&nbsp;品号：{{list.prod[5]}}</div>
+                <div class="ub" v-else>品名：{{list.prod[1]}}&nbsp;&nbsp;品号：{{list.prod[5]}}</div>
               </div>
             </div>
             <div class="ub ub-pc ub-ac">
@@ -99,7 +99,9 @@
                 <div class="ub pro-title" v-if="item.dtype.indexOf('离合器') > -1">{{item.models}}</div>
                 <div class="ub pro-title" v-if="item.dtype.indexOf('点火线圈') > -1">{{item.series}}{{item.models}}&nbsp;{{item.displacement}}</div>
                 <div class="ub pro-title" v-if="item.dtype.indexOf('氧传感') > -1">{{item.models}}{{item.style}}</div>
-                <div class="ub">品名：{{item.productname}}&nbsp;&nbsp;品号：{{item.mb001}}</div>
+                <div class="ub" v-if="item.dtype.indexOf('氧传感') > -1">品名：氧传感器&nbsp;&nbsp;品号：{{item.mb001}}</div>
+                <div class="ub" v-else-if="item.dtype.indexOf('离合器') > -1">品名：离合器套装&nbsp;&nbsp;品号：{{item.mb001}}</div>
+                <div class="ub" v-else>品名：{{item.dtype}}&nbsp;&nbsp;品号：{{item.mb001}}</div>
               </div>
               <div class="ub ub-pc ub-ac">
                 <span class="erpcode-box">
@@ -162,7 +164,7 @@
           </header>
           <div class="dialog-content">
             <crop
-                style="width:100%;height: 24rem;"
+                style="width:100%;height: 16rem;"
                 v-model="option.crop"
                 :defaultImgUrl="option.img"
                 :angle="15"
@@ -233,7 +235,7 @@
         tabCurrent : 0,
         keyWords : "",
         attrKey : "",
-        placeholderTxt : "车型/发动机型号/OE号/编码",
+        placeholderTxt : "车型/发动机型号/OE号/后三位编码",
         categoryName : "" ,//分类
         categoryBanner : "", //品类导航图
         imgUrl : '',
@@ -443,6 +445,8 @@
               }else{
                 this_.showEmpty = true;
               }
+            }else{
+              this_.bus.$emit('tipShow', data.Message);
             }
             this_.bus.$emit('loading', false);
           }
@@ -918,9 +922,9 @@
       //搜索框placeholderText
       showPlaceHolderText(){
         if(this.categoryName.indexOf('离合器') > -1){
-          this.placeholderTxt = "车型/发动机型号/编码";
+          this.placeholderTxt = "车型/发动机型号/后三位编码";
         }else{
-          this.placeholderTxt = "车型/发动机型号/OE号/编码";
+          this.placeholderTxt = "车型/发动机型号/OE号/后三位编码";
         }
       },
       //品类查询

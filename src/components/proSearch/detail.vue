@@ -80,10 +80,11 @@ export default {
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
           this_.isCart = true;
           this_.init_1();
-        } 
+        }
       }
       this_.init();
       this_.getParmas(); //适配车型
+
     })
   },
   created(){
@@ -150,6 +151,7 @@ export default {
           productNo : this_.$route.query.mb001
         },
         success: function (data) {
+          console.log("aaa");
           console.log(data);
           if(data.State){
             let result = data.centent.data.data;

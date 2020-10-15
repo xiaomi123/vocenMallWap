@@ -67,3 +67,6 @@
 .list-item:last-child{
   border-bottom: none;
 }
+.text-primary{
+  color: #0066CC;
+}
