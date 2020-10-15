@@ -15,7 +15,7 @@
           <p>产品编号：{{info.erpcode}}</p>
           <p style="color: red;">价格：{{cartList.price}}</p>
         </div>
-        <div class="right">
+        <div class="right" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default {
   name: 'proDetail',
   data () {
     return {
-    	userInfo:JSON.parse(sessionStorage.getItem('userinfo')),
+    	userInfo:{},
       imgUrl : "",
       swiper : [], //轮播
       activeNames: ['1'],
@@ -64,6 +64,7 @@ export default {
       api : "",
       //isShow : false,
       cartTotal : 0 ,//购物车数量
+      isCart : false
       //isMall:true,//用于商城进入购物车隐藏
     }
   },
@@ -75,7 +76,11 @@ export default {
       if(this_.$route.query.obj != ""){
         this_.cartList = this_.$route.query.obj;
       }else{
-        this_.init_1();
+        if(!this_.$utils.check.isEmpty(sessionStorage.getItem('userinfo'))){
+          this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
+          this_.isCart = true;
+          this_.init_1();
+        } 
       }
       this_.init();
       this_.getParmas(); //适配车型

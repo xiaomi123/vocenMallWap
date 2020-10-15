@@ -87,13 +87,14 @@
             <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getCutImg()">开始识别</van-button></div>
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;font-size: 0.875rem;">请核查识别结果与图片数据是否一致</div>
-              <van-password-input
+              <!-- <van-password-input
                 :value="keyWords"
                 :mask="false"
                 length="17"
                 :focused="showKeyboard"
                 @focus="showKeyboard = true"
-              />
+              /> -->
+              <input class="input-view" type="text" maxlength="17" v-model="keyWords" placeholder="请输入VIN码" />
               <van-button class="dialog-btn" type="danger" size="small" block @click="jiema()">查看解码消息</van-button>
             </div>
           </div>
@@ -128,7 +129,7 @@
           name: '上传VIN图片'
         }],
         isMask : false,
-        showKeyboard: false,
+        //showKeyboard: true,
         option:{
           img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
           zuobiao: [50, 50, 20, 0],
@@ -138,8 +139,6 @@
           rotation: 0
 
         },
-        // tabList : ["VIN码","按属性"], //查询分类
-        // tabCurrent : 0,
         keyWords : "",
         attrKey : "",
         isLogin : false, //登录按钮
@@ -156,8 +155,7 @@
         document.title = this_.$route.query.title;
         sessionStorage.setItem('brandType',this_.$route.query.type);
         this_.loadSwiper();
-
-        //sessionStorage.clear();
+        sessionStorage.removeItem('history');
         if(sessionStorage.getItem('epcrode') != null){
           this_.mb001 = sessionStorage.getItem('epcrode');
         }else{
@@ -462,7 +460,8 @@
           this.bus.$emit('tipShow', "请先登陆后，再进行查询");
           return false;
         }
-        this.$router.push({path:'/proSearch/products', query: {words:"",type:2,categoryName:this.cateListText[e],mb001:this.mb001}});
+        this.$router.push({path:'/proSearch/products', query: {words:"",type:0,categoryName:this.cateListText[e],mb001:this.mb001}});
+        // this.$router.push({path:'/proSearch/products', query: {words:"",type:2,categoryName:this.cateListText[e],mb001:this.mb001}});
       },
       //vin点击小摄像头事件
       btnShow(){

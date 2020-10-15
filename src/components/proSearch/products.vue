@@ -9,7 +9,8 @@
 
     <div class="lhq_header" ref="sysLeft">
       <div class="clearfix tag-item ub-pra">
-        <van-icon name="bulb-o" size="2em" class="icon" color="#0066CC" id="vin" />
+        <!-- <van-icon name="bulb-o" size="2em" class="icon" color="#0066CC" id="vin" /> -->
+        <van-icon name="bulb-o" size="2em" class="icon" color="#CCCCCC" id="vin" />
         <p>
           <input type="text" placeholder="请输入VIN码" v-model="keyWords" />
           <input id="upload_file" type="file"  accept="image/*" @change="fileChange($event)" multiple style="display: none">
@@ -53,8 +54,9 @@
            </template>
             <div class="ub ub-f1" @click="detail(list)">
               <div class="ub ub-f1 ub-ver">
-                <div class="ub pro-title">{{list.prod[4]}}{{list.prod[1]}}</div>
-                <div class="ub">品号：{{list.prod[5]}}</div>
+                <div class="ub pro-title">{{list.prod[4]}}</div>
+                <div class="ub" v-if="list.prod[1].indexOf('点火线圈') > -1">品名：{{list.prod[1].substr(0,4)}}&nbsp;&nbsp;品号：{{list.prod[5]}}</div>
+                <div class="ub" v-else>品名：{{list.prod[1].substr(0,4)}}&nbsp;&nbsp;品号：{{list.prod[5]}}</div>
               </div>
             </div>
             <div class="ub ub-pc ub-ac">
@@ -68,12 +70,14 @@
             <div class="ub">分离轴承：{{list.customFields[2]}}</div>
           </div>
           <div class="ub" v-if="list.prod[1].indexOf('氧传感') > -1">总长度：{{list.spec[0]}}</div>
-          <div class="ub ub-ac" v-if="isCart">
-            <div class="ub ub-f1 text-red">价格：{{list.params.price}}</div>
-            <div class="ub ub-pe ub-ac">
-              <em class="ub text-primary" @click="detail(list)">详情&nbsp;&nbsp;</em>
-              <cart-view :cartList="list.params" :num="0" :name="0" class="cart-width"></cart-view>
+          <div class="ub ub-ac">
+            <div class="ub ub-ac" v-if="isCart">
+              <div class="ub ub-f1 text-primary">价格：{{list.params.price}}</div>
+              <div class="ub ub-f1 ub-pe ub-ac">
+                <cart-view :cartList="list.params" :num="0" :name="0" class="cart-width"></cart-view>
+              </div>
             </div>
+            <div class="ub ub-f1 text-primary ub-pe" @click="detail(list)">详情&nbsp;&nbsp;</div>
           </div>
           <div v-if="buyRecord.length != 0">
             <template v-for="(item,index) in buyRecord">
@@ -83,61 +87,61 @@
           <div class="list-item-mask" v-show="list.prod[5].indexOf('开发中') > -1"></div>
         </div>
       </template>
-      <template v-else-if="tabCurrent == 2">
+      <template v-else-if="tabCurrent == 1">
         <div class="list-item ub ub-ver ub-pra" v-for="(item,index) in dataPage">
-          <template >
-            <div class="ub ub-ver ub-pra" @click="detail_1(item)">
-              <div class="ub ub-f1">
-                <template v-show="item.mb001.indexOf('开发中') == -1">
-                  <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
-                  <div class="img-mask" @click="imgPreview(item.titlepicurl)"  @click.stop>查看</div>
-                </template>
-                <div  class="ub ub-ver ub-f1">
-                  <div class="ub pro-title" v-if="categoryName.indexOf('离合器') > -1">{{item.车型}}</div>
-                  <div class="ub pro-title" v-if="categoryName.indexOf('点火线圈') > -1">{{item.车系}}{{item.车型}}&nbsp;{{item.排量}}</div>
-                  <div class="ub pro-title">{{item.适用车型}}{{item.类型}}</div>
-                </div>
-                <div class="ub ub-pc ub-ac">
-                  <span class="erpcode-box">
-                  {{item.mb001.substring(item.mb001.length - 3)}}
-                  </span>
-                </div>
+          <div class="ub ub-ver ub-pra" @click="detail_1(item)">
+            <div class="ub ub-f1">
+              <template v-show="item.mb001.indexOf('开发中') == -1">
+                <img :src="imgUrl + item.titlepicurl" class="ub ub-img1 imgwh1" />
+                <div class="img-mask" @click="imgPreview(item.titlepicurl)"  @click.stop>查看</div>
+              </template>
+              <div  class="ub ub-ver ub-f1">
+                <div class="ub pro-title" v-if="item.dtype.indexOf('离合器') > -1">{{item.models}}</div>
+                <div class="ub pro-title" v-if="item.dtype.indexOf('点火线圈') > -1">{{item.series}}{{item.models}}&nbsp;{{item.displacement}}</div>
+                <div class="ub pro-title" v-if="item.dtype.indexOf('氧传感') > -1">{{item.models}}{{item.style}}</div>
+                <div class="ub">品名：{{item.productname}}&nbsp;&nbsp;品号：{{item.mb001}}</div>
+              </div>
+              <div class="ub ub-pc ub-ac">
+                <span class="erpcode-box">
+                {{item.mb001.substring(item.mb001.length - 3)}}
+                </span>
               </div>
             </div>
-            <div class="ub ub-ver" v-if="categoryName.indexOf('离合器') > -1">
-              <div class="ub" >
-                <em>发动机：{{item.参数一}}</em>&nbsp;&nbsp;
-                <em>{{item.参数二}}</em>&nbsp;&nbsp;
-                <em class="text-primary">价格：{{item.价格}}</em>
-              </div>
-              <div class="ub">分离轴承：{{item.轴承型号}}</div>
-              <div class="ub">规格：{{item.产品规格}}</div>
+          </div>
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('离合器') > -1">
+            <div class="ub" >
+              <em>发动机：{{item.parm1}}</em>&nbsp;&nbsp;
+              <em>{{item.parm2}}</em>&nbsp;&nbsp;
+              <!-- <em class="text-primary">价格：{{item.price}}</em> -->
             </div>
-            <div class="ub ub-ver" v-if="categoryName.indexOf('点火线圈') > -1">
-              <div class="">
-                <em>品号：{{item.mb001}}</em>&nbsp;&nbsp;
-                <em>发动机：{{item.发动机型号}}</em>&nbsp;&nbsp;
-                <em class="text-primary">价格：{{item.价格}}</em>
-              </div>
-              <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
-              <div class="ub">规格：{{item.规格}}</div>
+            <div class="ub">分离轴承：{{item.style}}</div>
+            <div class="ub">规格：{{item.spec}}</div>
+          </div>
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('点火线圈') > -1">
+            <div class="">
+              <em>发动机：{{item.enginemodel}}</em>&nbsp;&nbsp;
+              <!-- <em class="text-primary">价格：{{item.price}}</em> -->
             </div>
-            <div class="ub ub-ver" v-if="categoryName.indexOf('氧传感') > -1">
-              <div>
-                <em>品号：{{item.mb001}}</em>&nbsp;&nbsp;
-                <em>发动机：{{item.发动机型号}}</em>&nbsp;&nbsp;
-                <em>总长度：{{item.线长}}</em>&nbsp;&nbsp;
-                <em class="text-primary">价格：{{item.价格}}</em>
-              </div>
-              <div class="" style="word-break: break-all;margin-top: 0.5rem;">OEM：{{item.oem}}</div>
-              <div class="">规格：{{item.名称}}</div>
+            <div class="" style="word-break: break-all;">OEM：{{item.oem}}</div>
+            <div class="ub">规格：{{item.spec}}</div>
+          </div>
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('氧传感') > -1">
+            <div>
+              <em>发动机：{{item.enginemodel}}</em>&nbsp;&nbsp;
+              <em>总长度：{{item.linelength}}</em>&nbsp;&nbsp;
+              <!-- <em class="text-primary">价格：{{item.price}}</em> -->
             </div>
-            <template v-for="(list,index) in buyRecord">
-              <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
-            </template>
-            <em class="ub ub-pe text-primary" @click="detail_1(item)">详情购买</em>
-            <div class="list-item-mask" v-show="item.mb001.indexOf('开发中') > -1"></div>
+            <div class="" style="word-break: break-all;">OEM：{{item.oem}}</div>
+            <div class="">规格：{{item.name}}</div>
+          </div>
+          <template v-for="(list,index) in buyRecord">
+            <div class="text-red" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
           </template>
+          <div class="ub ub-ac">
+            <div class="ub ub-f1 text-primary">价格：{{item.price}}</div>
+            <div class="ub ub-f1 ub-pe text-primary" @click="detail_1(item)">详情购买</div>
+          </div>
+          <div class="list-item-mask" v-show="item.mb001.indexOf('开发中') > -1"></div>
         </div>
       </template>
       <div v-show="showEmpty" style="text-align: center;">暂无适配产品信息</div>
@@ -174,11 +178,12 @@
             <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getCutImg()">开始识别</van-button></div>
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;">请核查识别结果与图片数据是否一致</div>
-              <van-password-input
+              <!-- <van-password-input
                 :value="keyWords"
                 :mask="false"
                 length="17"
-              />
+              /> -->
+              <input class="input-view" type="text" maxlength="17" v-model="keyWords" placeholder="请输入VIN码" />
               <van-button class="dialog-btn" type="danger" size="small" block @click="searchByVin1()">查看解码消息</van-button>
             </div>
           </div>
@@ -263,27 +268,55 @@
         let this_ = this;
         this_.imgUrl = Consts.apiConfig.imgPath;
         document.title = this_.$route.query.title;
-        this_.tabCurrent = this_.$route.query.type;
-
-        this_.categoryName = this_.$route.query.categoryName;
         this_.chexingObj = this_.$route.query.obj != undefined ? this_.$route.query.obj : "";
-        this_.showNavImg();
+
+        if(!this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
+          this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        }
+        if(this_.$utils.check.isEmpty(sessionStorage.getItem('history'))){
+          this_.tabCurrent = this_.$route.query.type;
+          this_.categoryName = this_.$route.query.categoryName;
+          if(this_.tabCurrent == 0){
+            document.getElementById('vin').style.color = "#0066CC";
+            this_.keyWords = this_.$route.query.words;
+          }else if(this_.tabCurrent == 1){
+            document.getElementById('attr').style.color = "#0066CC";
+            this_.attrKey = this_.$route.query.words;
+            this_.source = 1;
+          }
+          this_.showNavImg();
+        }else{
+          let obj = JSON.parse(sessionStorage.getItem('history'));
+          this_.source = obj.source;
+          this_.tabCurrent = obj.source;
+          this_.categoryName = obj.categoryName;
+          if(this_.source == 0){
+            document.getElementById('vin').style.color = "#0066CC";
+            this_.keyWords = obj.words;
+          }else if(this_.source == 1){
+            document.getElementById('attr').style.color = "#0066CC";
+            this_.attrKey = obj.words;
+          }
+          this_.showNavImg();
+        }
+        //关联tab切换
         this_.cateList.forEach((item,index) => {
           if(item.desc == this_.categoryName){
             item.color = "#0066CC";
           }
         })
-        if(this_.tabCurrent == 0){ //vin码
-          this_.keyWords = this_.$route.query.words;
-          this_.vinCodePros();
+
+        if(this_.tabCurrent == 0){
+          if(this_.keyWords != ""){
+            this_.vinCodePros();  //vin码
+          }else{
+            this_.showPlaceHolderText();
+            this_.carsPros();  //品类查询
+          }
         }else if(this_.tabCurrent == 1){ //综合查询
-          this_.attrKey = this_.$route.query.words;
           this_.attrSearch();
-        }else if(this_.tabCurrent == 2){ //品类查询
-          this_.attrKey = this_.$route.query.words;
-          this_.showPlaceHolderText();
-          this_.carsPros();
         }
+
         window.addEventListener('scroll',this_.handleScroll,true);
 
         //判断滚动条到底部分页加载
@@ -305,31 +338,14 @@
                   this_.dataPage.push(this_.proList[this_.dataPage.length]);
                 }
               }
-            }else if(this_.tabCurrent == 2){
-              if(this.categoryName.indexOf('离合器') > -1){
-                for(let i=0;i<this_.pages;i++){
-                  if(this_.dataPage.length<this_.searchList.length){
-                    //console.log(this_.proList)
-                    this_.dataPage.push(this_.searchList[this_.dataPage.length]);
-                  }
-                }
-              }else if(categoryName.indexOf('点火线圈') > -1){
-                for(let i=0;i<this_.pages;i++){
-                  if(this_.dataPage.length<this_.searchList.length){
-                    //console.log(this_.proList)
-                    this_.dataPage.push(this_.searchList[this_.dataPage.length]);
-                  }
-                }
-              }else if(categoryName.indexOf('氧传感') > -1){
-                for(let i=0;i<this_.pages;i++){
-                  if(this_.dataPage.length<this_.searchList.length){
-                    //console.log(this_.proList)
-                    this_.dataPage.push(this_.searchList[this_.dataPage.length]);
-                  }
+            }else if(this_.tabCurrent == 1){
+              for(let i=0;i<this_.pages;i++){
+                if(this_.dataPage.length<this_.searchList.length){
+                  //console.log(this_.proList)
+                  this_.dataPage.push(this_.searchList[this_.dataPage.length]);
                 }
               }
             }
-
           }
         }
 
@@ -505,7 +521,7 @@
             c_ma001 : ""
           };
         }else{
-          this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+          //this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
           if(this_.userInfo.dataset[0].mr003.indexOf('弘途耐用') > -1 || this_.userInfo.dataset[0].mr003.indexOf('江陵耐用') > -1){
               params_data = {
                 mb001 : eprcodes,
@@ -515,7 +531,8 @@
                 dpt : this_.userInfo.dataset[0].dpt,
                 c_ma001 : this_.userInfo.dataset[0].ma001
               };
-              this_.isCart = !this_.isCart;
+              //this_.isCart = !this_.isCart;
+              this_.isCart = true;
           }else{
             params_data = {
               mb001 : eprcodes,
@@ -531,6 +548,7 @@
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
           success: function (data) {
+            console.log('--------------缩略图--------------------');
             console.log(data);
             if(data.State){
               let infos = data.centent;
@@ -563,21 +581,35 @@
       },
       //属性-综合查询
       attrSearch(){
-        console.log("属性查询");
+        console.log();
         let this_ = this;
-        console.log(this_.categoryName);
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+        //console.log("品类名称："+this_.categoryName);
+        let mr003 = "";
+        if(this_.userInfo.mr003 == undefined){
+          if(sessionStorage.getItem('brandType') == '3'){
+            mr003 = "江陵耐用";
+          }else if(sessionStorage.getItem('brandType') == '4'){
+            mr003 = "弘途耐用";
+          }
+        }else{
+          mr003 = this_.userInfo.dataset[0].mr003;
+        }
         this_.bus.$emit('loading', true)
         this_.$api.get({
-          url: this_.$apiUrl.api.GetProdctList + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + this_.userInfo.dataset[0].mr003 + '&openid='+sessionStorage.getItem('openid') + '&categoryName=' + this_.categoryName,
+          url: this_.$apiUrl.api.GetProdctList + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + mr003 + '&openid='+sessionStorage.getItem('openid') + '&categoryName=' + this_.categoryName,
           params: {},
           success: function (data) {
             console.log(data);
             this_.tabCurrent = 1;
-            this_.searchList = data;
-            // let eprcodes = data.dataset.map(item => item.mb001).join(',');
-            // this_.getBuyRecord(eprcodes);
-            // this_.showEmpty = false;
+            if(data.length != 0){
+              this_.searchList = data;
+              this_.dataPage = this_.searchList.slice(0,this_.pages);
+              let eprcodes = data.map(item => item.mb001).join(',');
+              this_.getBuyRecord(eprcodes);
+              this_.showEmpty = false;
+            }else{
+              this_.showEmpty = true;
+            }
           	this_.bus.$emit('loading', false);
           }
         });
@@ -667,10 +699,10 @@
       //   });
       // },
       //属性购买记录
-      getAttrMb001(res){
-        let eprcodes = res.map(item => item.mb001).join(',');
-        this.getBuyRecord(eprcodes,2);
-      },
+      // getAttrMb001(res){
+      //   let eprcodes = res.map(item => item.mb001).join(',');
+      //   this.getBuyRecord(eprcodes,2);
+      // },
       //获取vincode查询数据的品号
       getMb001s(res){
         let this_ = this;
@@ -696,24 +728,26 @@
       //最近购买记录列表
       getBuyRecord(mb001s,type){
         let this_ = this;
-        this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
-        this_.bus.$emit('loading', true);
-        this_.$api.post({
-          url: this_.$apiUrl.api.RecentSale,
-          params: {
-            dpt : 'PTYW',
-            mb001 : mb001s,
-            ma001 : this_.userInfo.dataset[0].ma001
-          },
-          success: function (data) {
-            //console.log("购买记录");
-            console.log(data);
-            if(data.length != 0){
-              this_.buyRecord = data;
+        if(this_.userInfo.dataset != undefined){
+          this_.bus.$emit('loading', true);
+          this_.$api.post({
+            url: this_.$apiUrl.api.RecentSale,
+            params: {
+              dpt : 'PTYW',
+              mb001 : mb001s,
+              ma001 : this_.userInfo.dataset[0].ma001
+            },
+            success: function (data) {
+              console.log("-----购买记录-----");
+              console.log(data);
+              if(data.length != 0){
+                this_.buyRecord = data;
+              }
+            	this_.bus.$emit('loading', false);
             }
-          	this_.bus.$emit('loading', false);
-          }
-        });
+          });
+        }
+        //this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
       },
       onSelect(evt) {
         this.show = false;
@@ -828,12 +862,12 @@
       },
       //vincode查询
       searchByVin(){
+        this.checkedInput(0);
+        this.proList = [];
         if(this.keyWords != ""){
-          this.checkedInput(0);
-          this.proList = [];
           this.vinCodePros();
         }else{
-          this.bus.$emit('tipShow', "请输入查询条件");
+          this.carsPros();
         }
 
       },
@@ -857,12 +891,30 @@
       },
       //产品详情
       detail(list){
+        let obj = {
+          source : 0,
+          words : this.keyWords,
+          categoryName : this.categoryName
+        };
+        sessionStorage.setItem('history',JSON.stringify(obj));
+        console.log('words:'+this.keyWords+";categoryName:"+this.categoryName);
         this.$router.push({path:'/proSearch/detail', query:{obj:list.params,mb001:list.prod[5],title:this.$route.query.title}});
+
       },
       //属性-详情
       detail_1(list){
+        let obj = {
+          source : 1,
+          words : this.attrKey,
+          categoryName : this.categoryName
+        };
+        sessionStorage.setItem('history',JSON.stringify(obj));
+        console.log('words:'+this.attrKey+";categoryName:"+this.categoryName);
         this.$router.push({path:'/proSearch/detail', query:{obj:"",mb001:list.mb001,title:this.$route.query.title}});
+
       },
+      //从详情返回后记录参数
+
       //搜索框placeholderText
       showPlaceHolderText(){
         if(this.categoryName.indexOf('离合器') > -1){
@@ -888,7 +940,7 @@
             }else if(this.source == 1){
               this.searchList = [];
               this.dataPage = [];
-              //按属性查询
+              this.attrSearch();
             }
           }else{
             this.cateList[i].color = "#969799";
