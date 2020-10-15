@@ -181,7 +181,7 @@
             /*this_.bus.$emit('tipShow', "未获取到用户信息");
             this_.isLogin = true;
             this_.isShowFooter = false;
-            
+
             this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
             this_.showText = true;*/
             this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
@@ -195,7 +195,7 @@
           let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
           //判断是否含有弘途和江陵品牌
           if(this_.$utils.check.isEmpty(userdata)){
-            this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请于您的专属客服联系。";
+            this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
             this_.showText = true;
           }
 
@@ -308,7 +308,7 @@
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
               }else{
-                this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请于您的专属客服联系。";
+                this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
                 this_.showText = true;
               }
             } else{
