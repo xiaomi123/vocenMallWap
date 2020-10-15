@@ -178,7 +178,14 @@
         let this_ = this;
         if (this_.$utils.check.isEmpty(sessionStorage.getItem("token"))) {
           if(this_.$utils.check.isEmpty(this_.$route.query.openid)){
-            this_.bus.$emit('tipShow', "未获取到用户信息");
+            /*this_.bus.$emit('tipShow', "未获取到用户信息");
+            this_.isLogin = true;
+            this_.isShowFooter = false;
+            
+            this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
+            this_.showText = true;*/
+            this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
+
           }else{
             sessionStorage.setItem('openid',this_.$route.query.openid);
             this_.weChartLogin();
@@ -305,11 +312,12 @@
                 this_.showText = true;
               }
             } else{
-              this_.isLogin = true;
+              /*this_.isLogin = true;
               this_.isShowFooter = false;
 
               this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
-              this_.showText = true;
+              this_.showText = true;*/
+              this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
 
             }
           }
