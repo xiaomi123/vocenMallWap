@@ -253,3 +253,13 @@
 .cart-width{
   width: 10rem;
 }
+.input-view{
+  font-size: 1.6rem;
+  letter-spacing: 7px;
+  text-align: center;
+  font-weight: 400;
+  border: 1px solid #eee;
+  width: 100%;
+  height: 3.4rem;
+  border-radius: .5rem;
+}
