@@ -69,7 +69,8 @@
             <div class="ub">直径：{{list.customFields[0]}}&nbsp;齿数：{{list.customFields[1]}}</div>
             <div class="ub">分离轴承：{{list.customFields[2]}}</div>
           </div>
-          <div class="ub" v-if="list.prod[1].indexOf('氧传感') > -1">总长度：{{list.spec[0]}}</div>
+          <div class="ub" v-if="list.prod[1] == '前氧传感器'">总长度：{{list.spec[0]}}</div>
+          <div class="ub" v-else-if="list.prod[1] == '后氧传感器'">总长度：{{list.spec[4]}}</div>
           <div class="ub ub-ac">
             <div class="ub ub-ac" v-if="isCart">
               <div class="ub ub-f1 text-primary">价格：{{list.params.price}}</div>
