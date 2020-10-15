@@ -86,6 +86,12 @@ export default {
     this.$nextTick(function () {
       let this_ = this;
       document.title = this_.$route.query.title;
+      if(this_.$route.query.mb001 == '11'){
+      	this_.swiperList[0].imgUrl = require("../assets/images/lhq/img_proSearch_banner03.jpg");
+      }
+      if(this_.$route.query.mb001 == '17'){
+      	this_.swiperList[0].imgUrl = require("../assets/images/lhq/h_img_proSearch_banner03.jpg");
+      }
     });
   },
   methods:{
