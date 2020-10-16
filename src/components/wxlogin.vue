@@ -6,7 +6,7 @@
       <div class="login_content wxlogin_cont" v-if="isLogin">
         <p v-if="isSearch">
           此为专业查询系统、为授权客户提供专属服务。您当前为游客身份，需登录后方可查询。
-          <span class="search_tel">如需申请授权，请联系服务电话：<a href="tel:4008813500">4008813500</a></span>
+          <span class="search_tel">如需申请授权，请联系服务电话：<a href="tel:4008813500" v-if="$route.query.type == 3">4008813500</a><a href="tel:4008566580" v-if="$route.query.type == 4">4008566580</a></span>
         </p>
         <p v-else>首次登陆需录入订单平台手机号和密码，绑定后即可直接登陆</p>
         <ul class="login_list">
@@ -117,7 +117,7 @@
                     }
                   }
                 })
-                
+
                 if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
                   sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
                 }

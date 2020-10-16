@@ -184,7 +184,7 @@
 
             this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
             this_.showText = true;
-            
+
           }else{
             sessionStorage.setItem('openid',this_.$route.query.openid);
             this_.weChartLogin();
@@ -194,7 +194,13 @@
           let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
           //判断是否含有弘途和江陵品牌
           if(this_.$utils.check.isEmpty(userdata)){
-            this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
+            if(this_.$route.query.type == 4){
+              //弘途
+              this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
+            }else if(this_.$route.query.type == 3){
+              //江陵耐用
+              this_.showTextDesc = "您已登录，但未代理耐用件，如需更多查询，请与您的专属客服联系。";
+            }
             this_.showText = true;
           }
 
@@ -307,7 +313,13 @@
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
               }else{
-                this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
+                if(this_.$route.query.type == 4){
+                  //弘途
+                  this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
+                }else if(this_.$route.query.type == 3){
+                  //江陵耐用
+                  this_.showTextDesc = "您已登录，但未代理耐用件，如需更多查询，请与您的专属客服联系。";
+                }
                 this_.showText = true;
               }
             } else{
@@ -316,7 +328,7 @@
 
               this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
               this_.showText = true;
-              
+
               //this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
 
             }
@@ -486,5 +498,7 @@
   .text-info .text{
     font-size:1.3rem;
     color:#cb5f37;
+    line-height: 2rem;
   }
+
 </style>
