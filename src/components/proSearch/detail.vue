@@ -73,8 +73,10 @@ export default {
       let this_ = this;
       this_.imgUrl = Consts.apiConfig.imgPath;
       document.title = this_.$route.query.title;
+      console.log(this_.$route.query.obj)
       if(this_.$route.query.obj != ""){
         this_.cartList = this_.$route.query.obj;
+        this_.isCart = true;
       }else{
         if(!this_.$utils.check.isEmpty(sessionStorage.getItem('userinfo'))){
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
@@ -103,7 +105,6 @@ export default {
         url: this_.$apiUrl.api.ProductImage + "?mb001=" + this_.$route.query.mb001,
         params: {},
         success: function (data) {
-          console.log("清醒");
           console.log(data);
           if(data.content.length !=0){
             this_.swiper = data.content[0].sliderpics.split(',');

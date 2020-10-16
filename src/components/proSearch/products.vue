@@ -61,21 +61,21 @@
                 <div class="ub umar-t" v-else>品名：<em class="sc-text">{{list.prod[1]}}</em>&nbsp;&nbsp;品号：<em class="sc-text">{{list.prod[5]}}</em></div>
               </div>
             </div>
-            <div class="ub ub-pc ub-ac">
+            <div class="ub ub-pc ub-ac" @click="detail(list)">
               <span class="erpcode-box">
               {{list.prod[5].substring(list.prod[5].length - 3)}}
               </span>
             </div>
           </div>
-          <div class="ub ub-ver umar-t" v-if="list.prod[1].indexOf('离合器') > -1">
+          <div class="ub ub-ver umar-t" v-if="list.prod[1].indexOf('离合器') > -1" @click="detail(list)">
             <div class="ub">直径：<em class="sc-text">{{list.customFields[0]}}</em>&nbsp;齿数：<em class="sc-text">{{list.customFields[1]}}</em></div>
             <div class="ub">分离轴承：<em class="sc-text">{{list.customFields[2]}}</em></div>
           </div>
-          <div class="ub umar-t" v-if="list.prod[1] == '前氧传感器'">总长度：<em class="sc-text">{{list.spec[0]}}</em></div>
-          <div class="ub umar-t" v-else-if="list.prod[1] == '后氧传感器'">总长度：<em class="sc-text">{{list.spec[4]}}</em></div>
+          <div class="ub umar-t" v-if="list.prod[1] == '前氧传感器'" @click="detail(list)">总长度：<em class="sc-text">{{list.spec[0]}}</em></div>
+          <div class="ub umar-t" v-else-if="list.prod[1] == '后氧传感器'" @click="detail(list)">总长度：<em class="sc-text">{{list.spec[4]}}</em></div>
           <div class="ub ub-ac" style="margin-top: 1rem;">
             <div class="ub ub-ac ub-f1" v-if="isCart">
-              <div class="ub ub-ver">
+              <div class="ub ub-ver" @click="detail(list)">
                 <div class="ub ub-f1 text-red"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{list.params.price}}</em></div>
                 <div class="ub" v-if="buyRecord.length != 0">
                   <template v-for="(item,index) in buyRecord">
@@ -117,7 +117,7 @@
               </div>
             </div>
           </div>
-          <div class="ub ub-ver" v-if="item.dtype.indexOf('离合器') > -1">
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('离合器') > -1" @click="detail_1(item)">
             <div class="ub umar-t">
               <em>发动机：<em class="sc-text">{{item.parm1}}</em></em>&nbsp;&nbsp;
               <em class="sc-text">{{item.parm2}}</em>&nbsp;&nbsp;
@@ -125,14 +125,14 @@
             <div class="ub umar-t">分离轴承：<em class="sc-text">{{item.style}}</em></div>
             <div class="ub umar-t">规格：<em class="sc-text">{{item.pspec}}</em></div>
           </div>
-          <div class="ub ub-ver" v-if="item.dtype.indexOf('点火线圈') > -1">
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('点火线圈') > -1" @click="detail_1(item)">
             <div class="umar-t">
               <em>发动机：{{item.enginemodel}}</em>&nbsp;&nbsp;
             </div>
             <div class="umar-t" style="word-break: break-all;">OEM：<em class="sc-text">{{item.oem}}</em></div>
             <div class="ub umar-t">规格：<em class="sc-text">{{item.pspec}}</em></div>
           </div>
-          <div class="ub ub-ver" v-if="item.dtype.indexOf('氧传感') > -1">
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('氧传感') > -1" @click="detail_1(item)">
             <div class="umar-t">
               <span>发动机：<em class="sc-text">{{item.enginemodel}}</em></span>&nbsp;&nbsp;
               <span>总长度：<em class="sc-text">{{item.linelength}}</em></span>&nbsp;&nbsp;
@@ -140,14 +140,14 @@
             <div class="umar-t" style="word-break: break-all;">OEM：<em class="sc-text">{{item.oem}}</em></div>
             <div class="umar-t">规格：<em class="sc-text">{{item.name}}</em></div>
           </div>
-          <div class="ub ub-ac" style="margin-top: 1rem;">
+          <div class="ub ub-ac" style="margin-top: 1rem;" @click="detail_1(item)">
             <div class="ub">
               <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{item.price}}</em></div>
               <template v-for="(list,index) in buyRecord">
                 <div class="ub buy-text" style="margin-left: 1rem;" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
               </template>
             </div>
-            <div class="ub ub-f1 ub-pe text-primary" @click="detail_1(item)">详情购买</div>
+            <div class="ub ub-f1 ub-pe text-primary">详情购买</div>
           </div>
           <div class="list-item-mask" v-show="item.mb001.indexOf('开发中') > -1"></div>
         </div>
@@ -349,7 +349,7 @@
             console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
             if(this_.tabCurrent == 0){
               this_.p++;
-              if(this_.keyWords == ""){
+              if(this_.keyWords != ""){
                 this_.vinCodePros();  //vin码
               }else{
                 this_.carsPros();  //品类查询
@@ -601,6 +601,7 @@
       search(){
         if(this.attrKey != ""){
           if(this.attrKey.length >= 2){
+            this.showModelInfoByVinCode = false;
             this.checkedInput(1);
             this.p = 1;
             this.searchList = [];
