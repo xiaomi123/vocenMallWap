@@ -108,56 +108,55 @@
 	  	  <p v-show="cartList.length == 0 && isLoad" class="com_noData">暂无数据</p>
 			</div>
 
-  	</div>
 
-  	<div v-show="carIndex==1">
-  		<ul class="product_list cart_list">
-  	  	<li v-for="(item,index) in shortList" @click="isActive(index,shortList)" :class="item.ck?'active':''">
-  	  		<span class="cart_check">
-  	  			<i class="iconfont no">&#xe6c3;</i>
-  	  			<i class="iconfont yes">&#xe6c2;</i>
-  	  		</span>
-  	  		<div class="product_left">
-  	  			{{item.mb002New}}
-  	  			<em>{{item.s_oem}}</em><br />
-  	  			<i>{{item.mb003New}}</i><br />
-  	  			<span>
-  	  				<em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
-  	  				{{item.tj?'特价￥':''}}
-  	  				{{item.tj?item.aprice:''}}
-  	  				{{item.i_type_no=='2'?'限时秒杀':''}}
-  	  				{{item.i_type_no=='3'?'满减':''}}
-  	  			</span>
-  	  			<span>{{item.s_state}}</span>
-  	  		</div>
-  	  		<div class="product_right">
-  	  			<iconList-view :collItem="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></iconList-view>
-  	  			<input v-if="item.state == '产品不存在'" type="text" v-model="item.s_qty" class="cartNo" readonly="readonly" />
-  	  			<cart-view v-else :cartList="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></cart-view>
-  	  		</div>
 
-  	  	</li>
-  	  </ul>
-  	  <p v-show="shortList.length == 0 && isLoad" class="com_noData">暂无数据</p>
-  	</div>
+      <div v-show="carIndex==1">
+        <ul class="product_list cart_list">
+          <li v-for="(item,index) in shortList" @click="isActive(index,shortList)" :class="item.ck?'active':''">
+            <span class="cart_check">
+              <i class="iconfont no">&#xe6c3;</i>
+              <i class="iconfont yes">&#xe6c2;</i>
+            </span>
+            <div class="product_left">
+              {{item.mb002New}}
+              <em>{{item.s_oem}}</em><br />
+              <i>{{item.mb003New}}</i><br />
+              <span>
+                <em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
+                {{item.tj?'特价￥':''}}
+                {{item.tj?item.aprice:''}}
+                {{item.i_type_no=='2'?'限时秒杀':''}}
+                {{item.i_type_no=='3'?'满减':''}}
+              </span>
+              <span>{{item.s_state}}</span>
+            </div>
+            <div class="product_right">
+              <iconList-view :collItem="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></iconList-view>
+              <input v-if="item.state == '产品不存在'" type="text" v-model="item.s_qty" class="cartNo" readonly="readonly" />
+              <cart-view v-else :cartList="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></cart-view>
+            </div>
 
-  	<div class="cart_footer" style="bottom:6.2rem;">
-  		<p>
-  			<span v-show="cartList.length>0">
-					<em class="cart_ckAll" @click="checkAll()">
-						<i class="iconfont" v-if="!isAll">&#xe6c3;</i>
-						<i class="iconfont" v-if="isAll">&#xe6c2;</i>
-						全选
-					</em>
-				</span>
-				<label class="priceTo">共<i>{{qtyTotal}}</i>件,总金额￥<em>{{priceTotal==0?'0.00':priceTotal.toFixed(2)}}</em></label>
-  		</p>
-			<input type="button" value="提交订单" v-if="isEditor" @click="toCount()" />
-			<input type="button" value="删除" v-else @click="deletCart()" />
-  	</div>
+          </li>
+        </ul>
+        <p v-show="shortList.length == 0 && isLoad" class="com_noData">暂无数据</p>
+      </div>
 
-  	<sfooter-view></sfooter-view>
-
+      <div class="cart_footer" style="bottom:6.2rem;">
+        <p>
+          <span v-show="cartList.length>0">
+            <em class="cart_ckAll" @click="checkAll()">
+              <i class="iconfont" v-if="!isAll">&#xe6c3;</i>
+              <i class="iconfont" v-if="isAll">&#xe6c2;</i>
+              全选
+            </em>
+          </span>
+          <label class="priceTo">共<i>{{qtyTotal}}</i>件,总金额￥<em>{{priceTotal==0?'0.00':priceTotal.toFixed(2)}}</em></label>
+        </p>
+        <input type="button" value="提交订单" v-if="isEditor" @click="toCount()" />
+        <input type="button" value="删除" v-else @click="deletCart()" />
+      </div>
+      <sfooter-view></sfooter-view>
+    </div>
   </div>
 </template>
 
@@ -748,3 +747,8 @@ export default {
   }
 }
 </script>
+<style scoped="scoped">
+  .cart_main{
+    padding-top:8.5rem;
+  }
+</style>
