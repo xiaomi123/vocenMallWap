@@ -163,11 +163,11 @@ const router = new Router({
       component: YcgqList,
     },{
 		path : '/proSearch/products',
-		name : 'sproduct',  
+		name : 'sproduct',
 		component : SproList
 	},{
 		path : '/proSearch/products1',
-		name : 'sproList1',  
+		name : 'sproList1',
 		component : SproList1
 	},{
     path : '/proSearch/modelList',

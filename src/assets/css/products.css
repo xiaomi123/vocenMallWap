@@ -212,14 +212,18 @@
   color: red;
 }
 .erpcode-box{
-  border:2px solid #0066CC;
-  padding: 0.4rem;
+  border:1px solid #0066CC;
+  padding: 0 1rem;
   font-size: 1.5rem;
   font-weight: bold;
   color: #0066CC;
+  border-radius: 1rem;
 }
 .umar-tb{
   margin: 0.3rem 0;
+}
+.umar-t{
+  margin-top: 0.2rem;
 }
 .img-mask{
   width: 5rem;
@@ -262,4 +266,18 @@
   width: 100%;
   height: 3.4rem;
   border-radius: .5rem;
+}
+.buy-text{
+  font-size: 1rem;
+  color: #888888;
+}
+.sc-text{
+  color: #858585;
+}
+.icon-big{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 2rem;
+  height: 2rem;
 }

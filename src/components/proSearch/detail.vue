@@ -13,9 +13,9 @@
         <div class="left">
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
-          <p style="color: red;">价格：{{cartList.price}}</p>
+          <p class="text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{cartList.price}}</em></p>
         </div>
-        <div class="right" v-if="isCart">
+        <div class="right cart-box" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
         </div>
       </div>

@@ -65,7 +65,7 @@
 
     <!-- 遮罩层-->
     <!-- <van-overlay :show="isMask" @click="isMask = false"> -->
-      <!-- <div class="dialog" v-if="isMask">
+      <div class="dialog" v-if="isMask">
           <header class="dialog-nav">
             <em class="iconfont" @click="closeDialog()">&#xe601;</em>
             <h1 class="dialog-title">VIN码识别</h1>
@@ -84,14 +84,21 @@
                 :rotation="option.rotation"
               >
               </crop>
-            <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getCutImg">开始识别</van-button></div>
+            <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getCutImg()">开始识别</van-button></div>
             <div class="dialog-grid">
               <div style="color: red;text-align: center;margin-bottom: 1rem;font-size: 0.875rem;">请核查识别结果与图片数据是否一致</div>
+              <!-- <van-password-input
+                :value="keyWords"
+                :mask="false"
+                length="17"
+                :focused="showKeyboard"
+                @focus="showKeyboard = true"
+              /> -->
               <input class="input-view" type="text" maxlength="17" v-model="keyWords" placeholder="请输入VIN码" />
               <van-button class="dialog-btn" type="danger" size="small" block @click="jiema()">查看解码消息</van-button>
             </div>
           </div>
-      </div> -->
+      </div>
     <!-- </van-overlay> -->
     <!--底部footer内容开始-->
   	<sfooter-view v-if="isShowFooter"></sfooter-view>
@@ -121,16 +128,17 @@
         }, {
           name: '上传VIN图片'
         }],
-        //isMask : false,
+        isMask : false,
         //showKeyboard: true,
-        // option:{
-        //   img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
-        //   zuobiao: [50, 50, 20, 0],
-        //   color:'#f14864',
-        //   crop:{},
-        //   shape: 'rect', //截图形状
-        //   rotation: 0
-        // },
+        option:{
+          img : "https://img.zcool.cn/community/01bc0f59c9a9b0a8012053f85f066c.jpg",
+          zuobiao: [50, 50, 20, 0],
+          color:'#f14864',
+          crop:{},
+          shape: 'rect', //截图形状
+          rotation: 0
+
+        },
         keyWords : "",
         attrKey : "",
         isLogin : false, //登录按钮
@@ -157,13 +165,6 @@
 
         this_.auth(); //获取用户信息
         this_.category(); //产品分类
-
-        if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
-          this.keyWords = sessionStorage.getItem('vincode');
-          sessionStorage.removeItem('vincode');
-          this.$router.push({path:'/proSearch/products', query: {words:this_.keyWords,type:0,categoryName:"",mb001:this_.mb001}});
-        }
-
       });
     },
     created: function(){
@@ -358,10 +359,9 @@
           ctx.drawImage(img, 0, 0, img.width, img.height);
           let compressRate = this_.getCompressRate(1,img1.size/1024/1024);
           let dataUrl = canvas.toDataURL( 'image/jpeg', compressRate);
-          //let imgcode = dataUrl.split(',')[1];
-          //this_.option.img = dataUrl;
-          //this_.getVinCode(imgcode,1);
-          this.$router.push({path:'/proSearch/products1', query: {img:dataUrl}});
+          let imgcode = dataUrl.split(',')[1];
+          this_.option.img = dataUrl;
+          this_.getVinCode(imgcode,1);
         }
        reader.readAsDataURL(img1);
       },
@@ -395,53 +395,46 @@
         render.readAsDataURL(img1);
         render.onload = (e) => {
             var imgcode = e.target.result.split(',')[1];
-            //this_.option.img = e.target.result;
-            //this_.getVinCode(imgcode,1);
-            this.$router.push({path:'/proSearch/products1', query: {img:e.target.result}});
+            this_.option.img = e.target.result;
+            this_.getVinCode(imgcode,1);
         }
       },
       //上传图片获取VINCode
-      // getVinCode(imgcode,type){
-      //   let this_ = this;
-      //   this_.bus.$emit('loading', true);
-      //   this_.$api.post({
-      //     url: this_.$apiUrl.api.VinOCR,
-      //     params: {
-      //       imgcode : imgcode,
-      //       openid : sessionStorage.getItem('openid')
-      //     },
-      //     success: function (data) {
-      //       console.log(data);
-      //       if(data.State){
-      //         this_.keyWords = data.centent;
-      //         if(type == 1){
-      //           this_.isMask = !this_.isMask;
-      //         }
+      getVinCode(imgcode,type){
+        let this_ = this;
+        this_.bus.$emit('loading', true);
+        this_.$api.post({
+          url: this_.$apiUrl.api.VinOCR,
+          params: {
+            imgcode : imgcode,
+            openid : sessionStorage.getItem('openid')
+          },
+          success: function (data) {
+            console.log(data);
+            if(data.State){
+              this_.keyWords = data.centent;
+              if(type == 1){
+                this_.isMask = !this_.isMask;
+              }
 
-      //       }else{
-      //         this_.bus.$emit('tipShow', data.centent);
-      //       }
-      //       this_.bus.$emit('loading', false);
-      //     }
-      //   });
-      // },
+            }else{
+              this_.bus.$emit('tipShow', data.centent);
+            }
+            this_.bus.$emit('loading', false);
+          }
+        });
+      },
       //关闭弹层
-      // closeDialog(){
-      //   this.isMask = !this.isMask;
-      // },
-      // imgLoaded(){
-      //     console.log('图片加载完成~');
-      // },
+      closeDialog(){
+        this.isMask = !this.isMask;
+      },
+      imgLoaded(){
+          console.log('图片加载完成~');
+      },
       //重新识别
-      // getCutImg(){
-      //   this.option.crop.getImage('Base64', 'image/jpg', 2).then(imageData => {
-      //     if (Object.prototype.toString.call(imageData) === '[object Blob]') {
-      //          imageData =  window.URL.createObjectURL(imageData)
-      //      }
-      //      console.log("剪裁");
-      //      console.log(imageData);
-      //   })
-      // },
+      getCutImg(){
+        this.getVinCode(this.option.img);
+      },
       //查询
       winProduct(e){
         if(this.isLogin){
@@ -462,9 +455,9 @@
         }
       },
       //查看解码
-      // jiema(){
-      //   this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:0,categoryName:"",mb001:this.mb001}});
-      // },
+      jiema(){
+        this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:0,categoryName:"",mb001:this.mb001}});
+      },
       //点击产品类别
       openWin(e){
         if(this.isLogin){
