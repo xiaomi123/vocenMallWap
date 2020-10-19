@@ -76,7 +76,10 @@
           <div class="ub ub-ac" style="margin-top: 1rem;">
             <div class="ub ub-ac ub-f1" v-if="isCart">
               <div class="ub ub-ver" @click="detail(list)">
-                <div class="ub ub-f1 text-red"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(list.params.price)}}</em></div>
+                <div class="ub ub-f1 text-red" v-show="list.prod[5].indexOf('开发中') <= -1">
+                  <em style="font-size: 1rem;">￥</em>
+                  <em style="font-size: 1.4rem;">{{parseInt(list.params.price)}}</em>
+                </div>
                 <div class="ub" v-if="buyRecord.length != 0">
                   <template v-for="(item,index) in buyRecord">
                     <div class="buy-text" v-if="list.prod[5] == item.th004">{{item.date}}购买了{{item.qty}}个</div>
@@ -142,7 +145,12 @@
           </div>
           <div class="ub ub-ac" style="margin-top: 1rem;" @click="detail_1(item)">
             <div class="ub">
-              <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(item.price)}}</em></div>
+              <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')">
+                <template v-if="item.mb001.indexOf('开发中') <= -1">
+                  <em style="font-size: 1rem;">￥</em>
+                  <em style="font-size: 1.4rem;">{{parseInt(item.price)}}</em>
+                </template>
+              </div>
              <!-- <template v-for="(list,index) in buyRecord"> -->
                 <div class="ub buy-text" style="margin-left: 1rem;" :name="item.mb001"></div>
               <!-- </template -->
