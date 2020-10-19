@@ -29,7 +29,7 @@
 	  				</ul>
 	  			</li>
 	  		</ul>
-	  		
+
 	  		<div class="cart_footer">
 		  		<p>
 						<label class="priceTo">共<i>{{subNum}}</i>件,总金额￥<em>{{subMoney.toFixed(2)}}</em></label>
@@ -37,13 +37,13 @@
 					<input type="button" value="提交" @click="toSubmit()" style="background-color:#ff7f50" />
 	  	  </div>
 			</div>
-  		
+
   	</div>
-  	
+
   	<!--收货地址、发货详情预览结束-->
   	<div class="cart_main">
   		<div class="dpt_content">
-	  		
+
 	  		<!--品牌切换内容开始-->
 				<div class="dpt_contain">
 					<div class="index_dpt">
@@ -60,9 +60,9 @@
 					</div>
 				</div>
 				<!--品牌切换内容结束-->
-	  		
+
   		</div>
-  		
+
 			<!--购物车、缺货切换内容开始-->
 			<ul class="cart_tab">
 				<li :class="carIndex==0?'active':''" @click="cartTab(0,cartList)"><em></em>购物车({{allNum}})</li>
@@ -75,7 +75,7 @@
 				</li>
 			</ul>
 			<!--购物车、缺货切换内容结束-->
-			
+
 			<div v-show="carIndex==0">
 	  		<ul class="product_list cart_list">
 	  	  	<li v-for="(item,index) in cartList" @click="isActive(index,cartList)" :class="item.ck?'active':''">
@@ -102,14 +102,14 @@
 	  	  			<input v-if="item.state == '产品不存在'" type="text" v-model="item.s_qty" class="cartNo" readonly="readonly" />
 	  	  			<cart-view v-else :cartList="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></cart-view>
 	  	  		</div>
-	  	  		
+
 	  	  	</li>
 	  	  </ul>
 	  	  <p v-show="cartList.length == 0 && isLoad" class="com_noData">暂无数据</p>
 			</div>
-			
+
   	</div>
-  	
+
   	<div v-show="carIndex==1">
   		<ul class="product_list cart_list">
   	  	<li v-for="(item,index) in shortList" @click="isActive(index,shortList)" :class="item.ck?'active':''">
@@ -135,12 +135,12 @@
   	  			<input v-if="item.state == '产品不存在'" type="text" v-model="item.s_qty" class="cartNo" readonly="readonly" />
   	  			<cart-view v-else :cartList="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></cart-view>
   	  		</div>
-  	  		
+
   	  	</li>
   	  </ul>
   	  <p v-show="shortList.length == 0 && isLoad" class="com_noData">暂无数据</p>
   	</div>
-  	
+
   	<div class="cart_footer">
   		<p>
   			<span v-show="cartList.length>0">
@@ -155,9 +155,9 @@
 			<input type="button" value="提交订单" v-if="isEditor" @click="toCount()" />
 			<input type="button" value="删除" v-else @click="deletCart()" />
   	</div>
-  	
+
   	<footer-view></footer-view>
-  	
+
   </div>
 </template>
 
@@ -219,7 +219,7 @@ export default {
 				}else if(this_.carIndex == 1){
 					this_.shortNum = this_.shortNum + cartParm.chNum;
 				}
-				 
+
   		}else if(cartParm.type == 'cut'){
 	      //this_.priceTotal = Number(this_.priceTotal) - cartParm.chPrice * cartParm.chNum;
 				this_.qtyTotal = parseInt(this_.qtyTotal) - cartParm.chNum;
@@ -230,7 +230,7 @@ export default {
 					this_.shortNum= this_.shortNum - cartParm.chNum;
 				}
 			}
-  		
+
   		let curCart = [];
   		if(this_.carIndex == 0){
   			curCart = this_.cartList;
@@ -241,7 +241,7 @@ export default {
   		for(let i=0;i<curCart.length;i++){
   			this_.priceTotal = this_.priceTotal + parseInt(curCart[i].qty)*Number(curCart[i].price);
   		}
-  		
+
     });
     //点击其他地方，品牌弹层隐藏
     　　document.addEventListener('click',(e)=>{
@@ -267,7 +267,7 @@ export default {
   		this_.shortNum = 0;
   		this_.priceTotal = 0;
   		this_.qtyTotal = 0;
-  		
+
   		//提交订单传参
   		this_.subCartsInfo.c_id = this_.userInfo.dataset[0].c_id;
   		this_.subCartsInfo.c_login = this_.userInfo.dataset[0].c_login;
@@ -279,7 +279,7 @@ export default {
   		this_.subCartsInfo.r_addr = this_.userInfo.dataset1[index].ma027;
   		this_.subCartsInfo.kf = this_.userInfo.dataset1[index].kf;
   		this_.subCartsInfo.ma075 = this_.userInfo.dataset1[index].ma075;
-  		
+
   	},
   	//获取选中品牌品类
   	curDpt:function(){
@@ -295,7 +295,7 @@ export default {
   				this_.dptChange(i);
   			}
   		}
-  		
+
   	},
   	//品牌切换
   	dptSwitch:function(index){
@@ -304,12 +304,12 @@ export default {
   		this_.isEditor = true;//初始化编辑状态
   		if(this_.dptIndex != index){
   			this_.dptIndex = index;//品牌index
-	  		
+
 	  		//logo切换
 	  		let ma017 = this_.userInfo.dataset1[index].ma017;
 	  		let dpt = this_.userInfo.dataset1[index].dpt;
 				this_.swithLogo(ma017,dpt);
-	  		
+
 	  		if(this_.userInfo.dataset1[index].dpt.search("配件二部") != -1){
 					this_.userInfo.dataset[0].c_dpt = '轿车';
 				}else if(this_.userInfo.dataset1[index].dpt.search("配件一部") != -1 ){
@@ -329,16 +329,16 @@ export default {
 				this_.userInfo.dataset[0].ma085 = this_.userInfo.dataset1[index].ma085;
 				this_.userInfo.dataset[0].mr003 = this_.userInfo.dataset1[index].mr003;
 				this_.userInfo.dataset[0].yw = this_.userInfo.dataset1[index].yw;
-				
+
 				sessionStorage.setItem("userinfo",JSON.stringify(this_.userInfo)); //存入修改用户名后userInfo
 				this_.dptChange(index);
   		}
   	},
-  	
+
   	//logo切换
   	swithLogo:function(ma017,dpt){
   		let this_ = this;
-  		if(ma017 == '200'){
+  		if(ma017 == '200' || ma017 == '205'){
 				//江陵
 				this_.dptLogo = require('../assets/images/logo/img_index_logoJl.png');
 			}else if(ma017 == '201' || ma017 == '210'){
@@ -348,7 +348,7 @@ export default {
 				}else{
 					this_.dptLogo = require('../assets/images/logo/img_index_logoWcWs.png');
 				}
-				
+
 			}else if(ma017 == '211'){
 				//韩系智选
 				this_.dptLogo = require('../assets/images/logo/img_index_logoHxZx.png');
@@ -361,7 +361,7 @@ export default {
 					//韩系秀泰
 					this_.dptLogo = require('../assets/images/logo/img_index_logoHxXt.png');
 				}
-				
+
 			}else if(ma017 == '213'){
 				//韩系吉尔摩
 				this_.dptLogo = require('../assets/images/logo/img_index_logoHxJem.png');
@@ -371,16 +371,19 @@ export default {
 			}else if(ma017 == '203'){
 				//吉利吉尔摩
 				this_.dptLogo = require('../assets/images/logo/img_index_logoJlJem.png');
+			}else if(ma017 == '204'){
+				//微车弘涂
+				this_.dptLogo = require('../assets/images/logo/img_index_logoWcHt.png');
 			}
   	},
-  	
-  	
-  	
+
+
+
   	//购物车切换
   	cartTab:function(index,item){
   		let this_ = this;
   		this_.carIndex=index;
-  		
+
   		//判断是否全选，以及数量金额总数
 			let ckList = [];
 			this_.priceTotal = 0;
@@ -405,40 +408,40 @@ export default {
 				//无数据
 				this_.isAll = false;
 			}
-  		
+
   	},
-  	
-  	
+
+
   	//产品复选
   	isActive:function(index,list){
   		let this_ = this;
       //如果已经选中了，那就取消选中，如果没有，则选中
       if(list[index].ck){
       	list[index].ck = false;
-      	
+
       	//是否全选
         this_.isAll = false;
-        
+
         //设置所有选中项总数
 				this_.priceTotal = Number(this_.priceTotal) - Number(list[index].price) * parseInt(list[index].qty);
 				this_.qtyTotal = parseInt(this_.qtyTotal) - parseInt(list[index].qty);
-        
+
       }else{
        	list[index].ck = true;
-       	
+
        	//设置所有选中项总数
 				this_.priceTotal = Number(this_.priceTotal) + Number(list[index].price) * parseInt(list[index].qty);
 				this_.qtyTotal = parseInt(this_.qtyTotal) + parseInt(list[index].qty);
-       	
+
        	//是否全选
 	  		let ckList = list.filter(item => item.ck);
        	if(ckList.length == list.length){
        		this_.isAll = true;
        	}
       }
-  		
+
   	},
-  	
+
   	//全选
   	checkAll:function(){
   		let this_ = this;
@@ -456,8 +459,8 @@ export default {
 		      }else{
 		      	this_.cartList[i].ck = false;
 		      }
-		      
-		      
+
+
 		    }
 			}else if(this_.carIndex == 1){
 				//缺货
@@ -472,7 +475,7 @@ export default {
 		      }
 		    }
 			}
-  		
+
   	},
   	//删除
   	deletCart(){
@@ -485,8 +488,8 @@ export default {
   			//缺货
   			detList = this_.shortList.filter(item => item.ck);//批量删除数据
   		}
-  		
-  		
+
+
   		//购物车总数
   		let totalNum = parseInt(sessionStorage.getItem("cartTotal"));
 		  let detArr = [];//删除传参
@@ -514,11 +517,11 @@ export default {
 	        		}else if(this_.carIndex == 1){
 	        			this_.shortList = this_.shortList.filter(item => !item.ck);
 	        		}
-	        		
+
 	        		//公共footer购物车数量
 			  			sessionStorage.setItem("cartTotal", totalNum); //存入购物车总数
 			  			this_.bus.$emit('cartTotal', totalNum);
-	        		
+
 	        		//设置总金额和数量
 	        		this_.priceTotal = 0;
 							this_.qtyTotal = 0;
@@ -526,15 +529,15 @@ export default {
 	        		this_.bus.$emit('tipShow', data.Message);
 							//this_.addFail(cur);
 	        	}
-	        	
+
 	        }
 	      });
   		}else{
   			this_.bus.$emit('tipShow', '请选择删除产品');
   		}
-  		
+
   	},
-  	
+
   	//购物车查询
   	getCart:function(index,type,isCount){
   		let this_ = this;
@@ -573,11 +576,11 @@ export default {
 							  	if(mb003New.indexOf('（）') != -1){
 							  		mb003New = mb003New.replace('（）',"");
 							  	}
-							  	
+
 							  }
 							  data[i].mb003New = mb003New;
-		        		
-							 
+
+
 							  //显示价格
 							  data[i].tj = false;
 						    if(data[i].i_type_no == '1' || data[i].i_type_no == '4'){
@@ -591,11 +594,11 @@ export default {
 							  		}
 							  	}
 							  }
-						    
+
 						    if(data[i].a_isend == '1'){
 						    	data[i].s_state = '活动已结束';
 						    }
-						    
+
 						    //购物车数据格式统一
 						    data[i].a_type_no = data[i].i_type_no;
 						    data[i].mb001=data[i].s_i_mb001;
@@ -605,16 +608,16 @@ export default {
 						    data[i].aprice = '';
 						    data[i].oem = data[i].s_oem;
 						    data[i].qty = data[i].s_qty;
-						    
+
 						    data[i].cartType = 'cart';//判断是否为购物车页面数据
-						    
+
 						    //购物车数量
 						    if(type == '0'){
 						    	this_.allNum = this_.allNum + parseInt(data[i].s_qty);
 						    }else if(type == '1'){
 						    	this_.shortNum = this_.shortNum + parseInt(data[i].s_qty);
 						    }
-						    
+
 						    //是否选中
 						    if((data[i].s_is_sortage == 'False') && (parseInt(data[i].s_qty)>0)){
 						    	data[i].ck = true;
@@ -624,13 +627,13 @@ export default {
 						    	data[i].ck = false;
 						    }
 					    }
-					    
-					    
+
+
 	        	}
-        		
-        		
+
+
         	}
-        	
+
       		if(isCount=='list'){
       			if(type == '0'){
 	      			this_.cartList = data;
@@ -643,15 +646,15 @@ export default {
 	      			this_.isAll = false;
 	      		}
       		}
-        	
-        	
+
+
         }
       });
-      
-     
+
+
   	},
-  	
-  	
+
+
   	//提交订单
   	toCount:function(){
   		let this_ = this;
@@ -674,7 +677,7 @@ export default {
   				}
   			}
   		}
-  		
+
   		if(this_.subCartsInfo.cart.length>0){
   			this_.bus.$emit('loading', true);
 	  		this_.$api.post({
@@ -686,14 +689,14 @@ export default {
 	        		cartTip = data.centent + '已结束，无法提价订单，请删除！';
 	        		return false;
 	        	}
-	        	
+
 	        }
 	      });
   		}else{
   			this_.bus.$emit('tipShow', '请选择产品！');
   			return false;
   		}
-  		
+
       this_.$api.post({
         url: this_.$apiUrl.api.PlaceOrder + '?ma017=' + this_.userInfo.dataset[0].ma017 + '&type=' + this_.storagePlan,
         params:this_.subCartsInfo,
@@ -704,7 +707,7 @@ export default {
         			this_.subNum = parseInt(this_.subNum) + parseInt(data[i].data.footer[0].th008);
         			this_.subMoney = parseFloat(this_.subMoney) + parseFloat(data[i].data.footer[0].th013);
         		}
-        		
+
         		let ylList = data[i].data.rows;
         		for(var j=0;j<ylList.length;j++){
         			if(ylList[j].th008 == 0){
@@ -718,9 +721,9 @@ export default {
         }
       });
   		this_.toDetail = true;
-  		
+
   	},
-  	
+
   	//提交
   	toSubmit:function(){
   		let this_ = this;
@@ -742,9 +745,9 @@ export default {
         	this_.$router.push('/userCenter/order');
         }
       });
-  		
+
   	},
-  	
+
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div style="font-size: 1.2rem;">
     <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in swiper">
+      <van-swipe-item v-for="(image, index) in swiper" class="canvImg">
         <img :src="imgUrl+image">
       </van-swipe-item>
     </van-swipe>
@@ -37,7 +37,7 @@
     <div class="uinn bg-white">
       <h2 class="detail-title">图文详情</h2>
       <div v-html="info.content" id="cvs" style="display: none;"></div>
-      <div>
+      <div class="canvImg">
         <img v-for="img in pics" :src="img" />
       </div>
     </div>
@@ -49,6 +49,7 @@
 </template>
 <script>
 import Consts from '../../api/const.js'
+import Watermark from './../../../static/warterMark.js';
 export default {
   name: 'proDetail',
   data () {
@@ -71,6 +72,13 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
+      /*if(sessionStorage.getItem('brandType') == 3){
+        Watermark.set('江陵动力')
+      }else if(sessionStorage.getItem('brandType') == 4){
+        Watermark.set('弘途')
+      }*/
+
+
       this_.imgUrl = Consts.apiConfig.imgPath;
       document.title = this_.$route.query.title;
 

@@ -146,7 +146,10 @@
       this.$nextTick(function() {
         let this_ = this;
         document.title = this_.$route.query.title;
-        sessionStorage.setItem('brandType',this_.$route.query.type);
+        if(!this_.$utils.check.isEmpty(this_.$route.query.type)){
+          sessionStorage.setItem('brandType',this_.$route.query.type);
+        }
+        
         this_.loadSwiper();
         sessionStorage.removeItem('history');
         if(sessionStorage.getItem('epcrode') != null){
@@ -200,6 +203,14 @@
               this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
             }
             this_.showText = true;
+          }else{
+            this_.showText = true;
+            if(sessionStorage.getItem('brandType') == 3){
+              this_.showTextDesc = "欢迎江陵耐用品牌授权代理商“"+ userdata.dataset[0].ma002 +"”查询下单！";
+            }else if(sessionStorage.getItem('brandType') == 4){
+              this_.showTextDesc = "欢迎弘途品牌授权代理商“"+ userdata.dataset[0].ma002 +"”查询下单！";
+            }
+
           }
 
           this_.isShowFooter = !this_.isShowFooter;
@@ -311,6 +322,13 @@
               if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
+                this_.showText = true;
+                if(this_.$route.query.type == 3){
+                  this_.showTextDesc = "欢迎江陵耐用品牌授权代理商“"+ userdata.dataset[0].ma002 +"”查询下单！";
+                }else if(this_.$route.query.type == 4){
+                  this_.showTextDesc = "欢迎弘途品牌授权代理商“"+ userdata.dataset[0].ma002 +"”查询下单！";
+                }
+
               }else{
                 this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
                 if(this_.$route.query.type == 3){

@@ -340,7 +340,7 @@ export default {
   		if(ma017 == '200' || ma017 == '205'){
 				//江陵
 				this_.dptLogo = require('../../assets/images/logo/img_index_logoJl.png');
-			}else if(ma017 == '201' || ma017 == '210' || ma017 == '204'){
+			}else if(ma017 == '201' || ma017 == '210'){
 				//沃森
 				if(dpt.search("丰田") != -1){
 					this_.dptLogo = require('../../assets/images/logo/img_index_logoRxWs.png');
@@ -370,6 +370,9 @@ export default {
 			}else if(ma017 == '203'){
 				//吉利吉尔摩
 				this_.dptLogo = require('../../assets/images/logo/img_index_logoJlJem.png');
+			}else if(ma017 == '204'){
+				//微车弘涂
+				this_.dptLogo = require('../../assets/images/logo/img_index_logoWcHt.png');
 			}
   	},
 
