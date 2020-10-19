@@ -362,7 +362,7 @@
           //this_.option.img = dataUrl;
           //this_.getVinCode(imgcode,1);
           sessionStorage.setItem('vinImg',dataUrl);
-          this.$router.push({path:'/proSearch/products1'});
+          this_.$router.push({path:'/proSearch/products1'});
         }
        reader.readAsDataURL(img1);
       },
@@ -399,7 +399,7 @@
             //this_.option.img = e.target.result;
             //this_.getVinCode(imgcode,1);
             sessionStorage.setItem('vinImg',e.target.result);
-            this.$router.push({path:'/proSearch/products1'});
+            this_.$router.push({path:'/proSearch/products1'});
             //this.$router.push({path:'/proSearch/products1', query: {img:e.target.result}});
         }
       },

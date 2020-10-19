@@ -143,9 +143,9 @@
           <div class="ub ub-ac" style="margin-top: 1rem;" @click="detail_1(item)">
             <div class="ub">
               <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(item.price)}}</em></div>
-              <template v-for="(list,index) in buyRecord">
-                <div class="ub buy-text" style="margin-left: 1rem;" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
-              </template>
+             <!-- <template v-for="(list,index) in buyRecord"> -->
+                <div class="ub buy-text" style="margin-left: 1rem;" :name="item.mb001"></div>
+              <!-- </template -->
             </div>
             <div class="ub ub-f1 ub-pe text-primary">详情购买</div>
           </div>
@@ -612,6 +612,7 @@
             this.p = 1;
             this.searchList = [];
             this.buyRecord = [];
+            this.tabCurrent = 1;
             this.attrSearch();
           }else{
             this.bus.$emit('tipShow', "至少输入2位");
@@ -702,21 +703,28 @@
               ma001 : this_.userInfo.dataset[0].ma001
             },
             success: function (data) {
-              console.log("-----购买记录-----");
+              console.log("-----购买记录-----:");
               console.log(data);
               if(data.length != 0){
-                if(this_.p > 1){
-                  this_.buyRecord = this_.buyRecord.concat(data);
+                if(this_.tabCurrent == 1){ //自有数据源
+                  data.forEach((item,index) => {
+                    document.getElementsByName(item.th004).forEach((list,key) => {
+                      list.innerHTML = item.date +'购买了'+ item.qty + '个';
+                    })
+                  })
                 }else{
-                  this_.buyRecord = data;
+                  if(this_.p > 1){
+                    this_.buyRecord = this_.buyRecord.concat(data);
+                  }else{
+                    this_.buyRecord = data;
+                  }
+                  console.log(this_.buyRecord);
                 }
-                console.log(this_.buyRecord);
               }
             	this_.bus.$emit('loading', false);
             }
           });
         }
-        //this_.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
       },
       onSelect(evt) {
         this.show = false;
@@ -756,7 +764,6 @@
           //this_.getVinCode(imgcode,1);
           sessionStorage.setItem('vinImg',dataUrl);
           this_.$router.push({path:'/proSearch/products1'});
-          // this_.$router.push({path:'/proSearch/products1', query: {img:dataUrl}});
         }
        reader.readAsDataURL(img1);
       },
