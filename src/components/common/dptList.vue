@@ -58,7 +58,7 @@ export default {
   				this_.swithLogo(this_.userInfo.dataset1[i].ma017,this_.userInfo.dataset1[i].dpt);
   				this_.$emit('changetab',i);
   			}
-        
+
   		}
 
   	},
@@ -101,8 +101,8 @@ export default {
   	//logo切换
   	swithLogo:function(ma017,dpt){
   		let this_ = this;
-  		if(ma017 == '200'){
-				//江陵
+  		if(ma017 == '200' || ma017 == '205'){
+				//江陵,江陵耐用
 				this_.dptLogo = require('../../assets/images/logo/img_index_logoJl.png');
 			}else if(ma017 == '201' || ma017 == '210'){
 				//沃森

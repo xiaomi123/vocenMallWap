@@ -15,9 +15,12 @@ let setWatermark = (str) => {
 
   let cans = can.getContext('2d')
 
-  var img = new Image();
-  img.src = "./../../src/assets/images/lhq/img_mark_jl.png";
-  cans.drawImage(img,0,0,268,50);
+  /*var imgObj = new Image();
+  imgObj.src = "img_mark_jl.png";
+  imgObj.onload = function(){
+    cans.drawImage(imgObj,0,0,268,50);
+  };*/
+
 
   cans.rotate(-20 * Math.PI / 180)
   cans.font = '20px Vedana'
@@ -43,8 +46,6 @@ let setWatermark = (str) => {
     oldEle[i].appendChild(div);
     //oldEle[i].parentNode.insertBefore( div,oldEle[i] );
   }
-  console.log("suiyin");
-  console.log(oldEle)
   //oldEle.parentNode.appendChild(div);
   return id
 }
