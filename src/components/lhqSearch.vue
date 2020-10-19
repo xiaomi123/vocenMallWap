@@ -261,6 +261,7 @@
           url: this_.$apiUrl.api.WeChatLogin + '?openid=' + this_.$route.query.openid + '&type=' + this_.$route.query.type,
           params: {},
           success: function(data) {
+            console.log(data);
             this_.isShowFooter = !this_.isShowFooter;
             if (data.State) {
               let dataset2 = data.centent.userinfo.dataset2;
@@ -307,7 +308,6 @@
                   }
                 }
               });
-
               if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo

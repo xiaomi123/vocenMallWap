@@ -314,6 +314,19 @@
 
         if(this_.tabCurrent == 0){
           if(this_.keyWords != ""){
+            //console.log("aaaaaaaaaaaaaaaaaaa:"+this_.keyWords);
+
+            if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
+              this_.checkedInput(0);
+              this_.keyWords = sessionStorage.getItem('vincode');
+              sessionStorage.removeItem('vincode');
+              //console.log("this_.keyWords--------------->:"+this_.keyWords);
+              this_.p = 1;
+              this_.proList = [];
+              this_.buyRecord = [];
+              //this_.vinCodePros();
+            }
+
             this_.vinCodePros();  //vin码
           }else{
             this_.showPlaceHolderText();
@@ -324,16 +337,6 @@
         }
 
         window.addEventListener('scroll',this_.handleScroll,true);
-
-        if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
-          this_.checkedInput(0);
-          this_.keyWords = sessionStorage.getItem('vincode');
-          sessionStorage.removeItem('vincode');
-          this_.p = 1;
-          this_.proList = [];
-          this_.buyRecord = [];
-          this_.vinCodePros();
-        }
 
         //判断滚动条到底部分页加载
         window.onscroll = function(){
@@ -432,7 +435,7 @@
       //vin码对应产品
       vinCodePros(){
         let this_ = this;
-        console.log(this_.keyWords);
+        //console.log('this_.keyWords------------>:'+this_.keyWords);
         this_.bus.$emit('loading', true);
         this_.$api.post({
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
