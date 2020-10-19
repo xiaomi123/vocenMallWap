@@ -72,12 +72,6 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
-      /*if(sessionStorage.getItem('brandType') == 3){
-        Watermark.set('江陵动力')
-      }else if(sessionStorage.getItem('brandType') == 4){
-        Watermark.set('弘途')
-      }*/
-
 
       this_.imgUrl = Consts.apiConfig.imgPath;
       document.title = this_.$route.query.title;
@@ -96,6 +90,12 @@ export default {
       }
       this_.init();
       this_.getParmas(); //适配车型
+
+      if(sessionStorage.getItem('brandType') == 3){
+        Watermark.set('江陵耐用')
+      }else if(sessionStorage.getItem('brandType') == 4){
+        Watermark.set('弘途耐用')
+      }
 
     })
   },
@@ -127,6 +127,7 @@ export default {
             })
           }
           this_.bus.$emit('loading', false);
+
           // if(data.State){
           //   if(data.cented.length !=0){
           //     this_.swiper = data.centent[0].sliderpics.split(',');

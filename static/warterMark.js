@@ -1,5 +1,5 @@
 'use strict'
-
+import './date/jquery-1.9.1.min.js'
 let watermark = {}
 
 let setWatermark = (str) => {
@@ -23,8 +23,8 @@ let setWatermark = (str) => {
 
 
   cans.rotate(-20 * Math.PI / 180)
-  cans.font = '20px Vedana'
-  cans.fillStyle = 'rgba(200, 200, 200, 0.50)'
+  cans.font = '12px Vedana'
+  cans.fillStyle = 'rgba(200, 200, 200, 0.90)'
   cans.textAlign = 'left'
   cans.textBaseline = 'Middle'
   cans.fillText(str, can.width / 3, can.height / 2)
@@ -39,12 +39,16 @@ let setWatermark = (str) => {
   div.style.width = '100%'
   div.style.height = '100%'
   div.style.background = 'url(' + can.toDataURL('image/png') + ') left top repeat'
-  //div.style.background = 'url("../../../assets/images/lhq/img_mark_jl.png") left top repeat'
+  //div.style.background = 'url("./img_mark_jl.png") left top repeat'
   //document.body.appendChild(div)
-  let oldEle = document.getElementsByClassName('canvImg');
+  //let oldEle = document.getElementsByClassName('canvImg');
+  let oldEle = $(".canvImg");
   for(let i=0;i<oldEle.length;i++){
-    oldEle[i].appendChild(div);
+    console.log("轮播")
+    console.log(oldEle[i])
+    ///oldEle[i].appendChild(div);
     //oldEle[i].parentNode.insertBefore( div,oldEle[i] );
+    oldEle[i].append(div);
   }
   //oldEle.parentNode.appendChild(div);
   return id
