@@ -39,7 +39,7 @@
     <!--主要内容开始-->
     <div class="proSearch_main">
       <h2 class="clearfix"><i class="iconfont">&#xe619;</i>耐用品系列<span>点击下方图标按品类查询<i class="iconfont">&#xe7d3;</i></span></h2>
-      <ul class="proSearch_list clearfix">
+      <ul class="proSearch_list clearfix" v-if="isShow">
         <li class='lhq' @click="openWin(0)"><div>离合器套装</div></li>
         <li class='ycg' @click="openWin(2)"><div>氧传感器</div></li>
         <li class='dhxq' @click="openWin(1)"><div>点火线圈</div></li>
@@ -138,7 +138,8 @@
         showTextDesc : "" ,//提示信息描述
         cateListText : [], //产品分类
         isShowFooter : false,
-        mb001 : ""
+        mb001 : "",
+        isShow : false
       }
     },
     mounted: function() {
@@ -195,6 +196,9 @@
           //判断是否含有弘途和江陵品牌
           if(this_.$utils.check.isEmpty(userdata)){
             this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
+            if(sessionStorage.getItem('brandType') == 3){
+              this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
+            }
             this_.showText = true;
           }
 
@@ -245,6 +249,7 @@
             if(res.code == 200){
               let a = res.data[2].categoryName+","+res.data[3].categoryName;
               this_.cateListText = [res.data[4].categoryName,res.data[1].categoryName,a];
+              this_.isShow = true;
             }
           }
         })
@@ -308,6 +313,9 @@
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
               }else{
                 this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
+                if(this_.$route.query.type == 3){
+                  this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
+                }
                 this_.showText = true;
               }
             } else{

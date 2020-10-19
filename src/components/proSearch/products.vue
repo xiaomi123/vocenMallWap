@@ -432,7 +432,7 @@
       //vin码对应产品
       vinCodePros(){
         let this_ = this;
-        console.log(this_.categoryName+";vincode查询");
+        console.log(this_.keyWords);
         this_.bus.$emit('loading', true);
         this_.$api.post({
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
