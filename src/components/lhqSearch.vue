@@ -177,13 +177,13 @@
         let this_ = this;
         if (this_.$utils.check.isEmpty(sessionStorage.getItem("token"))) {
           if(this_.$utils.check.isEmpty(this_.$route.query.openid)){
-            /*this_.bus.$emit('tipShow', "未获取到用户信息");
+            //this_.bus.$emit('tipShow', "未获取到用户信息");
             this_.isLogin = true;
             this_.isShowFooter = false;
 
             this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
-            this_.showText = true;*/
-            this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
+            this_.showText = true;
+            //this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
 
           }else{
             sessionStorage.setItem('openid',this_.$route.query.openid);
@@ -311,12 +311,12 @@
                 this_.showText = true;
               }
             } else{
-              /*this_.isLogin = true;
+              this_.isLogin = true;
               this_.isShowFooter = false;
 
               this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
-              this_.showText = true;*/
-              this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
+              this_.showText = true;
+              //this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
 
             }
           }
@@ -448,7 +448,8 @@
       //查询
       winProduct(e){
         if(this.isLogin){
-          this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          //this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
           return false;
         }
         if(e == 0 && this.keyWords != ""){
@@ -471,7 +472,8 @@
       //点击产品类别
       openWin(e){
         if(this.isLogin){
-          this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          //this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
           return false;
         }
         this.$router.push({path:'/proSearch/products', query: {words:"",type:0,categoryName:this.cateListText[e],mb001:this.mb001}});
@@ -480,7 +482,8 @@
       //vin点击小摄像头事件
       btnShow(){
         if(this.isLogin){
-          this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          //this.bus.$emit('tipShow', "请先登陆后，再进行查询");
+          this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
           return false;
         }
         this.show = true;
