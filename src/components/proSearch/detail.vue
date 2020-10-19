@@ -13,7 +13,7 @@
         <div class="left">
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
-          <p class="text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{cartList.price}}</em></p>
+          <p class="text-red" v-if="isShow"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em></p>
         </div>
         <div class="right cart-box" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
@@ -62,7 +62,7 @@ export default {
       cartList : {},
       tablepara : [], //适用车型
       api : "",
-      //isShow : false,
+      isShow : false,
       cartTotal : 0 ,//购物车数量
       isCart : false
       //isMall:true,//用于商城进入购物车隐藏
@@ -73,14 +73,16 @@ export default {
       let this_ = this;
       this_.imgUrl = Consts.apiConfig.imgPath;
       document.title = this_.$route.query.title;
-      console.log(this_.$route.query.obj)
-      if(this_.$route.query.obj != ""){
-        this_.cartList = this_.$route.query.obj;
+
+      if(!this_.$utils.check.isEmpty(sessionStorage.getItem('userinfo'))){
         this_.isCart = true;
-      }else{
-        if(!this_.$utils.check.isEmpty(sessionStorage.getItem('userinfo'))){
+        this_.isShow = true;
+        if(this_.$route.query.obj != ""){
+          this_.cartList = JSON.parse(this_.$route.query.obj);
+          //this_.isCart = true;
+        }else{
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
-          this_.isCart = true;
+          //this_.isCart = true;
           this_.init_1();
         }
       }
@@ -105,7 +107,7 @@ export default {
         url: this_.$apiUrl.api.ProductImage + "?mb001=" + this_.$route.query.mb001,
         params: {},
         success: function (data) {
-          console.log(data);
+          //console.log(data);
           if(data.content.length !=0){
             this_.swiper = data.content[0].sliderpics.split(',');
             this_.info = data.content[0];
@@ -152,8 +154,7 @@ export default {
           productNo : this_.$route.query.mb001
         },
         success: function (data) {
-          console.log("aaa");
-          console.log(data);
+          //console.log(data);
           if(data.State){
             let result = data.centent.data.data;
             const set = new Set();
@@ -174,8 +175,6 @@ export default {
               }
               this_.tablepara.push(obj)
             }
-            console.log(this_.tablepara);
-
           }
         }
       });

@@ -57,8 +57,8 @@
     },
     created: function(){
         let this_ = this;
-        this_.img = this_.$route.query.img;
-        this_.imageData = this_.$route.query.img;
+        this_.img = sessionStorage.getItem('vinImg');
+        this_.imageData = sessionStorage.getItem('vinImg');
     },
     methods: {
       imgLoaded(){

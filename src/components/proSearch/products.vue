@@ -46,7 +46,7 @@
     <!--主要内容开始-->
     <div class="proSearch_main">
       <template v-if="tabCurrent == 0">
-        <div class="list-item ub ub-ver" v-for="(list,index) in proList">
+        <div class="list-item ub ub-ver ub-pra" v-for="(list,index) in proList">
           <div class="ub">
            <template v-if="list.prod[5].indexOf('开发中') == -1">
              <div class="ub ub-pra img-box" @click="imgPreview(list.titlepicurl)">
@@ -76,7 +76,7 @@
           <div class="ub ub-ac" style="margin-top: 1rem;">
             <div class="ub ub-ac ub-f1" v-if="isCart">
               <div class="ub ub-ver" @click="detail(list)">
-                <div class="ub ub-f1 text-red"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{list.params.price}}</em></div>
+                <div class="ub ub-f1 text-red"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(list.params.price)}}</em></div>
                 <div class="ub" v-if="buyRecord.length != 0">
                   <template v-for="(item,index) in buyRecord">
                     <div class="buy-text" v-if="list.prod[5] == item.th004">{{item.date}}购买了{{item.qty}}个</div>
@@ -105,7 +105,7 @@
               <div  class="ub ub-ver ub-f1">
                 <div class="ub pro-title" v-if="item.dtype.indexOf('离合器') > -1">{{item.models}}</div>
                 <div class="ub pro-title" v-if="item.dtype.indexOf('点火线圈') > -1">{{item.series}}{{item.models}}&nbsp;{{item.displacement}}</div>
-                <div class="ub pro-title" v-if="item.dtype.indexOf('氧传感') > -1">{{item.models}}{{item.style}}</div>
+                <div class="ub pro-title" v-if="item.dtype.indexOf('氧传感') > -1">{{item.series}}{{item.models}}{{item.style}}</div>
                 <div class="ub umar-t" v-if="item.dtype.indexOf('氧传感') > -1">品名：<em class="sc-text">氧传感器</em>&nbsp;&nbsp;品号：<em class="sc-text">{{item.mb001}}</em></div>
                 <div class="ub umar-t" v-else-if="item.dtype.indexOf('离合器') > -1">品名：<em class="sc-text">离合器套装</em>&nbsp;&nbsp;品号：<em class="sc-text">{{item.mb001}}</em></div>
                 <div class="ub umar-t" v-else>品名：<em class="sc-text">{{item.dtype}}</em>&nbsp;&nbsp;品号：<em class="sc-text">{{item.mb001}}</em></div>
@@ -120,14 +120,14 @@
           <div class="ub ub-ver" v-if="item.dtype.indexOf('离合器') > -1" @click="detail_1(item)">
             <div class="ub umar-t">
               <em>发动机：<em class="sc-text">{{item.parm1}}</em></em>&nbsp;&nbsp;
-              <em class="sc-text">{{item.parm2}}</em>&nbsp;&nbsp;
+              <em>{{item.parm2}}</em>&nbsp;&nbsp;
             </div>
             <div class="ub umar-t">分离轴承：<em class="sc-text">{{item.style}}</em></div>
             <div class="ub umar-t">规格：<em class="sc-text">{{item.pspec}}</em></div>
           </div>
           <div class="ub ub-ver" v-if="item.dtype.indexOf('点火线圈') > -1" @click="detail_1(item)">
             <div class="umar-t">
-              <em>发动机：{{item.enginemodel}}</em>&nbsp;&nbsp;
+              发动机：<em class="sc-text">{{item.enginemodel}}</em>&nbsp;&nbsp;
             </div>
             <div class="umar-t" style="word-break: break-all;">OEM：<em class="sc-text">{{item.oem}}</em></div>
             <div class="ub umar-t">规格：<em class="sc-text">{{item.pspec}}</em></div>
@@ -142,7 +142,7 @@
           </div>
           <div class="ub ub-ac" style="margin-top: 1rem;" @click="detail_1(item)">
             <div class="ub">
-              <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{item.price}}</em></div>
+              <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(item.price)}}</em></div>
               <template v-for="(list,index) in buyRecord">
                 <div class="ub buy-text" style="margin-left: 1rem;" v-if="item.mb001 == list.th004">{{list.date}}购买了{{list.qty}}个</div>
               </template>
@@ -459,7 +459,11 @@
                 this_.getPorductPics(result);
                 this_.showEmpty = false;
               }else{
-                this_.showEmpty = true;
+                if(this_.p > 1){
+                  this_.showEmpty = false;
+                }else{
+                  this_.showEmpty = true;
+                }
               }
             }else{
               this_.bus.$emit('tipShow', data.Message);
@@ -501,7 +505,11 @@
                 this_.getPorductPics(result);
                 this_.showEmpty = false;
               }else{
-                this_.showEmpty = true;
+                if(this_.p > 1){
+                  this_.showEmpty = false;
+                }else{
+                  this_.showEmpty = true;
+                }
               }
             }
             this_.bus.$emit('loading', false);
@@ -535,8 +543,6 @@
           this_.proList = res;
         }
         // this_.proList = res;
-        // this_.dataPage = this_.proList.slice(0,this_.pages);
-
         let params_data = {};
         if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
           params_data = {
@@ -646,7 +652,9 @@
               this_.getBuyRecord(eprcodes);
               this_.showEmpty = false;
             }else{
-              if(this_.p == 1){
+              if(this_.p > 1){
+                this_.showEmpty = false;
+              }else{
                 this_.showEmpty = true;
               }
             }
@@ -746,7 +754,9 @@
           //let imgcode = dataUrl.split(',')[1];
           //this_.option.img = dataUrl;
           //this_.getVinCode(imgcode,1);
-          this_.$router.push({path:'/proSearch/products1', query: {img:dataUrl}});
+          sessionStorage.setItem('vinImg',dataUrl);
+          this_.$router.push({path:'/proSearch/products1'});
+          // this_.$router.push({path:'/proSearch/products1', query: {img:dataUrl}});
         }
        reader.readAsDataURL(img1);
       },
@@ -784,7 +794,8 @@
             //var imgcode = e.target.result.split(',')[1];
             // this_.option.img = e.target.result;
             // this_.getVinCode(imgcode,1);
-            this_.$router.push({path:'/proSearch/products1', query: {img:e.target.result}});
+            sessionStorage.setItem('vinImg',e.target.result);
+            this_.$router.push({path:'/proSearch/products1'});
         }
       },
       //上传图片获取VINCode
@@ -875,7 +886,7 @@
         };
         sessionStorage.setItem('history',JSON.stringify(obj));
         console.log('words:'+this.keyWords+";categoryName:"+this.categoryName);
-        this.$router.push({path:'/proSearch/detail', query:{obj:list.params,mb001:list.prod[5],title:this.$route.query.title}});
+        this.$router.push({path:'/proSearch/detail', query:{obj:JSON.stringify(list.params),mb001:list.prod[5],title:this.$route.query.title}});
 
       },
       //属性-详情
