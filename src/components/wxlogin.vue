@@ -45,7 +45,9 @@
       this.$nextTick(function() {
         let this_ = this;
         if (this_.$utils.check.isEmpty(this_.$route.query.openid)) {
-          this_.bus.$emit('tipShow', "未获取到用户信息");
+          if(this_.$utils.check.isEmpty(this_.$route.query.target)){
+            this_.bus.$emit('tipShow', "未获取到用户信息");
+          }
         } else {
           this_.weChartLogin();
         }

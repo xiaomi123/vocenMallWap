@@ -73,3 +73,17 @@
 .text-red{
   color: red;
 }
+/*.detail2_cont{
+  position:relative;
+}
+.watermark{
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:url(../images/lhq/img_mark_jl.png)repeat-y center center;
+}*/
+.canvImg{
+  position: relative;
+}
