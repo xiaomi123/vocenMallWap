@@ -49,6 +49,7 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
+      document.title = sessionStorage.getItem('pageTitle');
       this_.bus.$emit('footer', true);
     })
   },

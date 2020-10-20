@@ -73,7 +73,7 @@ export default {
     this.$nextTick(function () {
       let this_ = this;
       this_.imgUrl = Consts.apiConfig.imgPath;
-      document.title = this_.$route.query.title;
+      document.title = sessionStorage.getItem('pageTitle');
 
       if(!this_.$utils.check.isEmpty(sessionStorage.getItem('userinfo'))){
         this_.isCart = true;

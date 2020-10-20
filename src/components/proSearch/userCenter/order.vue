@@ -67,6 +67,7 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
+      document.title = sessionStorage.getItem('pageTitle');
       this_.GetOrder(this_.tabIndex,this_.pagIndex);//订单查询
       $(window).on('scroll', function () {
 		    // 判断是否滚动到底部的逻辑

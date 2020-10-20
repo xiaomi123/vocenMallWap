@@ -19,7 +19,7 @@
           :rotation="rotation"
         >
         </crop>
-      <div class="resize-desc">识别错了？请重新调整图片位置，然后<van-button class="button" type="warning" size="small" @click="getImageData">重新识别</van-button></div>
+      <div class="resize-desc">识别错了？请调整图片位置或圈定VIN码，然后<van-button class="button" type="warning" size="small" @click="getImageData">重新识别</van-button></div>
       <div class="dialog-grid">
         <div style="color: red;text-align: center;margin-bottom: 1rem;font-size: 0.875rem;">{{tipText}}</div>
         <input class="input-view" type="text" maxlength="17" v-model="code" placeholder="请输入VIN码" />
@@ -52,6 +52,7 @@
     },
     mounted: function() {
       this.$nextTick(function() {
+        document.title = sessionStorage.getItem('pageTitle');
         this.getVinCode();
       });
     },
