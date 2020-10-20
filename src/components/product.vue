@@ -287,7 +287,13 @@ export default {
   	toDetail:function(list,item){
   		let this_ = this;
       if(this_.userInfo.dataset[0].mr003.search("耐用") != -1){
-        this_.$router.push({path:'/proSearch/detail', query: {obj:list,mb001:item.mb001,title:this.$route.query.title,productId:'no'}});
+        if(this_.userInfo.dataset[0].mr003.search("江陵耐用") != -1){
+          sessionStorage.setItem('brandType',3);
+        }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
+          sessionStorage.setItem('brandType',4);
+        }
+        
+        this_.$router.push({path:'/proSearch/detail', query: {obj:JSON.stringify(list),mb001:item.mb001,title:'订单系统'}});
       }else{
         if(item.imgqty>0){
         	this_.$router.push({path:'/proDetail', query: {ma001:list.num,mb001:item.mb001,mb002:item.mb002,imgqty:item.imgqty}});
