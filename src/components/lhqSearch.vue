@@ -145,11 +145,20 @@
     mounted: function() {
       this.$nextTick(function() {
         let this_ = this;
-        document.title = this_.$route.query.title;
+        //document.title = this_.$route.query.title;
         if(!this_.$utils.check.isEmpty(this_.$route.query.type)){
           sessionStorage.setItem('brandType',this_.$route.query.type);
+          if(this_.$route.query.type == '3'){
+            sessionStorage.setItem('pageTitle',"江陵耐用查询系统");
+            document.title = "江陵耐用查询系统";
+          }else if(this_.$route.query.type == '4'){
+            sessionStorage.setItem('pageTitle',"弘途耐用查询系统");
+            document.title = "弘途耐用查询系统";
+          }
+        }else{
+          document.title = sessionStorage.getItem('pageTitle');
         }
-        
+
         this_.loadSwiper();
         sessionStorage.removeItem('history');
         if(sessionStorage.getItem('epcrode') != null){

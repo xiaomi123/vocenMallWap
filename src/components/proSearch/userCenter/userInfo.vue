@@ -46,6 +46,7 @@ export default {
   	//用户名获取焦点
   	nameFoucs:function(){
   		let this_ = this;
+      document.title = sessionStorage.getItem('pageTitle');
   		this_.oldName = this_.userName;
   	},
   	//修改用户名

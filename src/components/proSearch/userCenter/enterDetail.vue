@@ -73,7 +73,11 @@ export default {
     	isLoad:false,
     }
   },
-
+  mounted: function () {
+    this.$nextTick(function () {
+      document.title = sessionStorage.getItem('pageTitle');
+    })
+  },
   methods:{
   	//初始化日期
   	initDate:function(){

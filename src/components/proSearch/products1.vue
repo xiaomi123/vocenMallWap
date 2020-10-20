@@ -52,6 +52,7 @@
     },
     mounted: function() {
       this.$nextTick(function() {
+        document.title = sessionStorage.getItem('pageTitle');
         this.getVinCode();
       });
     },

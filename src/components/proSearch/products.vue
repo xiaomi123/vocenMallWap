@@ -280,7 +280,7 @@
       this.$nextTick(function() {
         let this_ = this;
         this_.imgUrl = Consts.apiConfig.imgPath;
-        document.title = this_.$route.query.title;
+        document.title = sessionStorage.getItem('pageTitle');
         this_.chexingObj = this_.$route.query.obj != undefined ? this_.$route.query.obj : "";
 
         if(!this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
@@ -322,19 +322,14 @@
 
         if(this_.tabCurrent == 0){
           if(this_.keyWords != ""){
-            //console.log("aaaaaaaaaaaaaaaaaaa:"+this_.keyWords);
-
             if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
               this_.checkedInput(0);
               this_.keyWords = sessionStorage.getItem('vincode');
               sessionStorage.removeItem('vincode');
-              //console.log("this_.keyWords--------------->:"+this_.keyWords);
               this_.p = 1;
               this_.proList = [];
               this_.buyRecord = [];
-              //this_.vinCodePros();
             }
-
             this_.vinCodePros();  //vin码
           }else{
             this_.showPlaceHolderText();
@@ -355,9 +350,9 @@
           //变量scrollHeight是滚动条的总高度
           var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
           //滚动条到底部的条件
-          if(scrollTop+windowHeight==scrollHeight){
+          let totalHeight = scrollTop+windowHeight+100
+          if(totalHeight > scrollHeight){
             //写后台加载数据的函数
-            console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
             if(this_.tabCurrent == 0){
               this_.p++;
               if(this_.keyWords != ""){
@@ -365,12 +360,6 @@
               }else{
                 this_.carsPros();  //品类查询
               }
-              // for(let i=0;i<this_.pages;i++){
-              //   if(this_.dataPage.length<this_.proList.length){
-              //     //console.log(this_.proList)
-              //     this_.dataPage.push(this_.proList[this_.dataPage.length]);
-              //   }
-              // }
             }else if(this_.tabCurrent == 1){
               this_.p++;
               this_.attrSearch();
@@ -444,7 +433,7 @@
       vinCodePros(){
         let this_ = this;
         //console.log('this_.keyWords------------>:'+this_.keyWords);
-        this_.bus.$emit('loading', true);
+        if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.post({
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
           params: {},
@@ -488,7 +477,7 @@
         let this_ = this;
         console.log(this_.categoryName+";品类查询");
         this_.tabCurrent = 0;
-        this_.bus.$emit('loading', true);
+        if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.post({
           url : this_.$apiUrl.api.ProductByVehicle,
           params :{
@@ -590,7 +579,7 @@
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
           success: function (data) {
-            console.log('--------------缩略图--------------------');
+            //console.log('--------------缩略图--------------------');
             console.log(data);
             if(data.State){
               let infos = data.centent;
@@ -602,14 +591,6 @@
                   }
                 }
               }
-              // for(let i = 0; i < this_.proList.length; i++){
-              //   for(let m = 0; m < infos.length; m++){
-              //     if(infos[m].mb001 == this_.proList[i].prod[5]){
-              //       this_.$set(this_.proList[i], 'titlepicurl', infos[m].picurl);
-              //       this_.$set(this_.proList[i], 'params', infos[m].data);
-              //     }
-              //   }
-              // }
             }
           }
         });
@@ -646,12 +627,11 @@
         }else{
           mr003 = this_.userInfo.dataset[0].mr003;
         }
-        this_.bus.$emit('loading', true)
+       if(this_.p == 1){ this_.bus.$emit('loading', true);}
         this_.$api.get({
           url: this_.$apiUrl.api.GetProdctList + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.attrKey + '&type=&car=&brand=' + mr003 + '&openid='+sessionStorage.getItem('openid') + '&categoryName=' + this_.categoryName + '&pageindex=' + this.p + '&pagesize=' + this_.pageRows,
           params: {},
           success: function (data) {
-            console.log("-------------------");
             console.log(data);
             this_.tabCurrent = 1;
             if(data.length != 0){
