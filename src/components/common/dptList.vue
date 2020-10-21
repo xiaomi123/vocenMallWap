@@ -50,7 +50,10 @@ export default {
   		let this_ = this;
   		for(var i=0;i<this_.userInfo.dataset1.length;i++){
         if(this_.userInfo.dataset1[i].mr003 == '江陵耐用'){
-        	this_.userInfo.dataset1[i].dpt = '配件一部江陵-弘途';
+        	this_.userInfo.dataset1[i].dpt = '配件一部耐用-江陵';
+        	sessionStorage.setItem("userinfo",JSON.stringify(this_.userInfo));
+        }else if(this_.userInfo.dataset1[i].mr003 == '弘途耐用'){
+        	this_.userInfo.dataset1[i].dpt = '配件一部耐用-弘途';
         	sessionStorage.setItem("userinfo",JSON.stringify(this_.userInfo));
         }
   			if((this_.userInfo.dataset[0].ma015 == this_.userInfo.dataset1[i].ma015) && (this_.userInfo.dataset[0].ma017 == this_.userInfo.dataset1[i].ma017)){

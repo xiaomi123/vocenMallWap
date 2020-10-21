@@ -13,8 +13,8 @@
 
 		  	<!--tab切换内容开始-->
 		    <ul class="login_tab clearfix">
-		    	<li @click="cur=0" :class="{active:cur==0}">用户名登陆</li>
-		    	<li @click="cur=1" :class="{active:cur==1}">手机号登陆</li>
+		    	<li @click="cur=0" :class="{active:cur==0}" style="width:100%;">用户名登陆</li>
+		    	<!-- <li @click="cur=1" :class="{active:cur==1}">手机号登陆</li> -->
 		    </ul>
 		    <!--tab切换内容结束-->
 
@@ -36,7 +36,7 @@
 		    <!--用户名登陆内容结束-->
 
 		    <!--手机号登陆内容开始-->
-		    <div class="login_tabCont" v-show="cur==1">
+		    <!-- <div class="login_tabCont" v-show="cur==1">
 		    	<ul class="login_list">
 		    		<li>
 		    			<i><img src="../assets/images/common/icon_loginList1.png" alt="" /></i>
@@ -50,7 +50,7 @@
 		    		</li>
 		    	</ul>
 		    	<input type="button" value="登录" class="login_btn" @click="yzmLogin()" />
-		    </div>
+		    </div> -->
 		    <!--手机号登陆内容结束-->
 	    </div>
 	  </div>
@@ -152,14 +152,14 @@ export default {
 				          }
 				          localStorage.setItem("isRem", this_.isRem);
 				          //this_.$router.push('/index');
-                  
+
                   //登录成功后跳转index.vue还是lhqSearch.vue
                   if(this_.targetUrl == "search"){
                     this_.$router.push('/lhqSearch')
                   }else{
                     this_.$router.push('/index');
                   }
-                  
+
 			        	}else{
 			        		this_.bus.$emit('tipShow', data.Message);
 			        	}
