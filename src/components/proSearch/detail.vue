@@ -81,6 +81,7 @@ export default {
         if(this_.$route.query.title == '订单系统'){
           this_.isCart = false;
           this_.isShow = false;
+          document.title = '订单系统';
         }
 
         if(this_.$route.query.obj != ""){
