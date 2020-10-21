@@ -321,20 +321,37 @@
         })
 
         if(this_.tabCurrent == 0){
-          if(this_.keyWords != ""){
-            if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
-              this_.checkedInput(0);
-              this_.keyWords = sessionStorage.getItem('vincode');
-              sessionStorage.removeItem('vincode');
-              this_.p = 1;
-              this_.proList = [];
-              this_.buyRecord = [];
-            }
-            this_.vinCodePros();  //vin码
+          console.log("vincode:"+sessionStorage.getItem('vincode'));
+          if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
+            this_.checkedInput(0);
+            this_.keyWords = sessionStorage.getItem('vincode');
+            sessionStorage.removeItem('vincode');
+            this_.p = 1;
+            this_.proList = [];
+            this_.buyRecord = [];
+            this_.vinCodePros();
           }else{
-            this_.showPlaceHolderText();
-            this_.carsPros();  //品类查询
+            if(this_.keyWords != ""){
+              this_.vinCodePros();
+            }else{
+              this_.showPlaceHolderText();
+              this_.carsPros();  //品类查询
+            }
           }
+          // if(this_.keyWords != ""){
+          //   if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
+          //     this_.checkedInput(0);
+          //     this_.keyWords = sessionStorage.getItem('vincode');
+          //     sessionStorage.removeItem('vincode');
+          //     this_.p = 1;
+          //     this_.proList = [];
+          //     this_.buyRecord = [];
+          //   }
+          //   this_.vinCodePros();  //vin码
+          // }else{
+          //   this_.showPlaceHolderText();
+          //   this_.carsPros();  //品类查询
+          // }
         }else if(this_.tabCurrent == 1){ //综合查询
           this_.attrSearch();
         }

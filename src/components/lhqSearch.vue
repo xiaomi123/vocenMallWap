@@ -261,6 +261,7 @@
       },
       category(){
         let this_ = this;
+        console.log("1111111111")
         this_.$api.post({
           url : this_.$apiUrl.api.ProductCategoryByUsr,
           params :{},
