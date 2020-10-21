@@ -83,9 +83,9 @@ export default {
           this_.isShow = false;
           document.title = '订单系统';
         }
-
-        if(this_.$route.query.obj != ""){
-          this_.cartList = JSON.parse(this_.$route.query.obj);
+         let obj = sessionStorage.getItem('proObj');
+        if(obj != ""){
+          this_.cartList = JSON.parse(obj);
 
           //this_.isCart = true;
         }else{

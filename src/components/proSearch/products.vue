@@ -884,7 +884,10 @@
         };
         sessionStorage.setItem('history',JSON.stringify(obj));
         console.log('words:'+this.keyWords+";categoryName:"+this.categoryName);
-        this.$router.push({path:'/proSearch/detail', query:{obj:JSON.stringify(list.params),mb001:list.prod[5],title:this.$route.query.title}});
+        //this.$router.push({path:'/proSearch/detail', query:{obj:JSON.stringify(list.params),mb001:list.prod[5],title:this.$route.query.title}});
+        
+        sessionStorage.setItem('proObj',JSON.stringify(list.params));
+        this.$router.push({path:'/proSearch/detail', query:{mb001:list.prod[5],title:this.$route.query.title}});
 
       },
       //属性-详情
@@ -896,7 +899,10 @@
         };
         sessionStorage.setItem('history',JSON.stringify(obj));
         console.log('words:'+this.attrKey+";categoryName:"+this.categoryName);
-        this.$router.push({path:'/proSearch/detail', query:{obj:"",mb001:list.mb001,title:this.$route.query.title}});
+        //this.$router.push({path:'/proSearch/detail', query:{obj:"",mb001:list.mb001,title:this.$route.query.title}});
+        
+        sessionStorage.setItem('proObj',"");
+        this.$router.push({path:'/proSearch/detail', query:{mb001:list.mb001,title:this.$route.query.title}});
 
       },
       //从详情返回后记录参数

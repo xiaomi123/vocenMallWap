@@ -99,7 +99,7 @@ export default {
 			    		this_.searchDia = true;
 
 			    	}
-			    }, 300);
+			    }, 2000);
 
 	      }
   		}else{
@@ -292,8 +292,8 @@ export default {
         }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
           sessionStorage.setItem('brandType',4);
         }
-
-        this_.$router.push({path:'/proSearch/detail', query: {obj:JSON.stringify(list),mb001:item.mb001,title:'订单系统'}});
+        sessionStorage.setItem('proObj',JSON.stringify(list));
+        this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统'}});
       }else{
         if(item.imgqty>0){
         	this_.$router.push({path:'/proDetail', query: {ma001:list.num,mb001:item.mb001,mb002:item.mb002,imgqty:item.imgqty}});
