@@ -111,10 +111,10 @@ export default {
   		}else if(this_.$utils.check.isEmpty(this_.userForm.passWord)){
   			this_.bus.$emit('tipShow', "密码不能为空");
   			return false;
-  		}else if(!this_.$utils.check.pswCheck(this_.userForm.passWord)){
+  		}/*else if(!this_.$utils.check.pswCheck(this_.userForm.passWord)){
   			this_.bus.$emit('tipShow', "密码6-20位数字或字母组成");
   			return false;
-  		}
+  		}*/
   		//获取guid
   		this_.bus.$emit('loading', true);
     	this_.$api.get({

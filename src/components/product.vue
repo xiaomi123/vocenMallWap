@@ -159,7 +159,7 @@ export default {
 						}else if(this_.userInfo.dataset[0].ma017 == '201'){
 							data[i].imgSrc = require('../assets/images/miniCar/img_index_prows' + data[i].num + '.jpg');
 						}
-					}else if(this_.userInfo.dataset[0].dpt.search("弘途") != -1){
+					}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
 						data[i].imgSrc = require('../assets/images/hongtu/img_index_pro' + data[i].num + '.jpg');
 					}else {
 						data[i].imgSrc = require('../assets/images/miniCar/img_index_pro' + data[i].num + '.jpg');
@@ -267,7 +267,7 @@ export default {
 							}else if(this_.userInfo.dataset[0].ma017 == '201'){
 								dataArr.imgSrc = require('../assets/images/miniCar/img_index_prows' + dataArr.num + '.jpg');
 							}
-						}else if(this_.userInfo.dataset[0].dpt.search("弘途") != -1){
+						}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
 							dataArr.imgSrc = require('../assets/images/hongtu/img_index_pro' + dataArr.num + '.jpg');
 						}else {
 							dataArr.imgSrc = require('../assets/images/miniCar/img_index_pro' + dataArr.num + '.jpg');
@@ -292,7 +292,7 @@ export default {
         }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
           sessionStorage.setItem('brandType',4);
         }
-        
+
         this_.$router.push({path:'/proSearch/detail', query: {obj:JSON.stringify(list),mb001:item.mb001,title:'订单系统'}});
       }else{
         if(item.imgqty>0){
