@@ -99,7 +99,7 @@ export default {
 			    		this_.searchDia = true;
 
 			    	}
-			    }, 300);
+			    }, 2000);
 
 	      }
   		}else{
@@ -159,7 +159,7 @@ export default {
 						}else if(this_.userInfo.dataset[0].ma017 == '201'){
 							data[i].imgSrc = require('../assets/images/miniCar/img_index_prows' + data[i].num + '.jpg');
 						}
-					}else if(this_.userInfo.dataset[0].dpt.search("弘途") != -1){
+					}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
 						data[i].imgSrc = require('../assets/images/hongtu/img_index_pro' + data[i].num + '.jpg');
 					}else {
 						data[i].imgSrc = require('../assets/images/miniCar/img_index_pro' + data[i].num + '.jpg');
@@ -267,7 +267,7 @@ export default {
 							}else if(this_.userInfo.dataset[0].ma017 == '201'){
 								dataArr.imgSrc = require('../assets/images/miniCar/img_index_prows' + dataArr.num + '.jpg');
 							}
-						}else if(this_.userInfo.dataset[0].dpt.search("弘途") != -1){
+						}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
 							dataArr.imgSrc = require('../assets/images/hongtu/img_index_pro' + dataArr.num + '.jpg');
 						}else {
 							dataArr.imgSrc = require('../assets/images/miniCar/img_index_pro' + dataArr.num + '.jpg');
@@ -287,7 +287,13 @@ export default {
   	toDetail:function(list,item){
   		let this_ = this;
       if(this_.userInfo.dataset[0].mr003.search("耐用") != -1){
-        this_.$router.push({path:'/proSearch/detail', query: {obj:list,mb001:item.mb001,title:this.$route.query.title,productId:'no'}});
+        if(this_.userInfo.dataset[0].mr003.search("江陵耐用") != -1){
+          sessionStorage.setItem('brandType',3);
+        }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
+          sessionStorage.setItem('brandType',4);
+        }
+        sessionStorage.setItem('proObj',JSON.stringify(list));
+        this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统'}});
       }else{
         if(item.imgqty>0){
         	this_.$router.push({path:'/proDetail', query: {ma001:list.num,mb001:item.mb001,mb002:item.mb002,imgqty:item.imgqty}});

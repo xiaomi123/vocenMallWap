@@ -2274,6 +2274,8 @@ body{
 	font-size:0;
 }
 .com_search02>input{
+  display: inline-block;
+  max-width: 50%;
 	font-size:1.3rem;
 	color:#343434;
 }
@@ -2408,4 +2410,7 @@ body{
 }
 .cart-box .com_cart{
   border-radius: 2rem !important;
+}
+.product_container{
+  display: block;
 }

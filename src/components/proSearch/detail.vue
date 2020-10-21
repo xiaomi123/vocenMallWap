@@ -42,7 +42,7 @@
       </div>
     </div>
     <!-- 购物车-->
-    <router-link :to="{path: '/proSearch/cart'}">
+    <router-link :to="{path: '/proSearch/cart'}" v-if="isShow && isCart">
       <div class="fixed-btn"><van-icon name="cart-o" :badge="cartTotal" size="30" color="#ff0000" /></div>
     </router-link>
   </div>
@@ -65,22 +65,28 @@ export default {
       api : "",
       isShow : false,
       cartTotal : 0 ,//购物车数量
-      isCart : false
+      isCart : false,
       //isMall:true,//用于商城进入购物车隐藏
     }
   },
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
-
       this_.imgUrl = Consts.apiConfig.imgPath;
       document.title = sessionStorage.getItem('pageTitle');
 
       if(!this_.$utils.check.isEmpty(sessionStorage.getItem('userinfo'))){
         this_.isCart = true;
         this_.isShow = true;
-        if(this_.$route.query.obj != ""){
-          this_.cartList = JSON.parse(this_.$route.query.obj);
+        if(this_.$route.query.title == '订单系统'){
+          this_.isCart = false;
+          this_.isShow = false;
+          document.title = '订单系统';
+        }
+         let obj = sessionStorage.getItem('proObj');
+        if(obj != ""){
+          this_.cartList = JSON.parse(obj);
+
           //this_.isCart = true;
         }else{
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
@@ -145,6 +151,7 @@ export default {
       });
     },
     init_1(){
+
       let this_ = this;
       this_.$api.get({
         url: this_.$apiUrl.api.ProductMB001+'?mb001='+this_.$route.query.mb001+'&c_id='+this_.userInfo.dataset[0].c_id+'&c_ma001='+this_.userInfo.dataset[0].ma001+'&ma017='+this_.userInfo.dataset[0].ma017+'&dpt='+this_.userInfo.dataset[0].dpt+'&ma075='+this_.userInfo.dataset[0].ma075,
