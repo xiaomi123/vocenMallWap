@@ -1,5 +1,5 @@
 <template>
-  <div style="font-size: 1.2rem;">
+  <div style="font-size: 1.2rem;" class="detail-cont">
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in swiper" class="canvImg">
         <img :src="imgUrl+image">
