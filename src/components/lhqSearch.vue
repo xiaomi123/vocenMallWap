@@ -3,6 +3,10 @@
     <div class="login-btn" v-show="isLogin">
       <router-link :to="{path:'/wxlogin', query:{target:'search',openid:this.$route.query.openid,type:this.$route.query.type}}" style="color: #0057ED;">立即登录>></router-link>
     </div>
+    <div class="login-btn" v-show="isOut">
+      <a href="javascript:void(0)" style="color: #0057ED;" @click="logOut()">退出登陆&gt;&gt;</a>
+    </div>
+
     <div class="text-info" v-show="showText">
       <span class="text">{{showTextDesc}}</span>
     </div>
@@ -139,7 +143,8 @@
         cateListText : [], //产品分类
         isShowFooter : false,
         mb001 : "",
-        isShow : false
+        isShow : false,
+        isOut:false,//退出按钮
       }
     },
     mounted: function() {
@@ -213,6 +218,7 @@
             }
             this_.showText = true;
             this_.isShowFooter = true;
+            this_.isOut = true;
           }else{
             let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
             this_.showText = true;
@@ -525,6 +531,27 @@
           return false;
         }
         this.show = true;
+      },
+      //退出登陆
+      logOut(){
+        let this_ = this;
+        this_.$api.get({
+          url: this_.$apiUrl.api.LoginOut + '?openid=' + sessionStorage.getItem('openid'),
+          params: {},
+          success: function (data) {
+            if(data.State){
+              //清空
+              sessionStorage.setItem("token", ""); //清空token
+              sessionStorage.setItem("userinfo", ""); //清空userinfo
+              let brandType = 3;
+              if(!this_.$utils.check.isEmpty(sessionStorage.getItem('brandType'))){
+                brandType = sessionStorage.getItem('brandType')
+              }
+              this_.$router.push('/wxlogin?target=search&openid='+ sessionStorage.getItem('openid') +'&type='+brandType);
+            }
+        
+          }
+        });
       }
     }
   }
