@@ -204,15 +204,16 @@
           }
         }else{
           //已登陆
-          let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
+          
           //判断是否含有弘途和江陵品牌
-          if(this_.$utils.check.isEmpty(userdata)){
+          if(this_.$utils.check.isEmpty(sessionStorage.getItem("userinfo"))){
             this_.showTextDesc = "您已登录，但未代理该品牌。如需更多查询，请与您的专属客服联系。";
             if(sessionStorage.getItem('brandType') == 3){
               this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
             }
             this_.showText = true;
           }else{
+            let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
             this_.showText = true;
             if(sessionStorage.getItem('brandType') == 3){
               this_.showTextDesc = "欢迎江陵耐用品牌授权代理商“"+ userdata.dataset[0].ma002 +"”查询下单！";

@@ -56,6 +56,7 @@ export default {
     VehicleByProductNo : "queryVehicleByProductNo", //适配车型
     Multiple : "Multiple", //首页按属性查询
     RecentSale : "RecentSale", //最近购买记录
-    GetProdctList : "GetProdctList" //属性查询
+    GetProdctList : "GetProdctList" ,//属性查询
+    LoginOut:'LoginOut',//退出登陆
   }
 }

@@ -25,7 +25,7 @@
   			<li><router-link :to="{path: '/proSearch/userCenter/order'}"><i class="iconfont list03">&#xe648;</i>订单查询<em class="iconfont">&#xe74b;</em></router-link></li>
   			<li><router-link :to="{path: '/proSearch/userCenter/enterDetail'}"><i class="iconfont list04">&#xe6d7;</i>进货明细<em class="iconfont">&#xe74b;</em></router-link></li>
   			<li><router-link :to="{path: '/collect'}"><i class="iconfont list05">&#xe643;</i>我的收藏<em class="iconfont">&#xe74b;</em></router-link></li>
-  			<!-- <li><a href="javascript:void(0)" @click="loginOut()"><i class="iconfont">&#xe67b;</i>退出登陆</a></li> -->
+  			<li><a href="javascript:void(0)" @click="loginOut()"><i class="iconfont" style="color:darkred">&#xe67b;</i>退出登陆</a></li>
   		</ul>
 
   	</div>
@@ -119,8 +119,24 @@ export default {
   	//退出登陆
   	loginOut:function(){
   		let this_ = this;
-  		localStorage.setItem("isRem", 'false');
-  		this_.$router.push('/');
+      this_.$api.get({
+        url: this_.$apiUrl.api.LoginOut + '?openid=' + sessionStorage.getItem('openid'),
+        params: {},
+        success: function (data) {
+          if(data.State){
+            //清空
+            sessionStorage.setItem("token", ""); //清空token
+            sessionStorage.setItem("userinfo", ""); //清空userinfo
+            let brandType = 3;
+            if(!this_.$utils.check.isEmpty(sessionStorage.getItem('brandType'))){
+              brandType = sessionStorage.getItem('brandType')
+            }
+            this_.$router.push('/wxlogin?target=search&openid='+ sessionStorage.getItem('openid') +'&type='+brandType);
+          }
+
+        }
+      });
+
   	},
 
 
