@@ -3,18 +3,20 @@
   	<!--主要内容开始-->
   	<div class="dhxq_main">
       <!--查询录入框内容开始-->
-      <div class="lhq_header" ref="headCont">
+      <div class="lhq_header" :style="{padding:(!ishome?'1rem 3.5% 1rem 9%':'1rem 3.5%')}" ref="headCont">
+      	<em class="iconfont" @click="toBack()" v-show="!ishome">&#xe601;</em>
       	<p class="clearfix">
       		<em class="iconfont">&#xe60b;</em>
       		<input type="text" placeholder="编码/适用车型/发动机型号/OEM" v-model="keyWord" />
       	  <span @click="lhqSearch()">查询</span>
       	</p>
-      	<span class="lhq_tip">*请在上方输入<i>任一</i>下图所示可查询类目进行检索</span>
+      	<span class="lhq_tip" v-show="ishome">*请在上方输入<i>任一</i>下图所示可查询类目进行检索</span>
+      	<span class="lhq_tip02" v-show="!ishome"><label v-if="cxck!=''">&ensp;{{cxck}}</label></span>
       </div>
       <!--查询录入框内容结束-->
 
 	    <!--车系查询内容结束-->
-      <div>
+      <div v-if="ishome">
       	<div style="padding:0 4%;">
           <h2 class="lhq_title"><em></em>可查询车系</h2>
           <h3 class="dhxqList_h3">热卖品牌</h3>
@@ -44,7 +46,7 @@
       <!--车系查询内容结束-->
 
 	    <!--产品列表内容开始-->
-	    <!-- <div class="lhq_pro" v-show="!ishome">
+	    <div class="lhq_pro" v-show="!ishome">
          <ul class="lhq_list" v-if="lhqList.length>0">
              <li v-for="item in lhqList">
              	<p class="lhqfixed">
@@ -73,10 +75,12 @@
            </li>
          </ul>
 	      <p  v-if="lhqList.length == 0 && isLoad" class="com_noData">暂无数据</p>
-	    </div> -->
+	    </div>
 	    <!--产品列表内容结束-->
   	</div>
   	<!--主要内容结束-->
+
+  	<span class="lhq_back" v-show="!ishome" @click="toBack()">返回</span>
   </div>
 </template>
 
@@ -99,6 +103,7 @@ export default {
     		{imgSrc:require('../../assets/images/lhq/icon_lhq_cx02.png'),name:'现代'}
     	],
     	cxck:'',
+    	ishome:true,
     	fixData:[
     		'热','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
     	],
@@ -383,7 +388,7 @@ export default {
 
   		}
 
-
+  		this_.ishome = false;
   		this_.bus.$emit('loading', true);
       this_.$api.post({
           url: 'queryProductBrandByUsr',
@@ -403,6 +408,14 @@ export default {
   		let this_ = this;
   		this_.cxck = item.name;
   		this_.lhqSearch();
+  		this_.ishome = false;
+  	},
+
+  	//点击返回箭头
+  	toBack(){
+  		let this_ = this;
+  		this_.ishome = true;
+  		this_.cxck='';
   	},
 
   }

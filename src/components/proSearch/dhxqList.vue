@@ -4,19 +4,20 @@
   	<div class="dhxq_main">
 
 	  	<!--查询录入框内容开始-->
-	    <div class="lhq_header" style="padding:1rem 3.5% 1rem 3.5%" ref="headCont">
-	    	<!-- <em class="iconfont" @click="toBack()">&#xe601;</em> -->
+	    <div class="lhq_header" :style="{padding:(!ishome?'1rem 3.5% 1rem 9%':'1rem 3.5%')}" ref="headCont">
+	    	<em class="iconfont" @click="toBack()" v-show="!ishome">&#xe601;</em>
 	    	<p class="clearfix">
 	    		<em class="iconfont">&#xe60b;</em>
-	    		<input type="text" placeholder="请输入车型品牌" v-model="keyWord" />
+	    		<input type="text" placeholder="车型/排量/发动机型号/压盘OEM/轴承型号" v-model="keyWord" />
 	    	  <span @click="lhqSearch()">查询</span>
 	    	</p>
-	    	<span class="lhq_tip">*请在上方输入<i>任一</i>下图所示可查询类目进行检索</span>
+	    	<span class="lhq_tip" v-show="ishome">*请在上方输入<i>任一</i>下图所示可查询类目进行检索</span>
+	    	<span class="lhq_tip02" v-show="!ishome"><label v-if="cxck!=''">&ensp;{{cxck}}</label></span>
 	    </div>
 	    <!--查询录入框内容结束-->
 
 
-	    <div>
+	    <div v-if="ishome">
 	    	<div style="padding:0 4%;">
 			    <!--车系查询内容开始-->
 			    <h2 class="lhq_title"><em></em>可查询车系</h2>
@@ -45,10 +46,53 @@
 		    </ul>
 		    <!--车系查询内容结束-->
 	    </div>
+
+
+	    <!--产品列表内容开始-->
+	    <div class="lhq_main lhq_pro" v-show="!ishome">
+	        <ul class="lhq_list" v-if="lhqList.length>0">
+	          <li v-for="item in lhqList">
+			        <p>
+		            <label>oem：</label>
+		            <span>{{item.oem}}</span>
+			        </p>
+			        <p>
+		            <label>发动机型号：</label>
+		            <span>{{item.发动机型号}}</span>
+			        </p>
+			        <p v-show="hongtu">
+		            <label>弘途：</label>
+		            <span>{{item.弘途}}</span>
+			        </p>
+			        <p>
+		            <label>排量：</label>
+		            <span>{{item.排量}}</span>
+			        </p>
+			        <p v-show="jiangling">
+		            <label>江陵：</label>
+		            <span>{{item.江陵}}</span>
+			        </p>
+			        <p>
+		            <label>规格：</label>
+		            <span>{{item.规格}}</span>
+			        </p>
+			        <p>
+		            <label>车型：</label>
+		            <span>{{item.车型}}</span>
+			        </p>
+			        <p>
+		            <label>车系：</label>
+		            <span>{{item.车系}}</span>
+			        </p>
+			    </li>
+	      </ul>
+	      <p  v-if="lhqList.length == 0 && isLoad" class="com_noData">暂无数据</p>
+	    </div>
+	    <!--产品列表内容结束-->
   	</div>
   	<!--主要内容结束-->
 
-  	<span class="lhq_back" @click="toBack()">返回</span>
+  	<span class="lhq_back" v-show="!ishome" @click="toBack()">返回</span>
   </div>
 </template>
 
@@ -57,7 +101,9 @@ export default {
   name: 'LhqSearch',
   data () {
     return {
+    	lhqList:[],
     	keyWord:'',
+    	isLoad:false,
     	cxData:[
     		{imgSrc:require('../../assets/images/lhq/icon_lhq_cx01.png'),name:'大众'},
     		{imgSrc:require('../../assets/images/lhq/icon_lhq_cx03.png'),name:'别克'},
@@ -68,6 +114,8 @@ export default {
     		{imgSrc:require('../../assets/images/lhq/icon_lhq_cx06.png'),name:'奥迪'},//无图片
     		{imgSrc:require('../../assets/images/lhq/icon_lhq_cx02.png'),name:'现代'}
     	],
+    	cxck:'',
+    	ishome:true,
     	fixData:[
     		'热','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
     	],
@@ -316,10 +364,9 @@ export default {
     this.$nextTick(function () {
       let this_ = this;
      document.title = this_.$route.query.title;
-     //console.log("aaa:"+this_.$route.query.mb001);
       if(document.title.indexOf('江陵') > -1){
         this_.hongtu = !this_.hongtu;
-      }else if(document.title.indexOf('宏途') > -1){
+      }else if(document.title.indexOf('沃森') > -1){
         this_.jiangling = !this_.jiangling;
       }
     });
@@ -336,21 +383,42 @@ export default {
 
   	lhqSearch:function(){
   		let this_ = this;
-      if(this_.keyWord != ""){
-         this_.$router.push({path:'/proSearch/modelList', query:{words:this_.keyWord,categoryName:"",mb001:this_.$route.query.mb001}});
-        }else{
-          this_.bus.$emit('tipShow', "请输入查询条件");
+  		this_.lhqList = [];
+  		if(this_.$utils.check.isEmpty(this_.keyWord) && this_.$utils.check.isEmpty(this_.cxck)){
+  			this_.bus.$emit('tipShow', "请填写查询条件");
+  			return false;
+  		}else if(this_.$utils.check.trim(this_.keyWord) == '参数' || this_.$utils.check.trim(this_.keyWord) == '适用车型' || this_.$utils.check.trim(this_.keyWord) == '参数直径' || this_.$utils.check.trim(this_.keyWord) == '发动机' || this_.$utils.check.trim(this_.keyWord) == '齿数'){
+  			this_.bus.$emit('tipShow', "该关键词无法有效检索产品");
+  			return false;
+  		}
+
+  		this_.ishome = false;
+  		this_.bus.$emit('loading', true);
+  		this_.$api.get({
+        url: this_.$apiUrl.api.GetDhxq + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.keyWord + '&type=&car=' + this_.cxck,
+        params: {},
+        success: function (data) {
+        	this_.bus.$emit('loading', false);
+        	this_.isLoad = true;
+        	this_.lhqList = data;
         }
+      });
   	},
+
+
   	//点击车系
   	toCx(item){
   		let this_ = this;
-      this_.keyWord = item.name;
-      this_.lhqSearch();
+  		this_.cxck = item.name;
+  		this_.lhqSearch();
+  		this_.ishome = false;
   	},
+
   	//点击返回箭头
   	toBack(){
-  		this.$router.go(-1);
+  		let this_ = this;
+  		this_.ishome = true;
+  		this_.cxck='';
   	},
 
   }
@@ -438,6 +506,50 @@ export default {
     -webkit-border-bottom-right-radius: 6px;
     box-sizing: border-box;
 		-webkit-box-sizing:border-box;
+	}
+	.lhq_pro{
+		width:100%;
+    background-color: #fff;
+	}
+	.lhq_list{
+		font-size:1.3rem;
+    color: #404040;
+    line-height:2rem;
+    padding: 0 4%;
+	}
+	.lhq_list>li{
+		padding:1rem 0;
+		border-bottom: 1px solid #ddd;
+	}
+	.lhq_list>li:last-child{
+		border-bottom:none;
+	}
+	.lhq_list>li>p{
+		font-size:0;
+		margin-bottom:0.4rem;
+	}
+	.lhq_list>li>p>label{
+		display: inline-block;
+		width:30%;
+		font-size:1.3rem;
+    color: #404040;
+    line-height:2rem;
+		text-align: justify;
+    text-align-last: justify;
+    vertical-align: top;
+	}
+	.lhq_list>li>p>span{
+		display: inline-block;
+		width:70%;
+		font-size:1.3rem;
+		color: #969696;
+		line-height:2rem;
+		word-wrap: break-word;
+		vertical-align: top;
+	}
+	.lhq_main{
+		width:93%;
+		margin:0 auto;
 	}
 	.lhq_title{
 		position: relative;

@@ -27,7 +27,7 @@ import LhqSearch from '@/components/lhqSearch'//离合器查询
 import LhqList from '@/components/proSearch/lhqList'//离合器查询
 import DhxqList from '@/components/proSearch/dhxqList'//点火线圈查询
 import YcgqList from '@/components/proSearch/ycgqList'//氧传感器查询
-import SproList from '@/components/proSearch/products'//VIN码查询产品
+/*import SproList from '@/components/proSearch/products'//VIN码查询产品
 import SproList1 from '@/components/proSearch/products1'//VIN码查询产品
 import ModelList from '@/components/proSearch/modelList'//车型列表
 import ProductDetail from '@/components/proSearch/detail'//详情
@@ -38,7 +38,7 @@ import SEditInfo from '@/components/proSearch/userCenter/editInfo'//我的资料
 import SMyIntegral from '@/components/proSearch/userCenter/myIntegral'//我的积分
 import SEnterDetail from '@/components/proSearch/userCenter/enterDetail'//订单详情
 import SOrder from '@/components/proSearch/userCenter/order'//订单查询
-import SOrderDetail from '@/components/proSearch/userCenter/orderDetail'//订单详情
+import SOrderDetail from '@/components/proSearch/userCenter/orderDetail'//订单详情*/
 
 import LhqHome from '@/components/lhqhome'//离合器查询--旧版本（无用）
 
@@ -161,7 +161,7 @@ const router = new Router({
     	path: '/proSearch/ycgqList',
       name: 'dycgqList',
       component: YcgqList,
-    },{
+    },/*{
 		path : '/proSearch/products',
 		name : 'sproduct',
 		component : SproList
@@ -209,7 +209,7 @@ const router = new Router({
     path : '/proSearch/userCenter/orderDetail',
     name : 'sOrderDetail',
     component : SOrderDetail
-  },{
+  },*/{
     	path: '/wxlogin',
       name: 'wxlogin',
       component: Wxlogin,

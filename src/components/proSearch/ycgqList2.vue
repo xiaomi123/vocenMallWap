@@ -349,7 +349,7 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
-      //this_.lhqSearch();
+      this_.lhqSearch();
       document.title = '氧传感器';//this_.$route.query.title;
     });
   },
@@ -390,17 +390,16 @@ export default {
 
   		this_.ishome = false;
   		this_.bus.$emit('loading', true);
-      this_.$api.post({
-          url: 'queryProductBrandByUsr',
-          params: {},
-          type : 0,
-          success: function (data) {
-          	this_.bus.$emit('loading', false);
-          	this_.isLoad = true;
-          	this_.lhqList = data;
-          }
-        });
-
+  		this_.$api.get({
+        url: this_.$apiUrl.api.GetYchuan + '?mb001=' + this_.$route.query.mb001 + '&tag=' + this_.keyWord + '&type=' + cataPar.toString() + '&car=' + this_.cxck,
+        params: {},
+        success: function (data) {
+          console.log(data);
+        	this_.bus.$emit('loading', false);
+        	this_.isLoad = true;
+        	this_.lhqList = data;
+        }
+      });
   	},
 
   	//点击车系
