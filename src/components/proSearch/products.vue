@@ -39,9 +39,9 @@
 
     <!-- 根据vincode显示车型信息 -->
     <div v-if="showModelInfoByVinCode" style="background-color: #dff0d8;color: #3c763d;padding:1rem">
-      <div style="margin-bottom: 0.5rem;">{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.Manufacturers}}</div>
-      <div>[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;{{modelsInfo.Displacement}}L&nbsp;&nbsp;
-      {{modelsInfo.FuelType}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
+      <div style="margin-bottom: 0.5rem;">{{modelsInfo.Manufacturers}}&nbsp;&nbsp;{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.ChassisCode}}</div>
+      <div>{{modelsInfo.Year}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
+      {{modelsInfo.Displacement}}{{modelsInfo.Induction}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
     </div>
     <!--主要内容开始-->
     <div class="proSearch_main">
@@ -259,6 +259,8 @@
           Brand : '',
           Models : "",
           Manufacturers : '', //厂家
+          ChassisCode : '',
+          Year : '',
           Induction : '', //近气形式
           Displacement : '', //排量
           ListingYear : '', //上市年份
@@ -319,9 +321,8 @@
             item.txtColor = "#ffffff";
           }
         })
-
         if(this_.tabCurrent == 0){
-          console.log("vincode:"+sessionStorage.getItem('vincode'));
+          //console.log("vincode:"+sessionStorage.getItem('vincode'));
           if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
             this_.checkedInput(0);
             this_.keyWords = sessionStorage.getItem('vincode');
@@ -338,22 +339,18 @@
               this_.carsPros();  //品类查询
             }
           }
-          // if(this_.keyWords != ""){
-          //   if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
-          //     this_.checkedInput(0);
-          //     this_.keyWords = sessionStorage.getItem('vincode');
-          //     sessionStorage.removeItem('vincode');
-          //     this_.p = 1;
-          //     this_.proList = [];
-          //     this_.buyRecord = [];
-          //   }
-          //   this_.vinCodePros();  //vin码
-          // }else{
-          //   this_.showPlaceHolderText();
-          //   this_.carsPros();  //品类查询
-          // }
         }else if(this_.tabCurrent == 1){ //综合查询
-          this_.attrSearch();
+          if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
+            this_.checkedInput(0);
+            this_.keyWords = sessionStorage.getItem('vincode');
+            sessionStorage.removeItem('vincode');
+            this_.p = 1;
+            this_.proList = [];
+            this_.buyRecord = [];
+            this_.vinCodePros();
+          }else{
+            this_.attrSearch();
+          }
         }
 
         window.addEventListener('scroll',this_.handleScroll,true);
@@ -449,7 +446,6 @@
       //vin码对应产品
       vinCodePros(){
         let this_ = this;
-        //console.log('this_.keyWords------------>:'+this_.keyWords);
         if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.post({
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
@@ -459,10 +455,13 @@
             if(data.State){
               this_.tabCurrent = 0;
               //车型信息
+              console.log(data.centent.result);
               this_.modelsInfo.Brand = data.centent.result[0].Brand;
               this_.modelsInfo.Models = data.centent.result[0].Models;
               this_.modelsInfo.Manufacturers = data.centent.result[0].Manufacturers;
-              this_.modelsInfo.Induction = data.centent.result[0].Induction;
+              this_.modelsInfo.ChassisCode = data.centent.result[0].ChassisCode;
+              this_.modelsInfo.Year = data.centent.result[0].Year;
+              this_.modelsInfo.Induction = data.centent.result[0].Induction == '涡轮增压' ? 'T' : 'L';
               this_.modelsInfo.Displacement = data.centent.result[0].Displacement;
               this_.modelsInfo.ListingYear = data.centent.result[0].ListingYear;
               this_.modelsInfo.IdlingYear = data.centent.result[0].IdlingYear;
@@ -902,7 +901,7 @@
         sessionStorage.setItem('history',JSON.stringify(obj));
         console.log('words:'+this.keyWords+";categoryName:"+this.categoryName);
         //this.$router.push({path:'/proSearch/detail', query:{obj:JSON.stringify(list.params),mb001:list.prod[5],title:this.$route.query.title}});
-        
+
         sessionStorage.setItem('proObj',JSON.stringify(list.params));
         this.$router.push({path:'/proSearch/detail', query:{mb001:list.prod[5],title:this.$route.query.title}});
 
@@ -917,7 +916,7 @@
         sessionStorage.setItem('history',JSON.stringify(obj));
         console.log('words:'+this.attrKey+";categoryName:"+this.categoryName);
         //this.$router.push({path:'/proSearch/detail', query:{obj:"",mb001:list.mb001,title:this.$route.query.title}});
-        
+
         sessionStorage.setItem('proObj',"");
         this.$router.push({path:'/proSearch/detail', query:{mb001:list.mb001,title:this.$route.query.title}});
 
