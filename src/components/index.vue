@@ -154,7 +154,7 @@
   					<h2>{{list.name}}</h2>
 	  				<ul class="index_list clearfix">
 	  					<li v-for="item in list.item">
-	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name}}">
+	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}">
 	  							<span><img :src="item.imgSrc" /></span>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>

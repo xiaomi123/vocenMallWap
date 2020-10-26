@@ -144,11 +144,15 @@ export default {
   	},
   	//产品数据渲染
   	productList:function(data){
-      console.log("44")
   		let this_ = this;
   		for(var i=0;i<data.length;i++){
     		for(var j=0;j<data[i].pro.length;j++){
     			data[i].pro[j].cartType = 'product';
+          if(this_.$route.query.title == '德马赫产品'){
+            if(data[i].pro[j].mb001.substring(0,2) != 57){
+              data[i].pro.splice(i--, 1);
+            }
+          }
     		}
     		data[i].imgSrc = '';
     		if(this_.userInfo.dataset[0].dpt.search("配件一部") != -1){
@@ -251,6 +255,12 @@ export default {
         	this_.bus.$emit('loading', false);
         	for(var i=0;i<data.length;i++){
 					  data[i].cartType = 'product';
+            if(this_.$route.query.title == '德马赫产品'){
+              if(data[i].mb001.substring(0,2) != 57){
+                data.splice(i--, 1);
+              }
+            }
+
         	}
         	let dataArr = {
         		"name":name,

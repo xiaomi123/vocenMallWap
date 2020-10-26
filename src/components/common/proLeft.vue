@@ -1,8 +1,9 @@
 <template>
 <!--加减购物车内容开始-->
-<div class="proLeft_main">
+<div class="proLeft_main" v-if="!$utils.check.isEmpty(proItem02)">
 	{{proItem02.mb001}}
 	{{proItem02.mb002New}}
+  <label v-if="proItem02.mb001.substring(0,2) == 57" class="dmh">德马赫</label>
 	<em>{{proItem02.oem}}</em><br />
 	<i>{{proItem02.mb003New}}</i><br />
 	<span >
@@ -33,6 +34,7 @@ export default {
     	proItem02:'',
     	isShort:false,//缺货
     	userInfo:JSON.parse(sessionStorage.getItem("userinfo")),
+      isdmh:false,
     }
   },
   props:[
@@ -41,6 +43,7 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
+      this_.isdmh =
   		this_.proTo();
     });
   },

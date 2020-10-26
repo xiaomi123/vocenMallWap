@@ -2414,3 +2414,9 @@ body{
 .product_container{
   display: block;
 }
+.dmh{
+  display: inline-block;
+  padding:0 2px;
+  color:red;
+  border:1px solid red;
+}
