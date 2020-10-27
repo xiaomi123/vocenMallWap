@@ -114,7 +114,7 @@ export default {
         			if(!this_.$utils.check.isEmpty(data[i].column1)){
 	        			let erpItem = {erp:data[i].column1,store:''};
 			  				this_.$api.get({
-					        url: this_.$apiUrl.api.GetStore + '?billsort=' + data[i].column1.split("-")[0] + '&billno=' + data[i].column1.split("-")[1] + '&ma001' + this_.userInfo.dataset[0].ma001,
+					        url: this_.$apiUrl.api.GetStore + '?billsort=' + data[i].column1.split("-")[0] + '&billno=' + data[i].column1.split("-")[1] + '&ma001=' + this_.userInfo.dataset[0].ma001,
 					        params:{},
 					        success: function (data02) {
 					        	this_.bus.$emit('loading', false);
