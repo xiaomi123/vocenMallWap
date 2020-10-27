@@ -216,9 +216,23 @@
             if(sessionStorage.getItem('brandType') == 3){
               this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
             }
+
             this_.showText = true;
             this_.isShowFooter = true;
             this_.isOut = true;
+
+            //模拟账号条件
+            if(sessionStorage.getItem('openid') == 'oebB3' || sessionStorage.getItem('openid') == 'oebB4'){
+              this_.showText = true;
+              this_.isOut = false;
+              if(sessionStorage.getItem('brandType') == 3){
+                this_.showTextDesc = "欢迎登录江陵耐用查询系统！";
+              }
+              if(sessionStorage.getItem('brandType') == 4){
+                this_.showTextDesc = "欢迎登录弘途耐用查询系统！";
+              }
+            }
+
           }else{
             let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
             this_.showText = true;
@@ -352,6 +366,20 @@
                   this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
                 }
                 this_.showText = true;
+                this_.isShowFooter = false;
+
+                //模拟账号条件
+                if(this_.$route.query.openid == 'oebB3' || this_.$route.query.openid == 'oebB4'){
+                  this_.showText = true;
+                  this_.isOut = false;
+                  if(this_.$route.query.type == 3){
+                    this_.showTextDesc = "欢迎登录江陵耐用查询系统！";
+                  }
+                  if(this_.$route.query.type == 4){
+                    this_.showTextDesc = "欢迎登录弘途耐用查询系统！";
+                  }
+                }
+
               }
             } else{
               this_.isLogin = true;
@@ -548,7 +576,7 @@
               }
               this_.$router.push('/wxlogin?target=search&openid='+ sessionStorage.getItem('openid') +'&type='+brandType);
             }
-        
+
           }
         });
       }
