@@ -105,6 +105,10 @@ export default {
   	/*用户名登陆*/
   	login(){
   		let this_ = this;
+      if(this_.userForm.name == 'test'){
+        this_.bus.$emit('tipShow', "该用户暂未开通");
+        return false;
+      }
   		if(this_.$utils.check.isEmpty(this_.userForm.name)){
   			this_.bus.$emit('tipShow', "用户名不能为空");
   			return false;

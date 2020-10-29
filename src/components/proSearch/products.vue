@@ -165,7 +165,7 @@
     <!--主要内容结束-->
 
     <!-- 购物车-->
-    <router-link :to="{path: '/proSearch/cart'}">
+    <router-link :to="{path: '/proSearch/cart'}" v-if="isTest">
       <div class="fixed-btn"><van-icon name="cart-o" :badge="cartTotal" size="30" color="#ff0000" /></div>
     </router-link>
 
@@ -275,7 +275,8 @@
         pages:20,
         p : 1,
         pageRows : 20,
-        source : 0 //数据来源
+        source : 0 ,//数据来源
+        isTest:true,//是否为测试账号
       }
     },
     mounted: function() {
@@ -378,6 +379,11 @@
               this_.p++;
               this_.attrSearch();
             }
+          }
+        }
+        if(!this_.$utils.check.isEmpty(sessionStorage.getItem("shopname"))){
+          if(sessionStorage.getItem("shopname") == '试用账号'){
+            this_.isTest = false;
           }
         }
 
