@@ -158,8 +158,15 @@
 	  							<span><img :src="item.imgSrc" /></span>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
-	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  <!-- 新品推荐 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
+                  <!-- 直降 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076')"><img src="../assets/images/common/icon_cut.png" /></em>
+                  <!-- 特价 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0075' || item.num == '0078' || item.num == '0080')"><img src="../assets/images/common/icon_tejia.png" /></em>
+                  <!-- 秒杀 -->
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
                   {{item.name}}
 	  						</router-link>
 	  					</li>
