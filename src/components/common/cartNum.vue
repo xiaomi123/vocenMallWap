@@ -176,11 +176,20 @@ export default {
   				mQty = parseInt(this_.cartList.i_limit_qty);
   			}*/
 
+
   			let curQty = parseInt(this_.cartList.qty);
   			let remainder = parseInt(curQty%mQty);
   			if(remainder !=0){
-		  		this_.cartList.qty = curQty + (mQty-remainder);
-		  		this_.bus.$emit('tipShow', "商品自动加到最小单位");
+          console.log(this_.cartList.m_qty_type)
+          if(this_.cartList.m_qty_type == '1'){
+            if(curQty<mQty){
+              this_.cartList.qty = mQty;
+            }
+          }else{
+            this_.cartList.qty = curQty + (mQty-remainder);
+            this_.bus.$emit('tipShow', "商品自动加到最小单位");
+          }
+
 				}
   			if(this_.cartList.qty == 0){
   				totalNum = totalNum - parseInt(this_.changeQty);//总数量

@@ -140,7 +140,10 @@ export default {
 			}else if(ma017 == '204'){
 				//微车弘涂
 				this_.dptLogo = require('../../assets/images/logo/img_index_logoWcHt.png');
-			}
+			}else if(ma017 == '214'){
+        //丰田联保
+        this_.dptLogo = require('../../assets/images/logo/img_index_logoRxLb.png');
+      }
   	},
 
   }

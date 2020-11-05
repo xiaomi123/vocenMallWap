@@ -164,7 +164,9 @@
                   <!-- 直降 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076')"><img src="../assets/images/common/icon_cut.png" /></em>
                   <!-- 特价 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0075' || item.num == '0078' || item.num == '0080')"><img src="../assets/images/common/icon_tejia.png" /></em>
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0075' || item.num == '0078' || item.num == '0080' || item.num == '0043')"><img src="../assets/images/common/icon_tejia.png" /></em>
+                  <!-- 热卖 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em>
                   <!-- 秒杀 -->
                   <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
                   {{item.name}}
@@ -512,6 +514,10 @@ export default {
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7602.jpg'),'name':'散热器','num':'1045'});
 
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt71.jpg'),'name':'方向机','num':'1040'});
+      				}else if(this_.userInfo.dataset1[index].mr003 == "联保代理"){
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanRxLb01.jpg')});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanRxLb02.jpg')});
+
       				}else{
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan05.jpg'),'name':'暖风机','num':'1044'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan02.jpg'),'name':'','num':''});
