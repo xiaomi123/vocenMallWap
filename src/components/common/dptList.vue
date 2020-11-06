@@ -2,12 +2,13 @@
 <!--品牌切换内容开始-->
 <div class="dpt_contain">
 	<div class="index_dpt">
+    <label class="iconfont">&#xe602;</label>
 		<span @click.stop="dptShow = !dptShow"><img :src="dptLogo" alt="" /></span>
 		<em :class="dptShow?'iconfont dptBot tran':'iconfont dptBot'" @click.stop="dptShow = !dptShow">&#xe604;</em>
 		<i v-show="dptShow"></i>
 		<transition name="ul">
 			<ul class="index_dpt_list" v-show="dptShow">
-				<li v-for="(item,index) in userInfo.dataset1" :class="{active:index==dptIndex}" @click="dptSwitch(index)">{{item.mr003}}</li>
+				<li v-for="(item,index) in userInfo.dataset1" :class="{active:index==dptIndex}" @click="dptSwitch(index)"><i class="iconfont" v-if="index==dptIndex">&#xe602;</i>{{item.mr003}}</li>
 			</ul>
 		</transition>
 	</div>

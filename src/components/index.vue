@@ -505,11 +505,13 @@ export default {
       			}else{
       				//日系
       				if(this_.userInfo.dataset1[index].mr003 == "沃森代理(日系)"){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs115.jpg'),'name':'电子扇','num':'1047'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs7601.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs7602.jpg'),'name':'散热器','num':'1045'});
 
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs71.jpg'),'name':'方向机','num':'1040'});
       				}else if(this_.userInfo.dataset1[index].mr003 == "秀泰代理(日系)"){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt115.jpg'),'name':'电子扇','num':'1047'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7601.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7602.jpg'),'name':'散热器','num':'1045'});
 
@@ -542,10 +544,12 @@ export default {
       			}else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
       					//沃森
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_ws629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar05.jpg'),'name':'喇叭','num':'0087'});
       				}else if(this_.userInfo.dataset1[index].ma017 == '200'){
       					//江陵
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_jl629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar06.png'),'name':'喇叭','num':'0087'});
       				}else{

@@ -619,7 +619,7 @@ export default {
 						    }
 
 						    //是否选中
-						    if((data[i].s_is_sortage == 'False') && (parseInt(data[i].s_qty)>0)){
+						    if((!data[i].s_is_sortage) && (parseInt(data[i].s_qty)>0)){
 						    	data[i].ck = true;
 						    	this_.priceTotal = Number(this_.priceTotal) + Number(data[i].price) * parseInt(data[i].qty);
 						    	this_.qtyTotal = parseInt(this_.qtyTotal) + parseInt(data[i].qty);

@@ -2437,3 +2437,18 @@ body{
   color:red;
   border:1px solid red;
 }
+.index_dpt>label{
+  position: absolute;
+  left: -2rem;
+  top: 0.8rem;
+  font-size: 1.8rem;
+  color: #fff;
+  display:none;
+}
+.index_dpt_list>li.active>i{
+  display: inline-block;
+  margin-right:0.3rem;
+}
+.index_dpt>em{
+  color:#ff7f50;
+}
