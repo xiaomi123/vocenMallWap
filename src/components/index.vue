@@ -531,11 +531,19 @@ export default {
       			if(this_.userInfo.dataset1[index].dpt.search("吉利") != -1){
       				//吉利
       				if(this_.userInfo.dataset1[index].dpt.search("吉利-吉摩") != -1){
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg'),'name':'皮带','num':'0140'});
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg'),'name':'涨紧轮','num':'0141'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1191.jpg'),'name':'玻璃升降器','num':'0155'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1192.jpg'),'name':'方向机','num':'0154'});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1193.jpg'),'name':'减震器','num':'0108'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1194.jpg'),'name':'前大灯','num':'0101'});
+                //this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg'),'name':'皮带','num':'0140'});
+      					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else if(this_.userInfo.dataset1[index].dpt.search("吉利-沃森") != -1){
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs01.jpg'),'name':'皮带','num':'0140'});
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs02.jpg'),'name':'涨紧轮','num':'0141'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1191.jpg'),'name':'玻璃升降器','num':'0155'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1192.jpg'),'name':'方向机','num':'0154'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1193.jpg'),'name':'减震器','num':'0108'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1194.jpg'),'name':'前大灯','num':'0101'});
+      					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs01.jpg'),'name':'皮带','num':'0140'});
+      					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else{
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar03.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar04.jpg')});
