@@ -160,7 +160,6 @@
       login: function() {
         let this_ = this;
         this_.bus.$emit('loading', true);
-
         this_.$api.get({
           url: this_.$apiUrl.api.getLogin + '?name=' + this_.userForm.name,
           params: {},

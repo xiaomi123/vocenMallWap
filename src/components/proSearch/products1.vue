@@ -6,7 +6,7 @@
     </header>
     <div class="dialog-content">
       <crop
-          style="width:100%;height: 16rem;"
+          style="width:100%;height: 26rem;"
           v-model="crop"
           :position="option"
           :defaultImgUrl="img"
@@ -114,5 +114,9 @@
 </script>
 <style scoped>
   @import "../../assets/css/lhqSearch.css";
-
+.dialog{
+  background-color: #FFFFFF;
+  position:inherit;
+  height: 100%;
+}
 </style>

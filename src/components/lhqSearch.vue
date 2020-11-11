@@ -47,10 +47,7 @@
         <li class='lhq' @click="openWin(0)"><div>离合器套装</div></li>
         <li class='ycg' @click="openWin(2)"><div>氧传感器</div></li>
         <li class='dhxq' @click="openWin(1)"><div>点火线圈</div></li>
-        <li class='qyb'>
-          <p>燃油泵总成<br>正在开发中...</p>
-          <router-link to="/proSearch/lhqList">燃油泵总成</router-link>
-        </li>
+        <li class='qyb' @click="openWin(3)"><div>燃油泵总成<p>火热预定中</p></div></li>
         <li class='shuibeng'>
           <p>水泵<br>正在开发中...</p>
           <router-link to="/proSearch/lhqList">水泵</router-link>
@@ -276,7 +273,7 @@
             console.log(res);
             if(res.code == 200){
               let a = res.data[2].categoryName+","+res.data[3].categoryName;
-              this_.cateListText = [res.data[4].categoryName,res.data[1].categoryName,a];
+              this_.cateListText = [res.data[4].categoryName,res.data[1].categoryName,a,res.data[0].categoryName];
               this_.isShow = true;
             }
           }
@@ -508,10 +505,6 @@
           this.bus.$emit('tipShow', "请输入查询条件");
         }
       },
-      //查看解码
-      // jiema(){
-      //   this.$router.push({path:'/proSearch/products', query: {words:this.keyWords,type:0,categoryName:"",mb001:this.mb001}});
-      // },
       //点击产品类别
       openWin(e){
         if(this.isLogin){
@@ -520,7 +513,6 @@
           return false;
         }
         this.$router.push({path:'/proSearch/products', query: {words:"",type:0,categoryName:this.cateListText[e],mb001:this.mb001}});
-        // this.$router.push({path:'/proSearch/products', query: {words:"",type:2,categoryName:this.cateListText[e],mb001:this.mb001}});
       },
       //vin点击小摄像头事件
       btnShow(){
@@ -548,7 +540,7 @@
               }
               this_.$router.push('/wxlogin?target=search&openid='+ sessionStorage.getItem('openid') +'&type='+brandType);
             }
-        
+
           }
         });
       }

@@ -27,9 +27,9 @@
           <span @click="search()">查询</span>
         </p>
       </div>
-      <div style="background: #eeeeee;padding: 1rem;">
+      <div style="background: #eeeeee;padding: 1rem 1rem 0 1rem;">
         <template v-for="(item,index) in cateList" >
-          <van-tag class="umar-r" round :size="item.size" :color="item.color" :text-color="item.txtColor" @click="tapTag(item,index)">{{item.name}}</van-tag>
+          <van-tag class="umar-r" style="margin-bottom: 1rem;" round :size="item.size" :color="item.color" :text-color="item.txtColor" @click="tapTag(item,index)">{{item.name}}</van-tag>
         </template>
       </div>
     </div>
@@ -38,11 +38,29 @@
 
 
     <!-- 根据vincode显示车型信息 -->
-    <div v-if="showModelInfoByVinCode" style="background-color: #dff0d8;color: #3c763d;padding:1rem">
-      <div style="margin-bottom: 0.5rem;">{{modelsInfo.Manufacturers}}&nbsp;&nbsp;{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.ChassisCode}}</div>
-      <div>{{modelsInfo.Year}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
-      {{modelsInfo.Displacement}}{{modelsInfo.Induction}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
+    <div v-if="showModelInfoByVinCode" class="ub ub-ac" style="background-color: #dff0d8;color: #3c763d;padding:1rem">
+      <div class="ub ub-ver ub-f1">
+        <div style="margin-bottom: 0.5rem;">{{modelsInfo.Manufacturers}}&nbsp;&nbsp;{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.ChassisCode}}</div>
+        <div>{{modelsInfo.ProducedYear}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
+        {{modelsInfo.Displacement}}{{modelsInfo.Induction}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
+      </div>
+      <div class="ub ub-ac" v-show="changeModelIcon" @click="showModels = true">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;" /></div>
     </div>
+    <!-- 多个车型切换 -->
+    <van-popup v-model="showModels" position="bottom" :close-on-popstate="true" :close-on-click-overlay="false" :closeable="true" :safe-area-inset-bottom="true">
+      <div class="modelsPop">
+        <h3 class="models-title">车型列表</h3>
+        <block v-for="(model,index) in modelsInfoList">
+          <div :class="model.LevelId == modelsInfo.LevelId ? 'models-item active' : 'models-item'" @click="changeModels(model)">
+            <div style="margin-bottom: 0.5rem;">{{model.Manufacturers}}&nbsp;&nbsp;{{model.Brand}}&nbsp;&nbsp;{{model.Models}}&nbsp;&nbsp;{{model.ChassisCode}}</div>
+            <div>{{model.ProducedYear}}&nbsp;&nbsp;[{{model.ListingYear}}-{{model.IdlingYear}}]&nbsp;&nbsp;
+            {{model.Displacement}}{{model.Induction}}&nbsp;&nbsp;{{model.EngineModel}}</div>
+          </div>
+        </block>
+      </div>
+    </van-popup>
+
+
     <!--主要内容开始-->
     <div class="proSearch_main">
       <template v-if="tabCurrent == 0">
@@ -79,6 +97,7 @@
                 <div class="ub ub-f1 text-red" v-show="list.prod[5].indexOf('开发中') <= -1">
                   <em style="font-size: 1rem;">￥</em>
                   <em style="font-size: 1.4rem;">{{parseInt(list.params.price)}}</em>
+                  <div class="guideprice">指导价：￥{{list.params.guideprice}}</div>
                 </div>
                 <div class="ub" v-if="buyRecord.length != 0">
                   <template v-for="(item,index) in buyRecord">
@@ -149,6 +168,7 @@
                 <template v-if="item.mb001.indexOf('开发中') <= -1">
                   <em style="font-size: 1rem;">￥</em>
                   <em style="font-size: 1.4rem;">{{parseInt(item.price)}}</em>
+                  <div class="guideprice">指导价：￥{{item.guideprice}}</div>
                 </template>
               </div>
              <!-- <template v-for="(list,index) in buyRecord"> -->
@@ -223,6 +243,7 @@
           {name:"离合器套装",color:"#ffffff",txtColor:"#858585",size:"large",desc:"离合器三件套"},
           {name:"氧传感器",color:"#ffffff",txtColor:"#858585",size:"large",desc:"前氧传感器,后氧传感器"},
           {name:"点火线圈",color:"#ffffff",txtColor:"#858585",size:"large",desc:"点火线圈"},
+          {name:"燃油泵总成",color:"#ffffff",txtColor:"#858585",size:"large",desc:"燃油泵"},
         ],
         /*actionsheet*/
         show: false,
@@ -255,19 +276,10 @@
         isCart : false, //是否显示购物车
         showEmpty : false, //没有产品
         showEmptyText : '暂无适配产品信息',
-        modelsInfo : {
-          Brand : '',
-          Models : "",
-          Manufacturers : '', //厂家
-          ChassisCode : '',
-          Year : '',
-          Induction : '', //近气形式
-          Displacement : '', //排量
-          ListingYear : '', //上市年份
-          IdlingYear : '', //停产年份
-          FuelType : '' ,//燃油类型
-          EngineModel : '' //发动机型号
-        },
+        modelsInfo : {},
+        modelsInfoList : [], //车型列表
+        showModels : false,
+        changeModelIcon : false,
         showModelInfoByVinCode : false,
         cartTotal : 0, //购物车数量
         buyRecord :[], //购买记录
@@ -446,45 +458,29 @@
       //vin码对应产品
       vinCodePros(){
         let this_ = this;
-        if(this_.p == 1){this_.bus.$emit('loading', true);}
+        //if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.post({
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
           params: {},
           success: function (data) {
-            console.log(data);
+            //console.log(data);
             if(data.State){
               this_.tabCurrent = 0;
               //车型信息
-              console.log(data.centent.result);
-              this_.modelsInfo.Brand = data.centent.result[0].Brand;
-              this_.modelsInfo.Models = data.centent.result[0].Models;
-              this_.modelsInfo.Manufacturers = data.centent.result[0].Manufacturers;
-              this_.modelsInfo.ChassisCode = data.centent.result[0].ChassisCode;
-              this_.modelsInfo.Year = data.centent.result[0].Year;
-              this_.modelsInfo.Induction = data.centent.result[0].Induction == '涡轮增压' ? 'T' : 'L';
-              this_.modelsInfo.Displacement = data.centent.result[0].Displacement;
-              this_.modelsInfo.ListingYear = data.centent.result[0].ListingYear;
-              this_.modelsInfo.IdlingYear = data.centent.result[0].IdlingYear;
-              this_.modelsInfo.FuelType = data.centent.result[0].FuelType;
-              this_.modelsInfo.EngineModel = data.centent.result[0].EngineModel;
-              this_.showModelInfoByVinCode = true;
-              this_.dataPage = [];
-              if(data.centent.plist != "" && data.centent.plist != null){
-                let result = JSON.parse(data.centent.plist);
-                this_.getMb001s(result);
-                this_.getPorductPics(result);
-                this_.showEmpty = false;
+              console.log("------------车型列表---------------");
+              console.log(data.centent.tmparr);
+              this_.modelsInfoList = data.centent.tmparr;
+              this_.modelsInfo = data.centent.tmparr[0];
+              if(this_.modelsInfoList.length > 1){
+                this_.changeModelIcon = true;
               }else{
-                if(this_.p > 1){
-                  this_.showEmpty = false;
-                }else{
-                  this_.showEmpty = true;
-                }
+                this_.changeModelIcon = false;
               }
+              this_.showModelInfoByVinCode = true;
+              this_.getProductByModels();
             }else{
               this_.bus.$emit('tipShow', data.Message);
             }
-            this_.bus.$emit('loading', false);
           }
         });
       },
@@ -517,6 +513,7 @@
               this_.dataPage = [];
               if(res.centent.plist != ""){
                 let result = JSON.parse(res.centent.plist);
+                console.log(result);
                 this_.getMb001s(result);
                 this_.getPorductPics(result);
                 this_.showEmpty = false;
@@ -595,7 +592,7 @@
           url: this_.$apiUrl.api.ProductDetails,
           params: params_data,
           success: function (data) {
-            //console.log('--------------缩略图--------------------');
+            console.log('--------------缩略图--------------------');
             console.log(data);
             if(data.State){
               let infos = data.centent;
@@ -943,7 +940,8 @@
             if(this.source == 0){
               this.proList = [];
               if(this.keyWords != ""){
-                this.vinCodePros();
+                //this.vinCodePros();
+                this.getProductByModels();
               }else{
                 this.showPlaceHolderText();
                 this.carsPros();
@@ -963,7 +961,47 @@
       //预览图片
       imgPreview(e){
         ImagePreview([''+this.imgUrl + e+'']);
-      }
+      },
+      //选择车型
+      changeModels(item){
+        this.modelsInfo = item;
+        this.showModels = false;
+        this.getProductByModels();
+      },
+      //根据车型查询对应的产品
+      getProductByModels(){
+        let this_ = this;
+        console.log(this_.categoryName);
+        if(this_.p == 1){this_.bus.$emit('loading', true);}
+        this_.$api.get({
+          url: this_.$apiUrl.api.GetProductsByLevelId+'?levelId=' + this_.modelsInfo.LevelId + '&categoryName='+this_.categoryName+'&pageindex='+this_.p+'&pagesize='+this_.pageRows,
+          params: {},
+          success: function (data) {
+            console.log('产品列表');
+            //console.log(JSON.parse(data.centent));
+            if(data.State){
+              this_.dataPage = [];
+              if(data.centent != "" && data.centent != null){
+                console.log('数据不为空');
+                let result = JSON.parse(data.centent);
+                this_.getMb001s(result);
+                this_.getPorductPics(result);
+                this_.showEmpty = false;
+              }else{
+                console.log('数据为空');
+                if(this_.p > 1){
+                  this_.showEmpty = false;
+                }else{
+                  this_.showEmpty = true;
+                }
+              }
+            }else{
+              this_.bus.$emit('tipShow', data.Message);
+            }
+            this_.bus.$emit('loading', false);
+          }
+        });
+      },
     }
   }
 </script>
@@ -1003,5 +1041,34 @@
     padding: 0.5rem;
     border-radius: 2rem;
   }
-
+  .guideprice{
+    font-size: 1.2rem;
+    margin-left: 0.3rem;
+    color: #888888;
+    transform: scale(0.9);
+  }
+  .modelsPop{
+    padding: 0 1rem;
+  }
+  .modelsPop .models-title{
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+  }
+  .modelsPop .models-item{
+    border: 1px solid #CCCCCC;
+    padding: 1rem 0.625rem;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+  }
+  .modelsPop .active{
+    background-color: #dff0d8;
+    border-color: #3c763d;
+    color: #3c763d;
+  }
+  /* .modelsPop .models-item:last-child{
+    border-bottom: none;
+  } */
 </style>

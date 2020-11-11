@@ -13,7 +13,10 @@
         <div class="left">
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
-          <p class="text-red" v-if="isShow"><em style="font-size: 1rem;">￥</em><em style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em></p>
+          <p v-if="isShow">
+            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
+            <em class="guideprice">指导价：￥<em style="font-size: 1.4rem;">{{info.guideprice}}</em></em>
+          </p>
         </div>
         <div class="right cart-box" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
@@ -86,7 +89,6 @@ export default {
          let obj = sessionStorage.getItem('proObj');
         if(obj != ""){
           this_.cartList = JSON.parse(obj);
-
           //this_.isCart = true;
         }else{
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
@@ -121,7 +123,7 @@ export default {
         url: this_.$apiUrl.api.ProductImage + "?mb001=" + this_.$route.query.mb001,
         params: {},
         success: function (data) {
-          //console.log(data);
+          console.log(data);
           if(data.content.length !=0){
             this_.swiper = data.content[0].sliderpics.split(',');
             this_.info = data.content[0];
@@ -157,7 +159,7 @@ export default {
         url: this_.$apiUrl.api.ProductMB001+'?mb001='+this_.$route.query.mb001+'&c_id='+this_.userInfo.dataset[0].c_id+'&c_ma001='+this_.userInfo.dataset[0].ma001+'&ma017='+this_.userInfo.dataset[0].ma017+'&dpt='+this_.userInfo.dataset[0].dpt+'&ma075='+this_.userInfo.dataset[0].ma075,
         params: {},
         success: function (data) {
-          console.log(data);
+          //console.log(data);
           this_.cartList = data[0];
         }
       });
@@ -200,4 +202,9 @@ export default {
 </script>
 <style scoped>
   @import "../../assets/css/detail.css";
+  .guideprice{
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    color: #888888;
+  }
 </style>
