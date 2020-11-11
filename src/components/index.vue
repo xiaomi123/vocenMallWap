@@ -154,7 +154,7 @@
   					<h2>{{list.name}}</h2>
 	  				<ul class="index_list clearfix">
 	  					<li v-for="item in list.item">
-	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}">
+	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}" v-if='!(item.num == "1030" && proNot)'>
 	  							<span><img :src="item.imgSrc" /></span>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
@@ -217,6 +217,7 @@ export default {
     	activeData:[],//活动图数据
     	noReadNum:0,//未读消息
     	hisRecord:[],//历史搜索
+      proNot:false,
     }
   },
   mounted: function () {
@@ -245,6 +246,10 @@ export default {
       //历史搜索记录
       if(!this_.$utils.check.isEmpty(JSON.parse(localStorage.getItem("hisRecord")))){
       	this_.hisRecord = JSON.parse(localStorage.getItem("hisRecord")).reverse().slice(0,10);
+      }
+
+      if(this_.userInfo.dataset[0].ma001 == "2310002" || this_.userInfo.dataset[0].ma001 == "2510039" || this_.userInfo.dataset[0].ma001 == "2410009" || this_.userInfo.dataset[0].ma001 == "2510035" || this_.userInfo.dataset[0].ma001 == "2526046"){
+        this_.proNot = true;
       }
 
     })
