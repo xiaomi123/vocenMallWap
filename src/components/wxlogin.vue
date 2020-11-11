@@ -82,7 +82,6 @@
                   dataset1: data.centent.userinfo.dataset,
                   //dataset1: (data.centent.userinfo.dataset1).concat(dataset2)
                 };
-
                 //判断品牌是否存在
                 dataset2.forEach((item,index) => {
                   if(this_.$route.query.type == 4){
@@ -121,20 +120,21 @@
                   }
                 })
 
-                if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
-                  sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
+                if(!this_.$utils.check.isEmpty(userdata.dataset[0].mr003)){
+                  if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
+                    sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
+                  }
                 }
 
-                var branType = '';
-                if(sessionStorage.getItem('brandType') != null){
+                sessionStorage.setItem("shopname",userdata.dataset[0].c_shopname)
+                let branType = '';
+                if(!this_.$utils.check.isEmpty(sessionStorage.getItem('brandType'))){
                   branType = sessionStorage.getItem('brandType');
                 }
-
-                var mb001 = '';
-                if(sessionStorage.getItem('epcrode') != null){
+                let mb001 = '';
+                if(!this_.$utils.check.isEmpty(sessionStorage.getItem('epcrode'))){
                   mb001 = sessionStorage.getItem('epcrode');
                 }
-
 
                 this_.$router.push('/lhqSearch?type=' + branType + '&mb001=' + mb001 );
               }else{
@@ -144,6 +144,12 @@
                   dataset: data.centent.userinfo.dataset,
                   dataset1: (data.centent.userinfo.dataset1).concat(data.centent.userinfo.dataset2)
                 };
+                if(!this_.$utils.check.isEmpty(userdata.dataset[0].c_shopname)){
+                  if(userdata.dataset[0].c_shopname == '试用账号'){
+                    //this_.bus.$emit('tipShow', "该账号为测试账号，无法登陆！");
+                    return false;
+                  }
+                }
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
                 this_.$router.push('/index');
               }
@@ -159,6 +165,10 @@
       //用户名密码登陆
       login: function() {
         let this_ = this;
+        if(!this_.isSearch && this_.userForm.name == 'test'){
+          this_.bus.$emit('tipShow', "该账号为测试账号，无法登陆！");
+          return false;
+        }
         this_.bus.$emit('loading', true);
         this_.$api.get({
           url: this_.$apiUrl.api.getLogin + '?name=' + this_.userForm.name,

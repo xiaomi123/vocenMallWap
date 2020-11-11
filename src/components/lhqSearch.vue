@@ -213,9 +213,32 @@
             if(sessionStorage.getItem('brandType') == 3){
               this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
             }
+
             this_.showText = true;
             this_.isShowFooter = true;
             this_.isOut = true;
+
+            //模拟账号条件
+            let isTest = false;
+            if(!this_.$utils.check.isEmpty(sessionStorage.getItem("shopname"))){
+              if(sessionStorage.getItem("shopname") == '试用账号'){
+                isTest = true;
+              }
+            }
+            if(sessionStorage.getItem('openid') == 'oebB3' || sessionStorage.getItem('openid') == 'oebB4' || isTest){
+              this_.showText = true;
+              this_.isOut = false;
+              if(isTest){
+                this_.isOut = true;
+              }
+              if(sessionStorage.getItem('brandType') == 3){
+                this_.showTextDesc = "欢迎登录江陵耐用查询系统！";
+              }
+              if(sessionStorage.getItem('brandType') == 4){
+                this_.showTextDesc = "欢迎登录弘途耐用查询系统！";
+              }
+            }
+
           }else{
             let userdata = JSON.parse(sessionStorage.getItem("userinfo"));
             this_.showText = true;
@@ -333,7 +356,7 @@
                   }
                 }
               });
-              if(userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1){
+              if(!this_.$utils.check.isEmpty(userdata.dataset[0].mr003) && (userdata.dataset[0].mr003.indexOf('弘途耐用') > -1 || userdata.dataset[0].mr003.indexOf('江陵耐用') > -1)){
 
                 sessionStorage.setItem("userinfo", JSON.stringify(userdata)); //存入userinfo
                 this_.showText = true;
@@ -349,6 +372,29 @@
                   this_.showTextDesc = "您已登录，但未代理耐用件。如需更多查询，请与您的专属客服联系。";
                 }
                 this_.showText = true;
+                this_.isShowFooter = false;
+
+                //模拟账号条件
+                let isTest = false;
+                if(!this_.$utils.check.isEmpty(userdata.dataset[0].c_shopname)){
+                  if(userdata.dataset[0].c_shopname == '试用账号'){
+                    isTest = true;
+                  }
+                }
+                if(this_.$route.query.openid == 'oebB3' || this_.$route.query.openid == 'oebB4' || isTest){
+                  this_.showText = true;
+                  this_.isOut = false;
+                  if(isTest){
+                    this_.isOut = true;
+                  }
+                  if(this_.$route.query.type == 3){
+                    this_.showTextDesc = "欢迎登录江陵耐用查询系统！";
+                  }
+                  if(this_.$route.query.type == 4){
+                    this_.showTextDesc = "欢迎登录弘途耐用查询系统！";
+                  }
+                }
+
               }
             } else{
               this_.isLogin = true;

@@ -154,12 +154,21 @@
   					<h2>{{list.name}}</h2>
 	  				<ul class="index_list clearfix">
 	  					<li v-for="item in list.item">
-	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}">
+	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}" v-if='!(item.num == "1030" && proNot)'>
 	  							<span><img :src="item.imgSrc" /></span>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
-	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  <!-- 新品推荐 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
+                  <!-- 直降 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076')"><img src="../assets/images/common/icon_cut.png" /></em>
+                  <!-- 特价 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0075' || item.num == '0078' || item.num == '0080' || item.num == '0043')"><img src="../assets/images/common/icon_tejia.png" /></em>
+                  <!-- 热卖 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  <!-- 秒杀 -->
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
                   {{item.name}}
 	  						</router-link>
 	  					</li>
@@ -208,6 +217,7 @@ export default {
     	activeData:[],//活动图数据
     	noReadNum:0,//未读消息
     	hisRecord:[],//历史搜索
+      proNot:false,
     }
   },
   mounted: function () {
@@ -236,6 +246,10 @@ export default {
       //历史搜索记录
       if(!this_.$utils.check.isEmpty(JSON.parse(localStorage.getItem("hisRecord")))){
       	this_.hisRecord = JSON.parse(localStorage.getItem("hisRecord")).reverse().slice(0,10);
+      }
+
+      if(this_.userInfo.dataset[0].ma001 == "2310002" || this_.userInfo.dataset[0].ma001 == "2510039" || this_.userInfo.dataset[0].ma001 == "2410009" || this_.userInfo.dataset[0].ma001 == "2510035" || this_.userInfo.dataset[0].ma001 == "2526046"){
+        this_.proNot = true;
       }
 
     })
@@ -496,15 +510,21 @@ export default {
       			}else{
       				//日系
       				if(this_.userInfo.dataset1[index].mr003 == "沃森代理(日系)"){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs115.jpg'),'name':'电子扇','num':'1047'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs7601.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs7602.jpg'),'name':'散热器','num':'1045'});
 
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtWs71.jpg'),'name':'方向机','num':'1040'});
       				}else if(this_.userInfo.dataset1[index].mr003 == "秀泰代理(日系)"){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt115.jpg'),'name':'电子扇','num':'1047'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7601.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt7602.jpg'),'name':'散热器','num':'1045'});
 
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanFtXt71.jpg'),'name':'方向机','num':'1040'});
+      				}else if(this_.userInfo.dataset1[index].mr003 == "联保代理"){
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanRxLb01.jpg')});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanRxLb02.jpg')});
+
       				}else{
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan05.jpg'),'name':'暖风机','num':'1044'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan02.jpg'),'name':'','num':''});
@@ -516,11 +536,19 @@ export default {
       			if(this_.userInfo.dataset1[index].dpt.search("吉利") != -1){
       				//吉利
       				if(this_.userInfo.dataset1[index].dpt.search("吉利-吉摩") != -1){
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg'),'name':'皮带','num':'0140'});
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg'),'name':'涨紧轮','num':'0141'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1191.jpg'),'name':'玻璃升降器','num':'0155'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1192.jpg'),'name':'方向机','num':'0154'});
+      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1193.jpg'),'name':'减震器','num':'0108'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1194.jpg'),'name':'前大灯','num':'0101'});
+                //this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg'),'name':'皮带','num':'0140'});
+      					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else if(this_.userInfo.dataset1[index].dpt.search("吉利-沃森") != -1){
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs01.jpg'),'name':'皮带','num':'0140'});
-      					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs02.jpg'),'name':'涨紧轮','num':'0141'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1191.jpg'),'name':'玻璃升降器','num':'0155'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1192.jpg'),'name':'方向机','num':'0154'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1193.jpg'),'name':'减震器','num':'0108'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1194.jpg'),'name':'前大灯','num':'0101'});
+      					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs01.jpg'),'name':'皮带','num':'0140'});
+      					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else{
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar03.jpg')});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar04.jpg')});
@@ -529,10 +557,12 @@ export default {
       			}else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
       					//沃森
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_ws629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar05.jpg'),'name':'喇叭','num':'0087'});
       				}else if(this_.userInfo.dataset1[index].ma017 == '200'){
       					//江陵
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_jl629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar06.png'),'name':'喇叭','num':'0087'});
       				}else{

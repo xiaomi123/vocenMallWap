@@ -25,7 +25,7 @@
   			<li><router-link :to="{path: '/proSearch/userCenter/order'}"><i class="iconfont list03">&#xe648;</i>订单查询<em class="iconfont">&#xe74b;</em></router-link></li>
   			<li><router-link :to="{path: '/proSearch/userCenter/enterDetail'}"><i class="iconfont list04">&#xe6d7;</i>进货明细<em class="iconfont">&#xe74b;</em></router-link></li>
   			<li><router-link :to="{path: '/collect'}"><i class="iconfont list05">&#xe643;</i>我的收藏<em class="iconfont">&#xe74b;</em></router-link></li>
-  			<li><a href="javascript:void(0)" @click="loginOut()"><i class="iconfont" style="color:darkred">&#xe67b;</i>退出登陆</a></li>
+  			<li><a href="javascript:void(0)" @click="loginOut()" v-if="isVis"><i class="iconfont" style="color:darkred">&#xe67b;</i>退出登陆</a></li>
   		</ul>
 
   	</div>
@@ -44,11 +44,18 @@ export default {
     	userName:JSON.parse(sessionStorage.getItem("userinfo")).dataset[0].c_login,
     	isEdit:true,
     	oldName:'',
+      isVis:true,//退出登陆是否显示
     }
   },
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
+      if(!this_.$utils.check.isEmpty(sessionStorage.getItem('openid'))){
+        if(sessionStorage.getItem('openid') == 'oebB1' || sessionStorage.getItem('openid') == 'oebB2' || sessionStorage.getItem('openid') == 'oebB3' || sessionStorage.getItem('openid') == 'oebB4'){
+          this_.isVis = false;
+        }
+      }
+      
       document.title = sessionStorage.getItem('pageTitle');
       this_.bus.$emit('footer', true);
     })
