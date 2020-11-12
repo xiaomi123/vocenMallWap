@@ -4,6 +4,7 @@
 	{{proItem02.mb001}}
 	{{proItem02.mb002New}}
   <label v-if="proItem02.mb001.substring(0,2) == 57" class="dmh">德马赫</label>
+  <label v-if="proItem02.mb001.substring(0,2) == 58" class="dmh">联保</label>
 	<em>{{proItem02.oem}}</em><br />
 	<i>{{proItem02.mb003New}}</i><br />
 	<span>
