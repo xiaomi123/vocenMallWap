@@ -148,8 +148,8 @@ export default {
   		for(var i=0;i<data.length;i++){
     		for(var j=0;j<data[i].pro.length;j++){
     			data[i].pro[j].cartType = 'product';
-          if(this_.$route.query.title == '德马赫产品'){
-            if(data[i].pro[j].mb001.substring(0,2) != 57){
+          if(this_.$route.query.title == '德马赫产品' || this_.$route.query.title == '联保产品'){
+            if(data[i].pro[j].mb001.substring(0,2) != '57' && data[i].pro[j].mb001.substring(0,2) != '58'){
               data[i].pro.splice(i--, 1);
             }
           }
@@ -255,8 +255,8 @@ export default {
         	this_.bus.$emit('loading', false);
         	for(var i=0;i<data.length;i++){
 					  data[i].cartType = 'product';
-            if(this_.$route.query.title == '德马赫产品'){
-              if(data[i].mb001.substring(0,2) != 57){
+            if(this_.$route.query.title == '德马赫产品' || this_.$route.query.title == '联保产品'){
+              if(data[i].mb001.substring(0,2) != '57' && data[i].mb001.substring(0,2) != '58'){
                 data.splice(i--, 1);
               }
             }

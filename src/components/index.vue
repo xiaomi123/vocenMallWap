@@ -159,6 +159,8 @@
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  
                   <!-- 新品推荐 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
                   <!-- 直降 -->
@@ -502,8 +504,8 @@ export default {
       			//轿车
       			if(this_.userInfo.dataset1[index].dpt.search("现代") != -1){
       				//韩系
+              this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx1112.jpg'),'name':'保险杠','num':'1073'});
       				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedan827.jpg'),'name':'发电机','num':'1060'});
-      				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx7602.jpg'),'name':'中网格栅','num':'1075'});
       				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx76.jpg'),'name':'元宝梁','num':'1062'});
       				this_.hotData.push({"imgSrc":require('../assets/images/activity/sedan/img_index_sedanHx642.jpg'),'name':'锁块','num':'1086'});
 
