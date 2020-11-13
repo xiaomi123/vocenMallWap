@@ -5,34 +5,39 @@
     </div>
 
     <!--查询录入框内容开始-->
+    <van-sticky>
+      <van-button type="primary">基础用法</van-button>
+    </van-sticky>
 
+    <!-- <van-sticky> -->
+      <div class="lhq_header" ref="sysLeft">
+        <div class="clearfix tag-item ub-pra">
+          <!-- <van-icon name="bulb-o" size="2em" class="icon" color="#0066CC" id="vin" /> -->
+          <van-icon name="bulb-o" size="2em" class="icon" color="#CCCCCC" id="vin" />
+          <p id="input1">
+            <input type="text" placeholder="请输入VIN码" v-model="keyWords" />
+            <input id="upload_file" type="file"  accept="image/*" @change="fileChange($event)" multiple style="display: none">
+            <input id="camera_file" type="file"  accept="image/*" capture="camera" @change="camera($event)" multiple style="display: none">
+            <img class="icon-scanner" src="../../assets/images/common/scanner.png" @click="show = true" />
+            <span @click="searchByVin()">查询</span>
+          </p>
+          <label style="color: #666666;">VIN码：如LFV3B28R1C3080426</label>
+        </div>
+        <div  class="clearfix tag-item ub-pra">
+          <van-icon name="bulb-o" size="2em" class="icon" color="#CCCCCC" id="attr" />
+          <p id="input2">
+            <input type="text" :placeholder="placeholderTxt" v-model="attrKey" />
+            <span @click="search()">查询</span>
+          </p>
+        </div>
+        <div style="background: #eeeeee;padding: 1rem 1rem 0 1rem;">
+          <template v-for="(item,index) in cateList" >
+            <van-tag class="umar-r" style="margin-bottom: 1rem;" round :size="item.size" :color="item.color" :text-color="item.txtColor" @click="tapTag(item,index)">{{item.name}}</van-tag>
+          </template>
+        </div>
+      </div>
+    <!-- </van-sticky> -->
 
-    <div class="lhq_header" ref="sysLeft">
-      <div class="clearfix tag-item ub-pra">
-        <!-- <van-icon name="bulb-o" size="2em" class="icon" color="#0066CC" id="vin" /> -->
-        <van-icon name="bulb-o" size="2em" class="icon" color="#CCCCCC" id="vin" />
-        <p id="input1">
-          <input type="text" placeholder="请输入VIN码" v-model="keyWords" />
-          <input id="upload_file" type="file"  accept="image/*" @change="fileChange($event)" multiple style="display: none">
-          <input id="camera_file" type="file"  accept="image/*" capture="camera" @change="camera($event)" multiple style="display: none">
-          <img class="icon-scanner" src="../../assets/images/common/scanner.png" @click="show = true" />
-          <span @click="searchByVin()">查询</span>
-        </p>
-        <label style="color: #666666;">VIN码：如LFV3B28R1C3080426</label>
-      </div>
-      <div  class="clearfix tag-item ub-pra">
-        <van-icon name="bulb-o" size="2em" class="icon" color="#CCCCCC" id="attr" />
-        <p id="input2">
-          <input type="text" :placeholder="placeholderTxt" v-model="attrKey" />
-          <span @click="search()">查询</span>
-        </p>
-      </div>
-      <div style="background: #eeeeee;padding: 1rem 1rem 0 1rem;">
-        <template v-for="(item,index) in cateList" >
-          <van-tag class="umar-r" style="margin-bottom: 1rem;" round :size="item.size" :color="item.color" :text-color="item.txtColor" @click="tapTag(item,index)">{{item.name}}</van-tag>
-        </template>
-      </div>
-    </div>
     <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" @select="onSelect"></van-action-sheet>
     <!--查询录入框内容结束-->
 
@@ -97,7 +102,7 @@
                 <div class="ub ub-f1 text-red" v-show="list.prod[5].indexOf('开发中') <= -1">
                   <em style="font-size: 1rem;">￥</em>
                   <em style="font-size: 1.4rem;">{{parseInt(list.params.price)}}</em>
-                  <div class="guideprice">指导价：￥{{list.params.guideprice}}</div>
+                  <div class="guideprice">指导售价：￥{{list.params.guideprice}}</div>
                 </div>
                 <div class="ub" v-if="buyRecord.length != 0">
                   <template v-for="(item,index) in buyRecord">
@@ -125,9 +130,10 @@
                 </div>
               </template>
               <div  class="ub ub-ver ub-f1">
-                <div class="ub pro-title" v-if="item.dtype.indexOf('离合器') > -1">{{item.models}}</div>
+                <div class="ub pro-title" v-if="item.dtype.indexOf('离合器') > -1 || item.dtype.indexOf('燃油泵') > -1">{{item.models}}</div>
                 <div class="ub pro-title" v-if="item.dtype.indexOf('点火线圈') > -1">{{item.series}}{{item.models}}&nbsp;{{item.displacement}}</div>
                 <div class="ub pro-title" v-if="item.dtype.indexOf('氧传感') > -1">{{item.series}}{{item.models}}{{item.style}}</div>
+
                 <div class="ub umar-t" v-if="item.dtype.indexOf('氧传感') > -1">品名：<em class="sc-text">氧传感器</em>&nbsp;&nbsp;品号：<em class="sc-text">{{item.mb001}}</em></div>
                 <div class="ub umar-t" v-else-if="item.dtype.indexOf('离合器') > -1">品名：<em class="sc-text">离合器套装</em>&nbsp;&nbsp;品号：<em class="sc-text">{{item.mb001}}</em></div>
                 <div class="ub umar-t" v-else>品名：<em class="sc-text">{{item.dtype}}</em>&nbsp;&nbsp;品号：<em class="sc-text">{{item.mb001}}</em></div>
@@ -162,13 +168,17 @@
             <div class="umar-t" style="word-break: break-all;">OEM：<em class="sc-text">{{item.oem}}</em></div>
             <div class="umar-t">规格：<em class="sc-text">{{item.name}}</em></div>
           </div>
+          <div class="ub ub-ver" v-if="item.dtype.indexOf('燃油泵') > -1" @click="detail_1(item)">
+            <div class="umar-t" style="word-break: break-all;">OEM：<em class="sc-text">{{item.oem}}</em></div>
+            <div class="umar-t">规格：<em class="sc-text">{{item.pspec}}</em></div>
+          </div>
           <div class="ub ub-ac" style="margin-top: 1rem;" @click="detail_1(item)">
             <div class="ub">
               <div class="ub text-red" v-if="!(JSON.stringify(userInfo) === '{}')">
                 <template v-if="item.mb001.indexOf('开发中') <= -1">
                   <em style="font-size: 1rem;">￥</em>
-                  <em style="font-size: 1.4rem;">{{parseInt(item.price)}}</em>
-                  <div class="guideprice">指导价：￥{{item.guideprice}}</div>
+                  <em style="font-size: 1.4rem;">{{item.price}}</em>
+                  <div class="guideprice">指导售价：￥{{item.guideprice}}</div>
                 </template>
               </div>
              <!-- <template v-for="(list,index) in buyRecord"> -->
@@ -289,6 +299,7 @@
         pageRows : 20,
         source : 0 ,//数据来源
         isTest:true,//是否为测试账号
+        stickyTop : 0
       }
     },
     mounted: function() {
@@ -399,6 +410,9 @@
           }
         }
 
+        //吸顶距离
+        this_.stickyTop = document.getElementsByClassName('lhq_header')[0].offsetTop;
+
       });
     },
     created(){
@@ -418,28 +432,28 @@
         let this_ = this;
       },
       //滚动监听
-      handleScroll:function(){
-      	let this_ = this;
-      	let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      	let offTop = this_.$refs.sysLeft.offsetTop;
-      	let h = document.documentElement.clientHeight || document.body.clientHeight;
-      	if(scrollTop > offTop){
-      		this_.$refs.sysLeft.style.position = 'fixed';
-      		this_.$refs.sysLeft.style.top = '0px';
-      		this_.$refs.sysLeft.style.left = '0px';
-      		this_.$refs.sysLeft.style.width = '100%';
-      		this_.$refs.sysLeft.style.overflowY = 'auto';
-          this_.$refs.sysLeft.style.zIndex = '9';
-      	}else{
-      		this_.$refs.sysLeft.style.position = 'initial';
-      		this_.$refs.sysLeft.style.top = '0px';
-      		this_.$refs.sysLeft.style.left = '0px';
-      		this_.$refs.sysLeft.style.width = '100%';
-      		this_.$refs.sysLeft.style.overflowY = 'initial';
-          this_.$refs.sysLeft.style.zIndex = 'auto';
-      	}
+      // handleScroll:function(){
+      // 	let this_ = this;
+      // 	let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      // 	let offTop = this_.$refs.sysLeft.offsetTop;
+      // 	let h = document.documentElement.clientHeight || document.body.clientHeight;
+      // 	if(scrollTop > offTop){
+      // 		this_.$refs.sysLeft.style.position = 'fixed';
+      // 		this_.$refs.sysLeft.style.top = '0px';
+      // 		this_.$refs.sysLeft.style.left = '0px';
+      // 		this_.$refs.sysLeft.style.width = '100%';
+      // 		this_.$refs.sysLeft.style.overflowY = 'auto';
+      //     this_.$refs.sysLeft.style.zIndex = '9';
+      // 	}else{
+      // 		this_.$refs.sysLeft.style.position = 'initial';
+      // 		this_.$refs.sysLeft.style.top = '0px';
+      // 		this_.$refs.sysLeft.style.left = '0px';
+      // 		this_.$refs.sysLeft.style.width = '100%';
+      // 		this_.$refs.sysLeft.style.overflowY = 'initial';
+      //     this_.$refs.sysLeft.style.zIndex = 'auto';
+      // 	}
 
-      },
+      // },
       //显示对应的品类图
       showNavImg(){
         let this_ = this;
