@@ -84,19 +84,21 @@
 	  	  			<i class="iconfont yes">&#xe6c2;</i>
 	  	  		</span>
 	  	  		<div class="product_left">
-	  	  			{{item.mb002New}}
-	  	  			<em>{{item.s_oem}}</em><br />
-	  	  			<i>{{item.mb003New}}</i><br />
-	  	  			<span>
-	  	  				<em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
-	  	  				<!--{{item.tj?'特价￥':''}}
-	  	  				{{item.tj?item.aprice:''}}-->
-	  	  				{{item.i_type_no=='2'?'限时秒杀':''}}
-	  	  				{{item.i_type_no=='3'?'满减':''}}
-	  	  			</span>
-	  	  			<span style="color:red">{{item.s_state}}</span>
-	  	  			<!--<i v-if="item.a_type_no=='1' && !$utils.check.isEmpty(item.i_limit_qty)" style="color:red">数量满{{item.i_limit_qty}}可享受特价</i>-->
-	  	  		</div>
+              <div class="proLeft_main">
+                {{item.mb001}}&ensp;{{item.mb002New}}
+                <em>{{item.s_oem}}</em><br />
+                <i>{{item.mb003New}}</i><br />
+                <span>
+                  <em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
+                  <!--{{item.tj?'特价￥':''}}
+                  {{item.tj?item.aprice:''}}-->
+                  {{item.i_type_no=='2'?'限时秒杀':''}}
+                  {{item.i_type_no=='3'?'满减':''}}
+                </span>
+                <span style="color:red">{{item.s_state}}</span>
+                <!--<i v-if="item.a_type_no=='1' && !$utils.check.isEmpty(item.i_limit_qty)" style="color:red">数量满{{item.i_limit_qty}}可享受特价</i>-->
+              </div>
+            </div>
 	  	  		<div class="product_right">
 	  	  			<iconList-view :collItem="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></iconList-view>
 	  	  			<input v-if="item.state == '产品不存在'" type="text" v-model="item.s_qty" class="cartNo" readonly="readonly" />
@@ -118,17 +120,19 @@
   	  			<i class="iconfont yes">&#xe6c2;</i>
   	  		</span>
   	  		<div class="product_left">
-  	  			{{item.mb002New}}
-  	  			<em>{{item.s_oem}}</em><br />
-  	  			<i>{{item.mb003New}}</i><br />
-  	  			<span>
-  	  				<em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
-  	  				{{item.tj?'特价￥':''}}
-  	  				{{item.tj?item.aprice:''}}
-  	  				{{item.i_type_no=='2'?'限时秒杀':''}}
-  	  				{{item.i_type_no=='3'?'满减':''}}
-  	  			</span>
-  	  			<span>{{item.s_state}}</span>
+            <div class="proLeft_main">
+              {{item.mb001}}&ensp;{{item.mb002New}}
+              <em>{{item.s_oem}}</em><br />
+              <i>{{item.mb003New}}</i><br />
+              <span>
+                <em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
+                {{item.tj?'特价￥':''}}
+                {{item.tj?item.aprice:''}}
+                {{item.i_type_no=='2'?'限时秒杀':''}}
+                {{item.i_type_no=='3'?'满减':''}}
+              </span>
+              <span>{{item.s_state}}</span>
+            </div>
   	  		</div>
   	  		<div class="product_right">
   	  			<iconList-view :collItem="item" :num="item.s_i_ma001" :name="item.s_i_ma002"></iconList-view>
