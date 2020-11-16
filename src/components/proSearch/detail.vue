@@ -15,7 +15,7 @@
           <p>产品编号：{{info.erpcode}}</p>
           <p v-if="isShow">
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
-            <em class="guideprice">指导价：￥<em style="font-size: 1.4rem;">{{info.guideprice}}</em></em>
+            <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{info.guideprice}}</em></em>
           </p>
         </div>
         <div class="right cart-box" v-if="isCart">
@@ -86,13 +86,11 @@ export default {
           this_.isShow = false;
           document.title = '订单系统';
         }
-         let obj = sessionStorage.getItem('proObj');
-        if(obj != ""){
-          this_.cartList = JSON.parse(obj);
-          //this_.isCart = true;
+         let obj = JSON.parse(sessionStorage.getItem('proObj'));
+        if(obj.length != 0){
+          this_.cartList = obj; //JSON.parse(obj);
         }else{
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
-          //this_.isCart = true;
           this_.init_1();
         }
       }
@@ -153,13 +151,13 @@ export default {
       });
     },
     init_1(){
-
       let this_ = this;
       this_.$api.get({
         url: this_.$apiUrl.api.ProductMB001+'?mb001='+this_.$route.query.mb001+'&c_id='+this_.userInfo.dataset[0].c_id+'&c_ma001='+this_.userInfo.dataset[0].ma001+'&ma017='+this_.userInfo.dataset[0].ma017+'&dpt='+this_.userInfo.dataset[0].dpt+'&ma075='+this_.userInfo.dataset[0].ma075,
         params: {},
         success: function (data) {
-          //console.log(data);
+          console.log('init_1');
+          console.log(data);
           this_.cartList = data[0];
         }
       });

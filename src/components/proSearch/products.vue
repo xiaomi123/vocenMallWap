@@ -5,9 +5,6 @@
     </div>
 
     <!--查询录入框内容开始-->
-    <van-sticky>
-      <van-button type="primary">基础用法</van-button>
-    </van-sticky>
 
     <!-- <van-sticky> -->
       <div class="lhq_header" ref="sysLeft">
@@ -47,7 +44,7 @@
       <div class="ub ub-ver ub-f1">
         <div style="margin-bottom: 0.5rem;">{{modelsInfo.Manufacturers}}&nbsp;&nbsp;{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.ChassisCode}}</div>
         <div>{{modelsInfo.ProducedYear}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
-        {{modelsInfo.Displacement}}{{modelsInfo.Induction}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
+        {{modelsInfo.Displacement}}{{modelsInfo.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
       </div>
       <div class="ub ub-ac" v-show="changeModelIcon" @click="showModels = true">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;" /></div>
     </div>
@@ -59,7 +56,7 @@
           <div :class="model.LevelId == modelsInfo.LevelId ? 'models-item active' : 'models-item'" @click="changeModels(model)">
             <div style="margin-bottom: 0.5rem;">{{model.Manufacturers}}&nbsp;&nbsp;{{model.Brand}}&nbsp;&nbsp;{{model.Models}}&nbsp;&nbsp;{{model.ChassisCode}}</div>
             <div>{{model.ProducedYear}}&nbsp;&nbsp;[{{model.ListingYear}}-{{model.IdlingYear}}]&nbsp;&nbsp;
-            {{model.Displacement}}{{model.Induction}}&nbsp;&nbsp;{{model.EngineModel}}</div>
+            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}</div>
           </div>
         </block>
       </div>
@@ -432,28 +429,28 @@
         let this_ = this;
       },
       //滚动监听
-      // handleScroll:function(){
-      // 	let this_ = this;
-      // 	let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      // 	let offTop = this_.$refs.sysLeft.offsetTop;
-      // 	let h = document.documentElement.clientHeight || document.body.clientHeight;
-      // 	if(scrollTop > offTop){
-      // 		this_.$refs.sysLeft.style.position = 'fixed';
-      // 		this_.$refs.sysLeft.style.top = '0px';
-      // 		this_.$refs.sysLeft.style.left = '0px';
-      // 		this_.$refs.sysLeft.style.width = '100%';
-      // 		this_.$refs.sysLeft.style.overflowY = 'auto';
-      //     this_.$refs.sysLeft.style.zIndex = '9';
-      // 	}else{
-      // 		this_.$refs.sysLeft.style.position = 'initial';
-      // 		this_.$refs.sysLeft.style.top = '0px';
-      // 		this_.$refs.sysLeft.style.left = '0px';
-      // 		this_.$refs.sysLeft.style.width = '100%';
-      // 		this_.$refs.sysLeft.style.overflowY = 'initial';
-      //     this_.$refs.sysLeft.style.zIndex = 'auto';
-      // 	}
+      handleScroll:function(){
+      	let this_ = this;
+      	let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      	let offTop = this_.$refs.sysLeft.offsetTop;
+      	let h = document.documentElement.clientHeight || document.body.clientHeight;
+      	if(scrollTop > offTop){
+      		this_.$refs.sysLeft.style.position = 'fixed';
+      		this_.$refs.sysLeft.style.top = '0px';
+      		this_.$refs.sysLeft.style.left = '0px';
+      		this_.$refs.sysLeft.style.width = '100%';
+      		this_.$refs.sysLeft.style.overflowY = 'auto';
+          this_.$refs.sysLeft.style.zIndex = '9';
+      	}else{
+      		this_.$refs.sysLeft.style.position = 'initial';
+      		this_.$refs.sysLeft.style.top = '0px';
+      		this_.$refs.sysLeft.style.left = '0px';
+      		this_.$refs.sysLeft.style.width = '100%';
+      		this_.$refs.sysLeft.style.overflowY = 'initial';
+          this_.$refs.sysLeft.style.zIndex = 'auto';
+      	}
 
-      // },
+      },
       //显示对应的品类图
       showNavImg(){
         let this_ = this;
@@ -986,6 +983,8 @@
       changeModels(item){
         this.modelsInfo = item;
         this.showModels = false;
+        this.p = 1;
+        this.proList = [];
         this.getProductByModels();
       },
       //根据车型查询对应的产品
@@ -998,7 +997,7 @@
           params: {},
           success: function (data) {
             console.log('产品列表');
-            //console.log(JSON.parse(data.centent));
+            console.log(data);
             if(data.State){
               this_.dataPage = [];
               if(data.centent != "" && data.centent != null){

@@ -190,7 +190,8 @@ export default {
 				"note":'',
 				"cart":[],
 				"kf":'',
-				"ma075":''
+				"ma075":'',
+        "ma017":''
       },//提交订单传值
       subNum:0,
       subMoney:0,
@@ -280,6 +281,7 @@ export default {
   		this_.subCartsInfo.r_addr = this_.userInfo.dataset1[index].ma027;
   		this_.subCartsInfo.kf = this_.userInfo.dataset1[index].kf;
   		this_.subCartsInfo.ma075 = this_.userInfo.dataset1[index].ma075;
+      this_.subCartsInfo.ma017 = this_.userInfo.dataset1[index].ma017;
       this_.bus.$emit('loading', true);
   	},
   	//获取选中品牌品类
