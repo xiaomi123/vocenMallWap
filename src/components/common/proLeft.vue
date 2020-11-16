@@ -22,6 +22,9 @@
     </label>
 
     <label v-if="userInfo.dataset[0].dpt.search('配件二部') != -1">{{proItem02.tj?'特价￥'+proItem02.aprice:''}}</label>
+    <label v-if='proItem02.guideprice != 0 && userInfo.dataset[0].dpt.search("配件一部吉利") != -1'>{{'集采价￥'+proItem02.guideprice}}</label>
+    <label v-else style="font-size:1.1rem;color:#999">{{'指导售价￥'+ Math.round(proItem02.guideprice)}}</label>
+
 		<!-- {{proItem02.tj?'特价￥'+proItem02.aprice:''}} -->
 		{{proItem02.a_type_no=='2'?'限时秒杀':''}}
 		{{proItem02.a_type_no=='3'?'满减':''}}
