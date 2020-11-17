@@ -171,7 +171,7 @@
         }
 
         this_.auth(); //获取用户信息
-        this_.category(); //产品分类
+        
 
         if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
           this.keyWords = sessionStorage.getItem('vincode');
@@ -249,7 +249,7 @@
             }
 
           }
-
+          this_.category(); //产品分类
           this_.isShowFooter = !this_.isShowFooter;
         }
         // if(this_.$utils.check.isEmpty(sessionStorage.getItem("token"))){
@@ -309,11 +309,13 @@
           url: this_.$apiUrl.api.WeChatLogin + '?openid=' + this_.$route.query.openid + '&type=' + this_.$route.query.type,
           params: {},
           success: function(data) {
+            console.log("------------------------------");
             console.log(data);
             this_.isShowFooter = !this_.isShowFooter;
             if (data.State) {
               let dataset2 = data.centent.userinfo.dataset2;
               sessionStorage.setItem("token", data.centent.Token); //存入token
+               this_.category(); //产品分类
               let userdata = {
                 dataset: data.centent.userinfo.dataset,
                 dataset1: data.centent.userinfo.dataset,
