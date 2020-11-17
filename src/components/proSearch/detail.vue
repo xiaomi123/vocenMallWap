@@ -86,9 +86,16 @@ export default {
           this_.isShow = false;
           document.title = '订单系统';
         }
-         let obj = JSON.parse(sessionStorage.getItem('proObj'));
-        if(obj.length != 0){
-          this_.cartList = obj; //JSON.parse(obj);
+        //let obj = JSON.parse(sessionStorage.getItem('proObj'));
+        // if(obj.length != 0){
+        //   this_.cartList = obj; //JSON.parse(obj);
+        // }else{
+        //   this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
+        //   this_.init_1();
+        // }
+        let obj = sessionStorage.getItem('proObj');
+        if(obj.obj != ""){
+          this_.cartList = JSON.parse(obj);
         }else{
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
           this_.init_1();
