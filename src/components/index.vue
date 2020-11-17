@@ -160,7 +160,7 @@
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em>
-                  
+
                   <!-- 新品推荐 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
                   <!-- 直降 -->
@@ -556,7 +556,16 @@ export default {
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar04.jpg')});
       				}
 
-      			}else{
+      			}else if(this_.userInfo.dataset1[index].dpt.search("耐用") != -1){
+              if(this_.userInfo.dataset1[index].ma017 == '204'){
+                //弘途
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_ht01.jpg'),'name':'氧传感器','num':'0098'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_ht02.jpg')});
+              }else if(this_.userInfo.dataset1[index].ma017 == '205'){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_jl01.jpg'),'name':'氧传感器','num':'0098'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_jl02.jpg')});
+              }
+            }else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
       					//沃森
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});

@@ -302,7 +302,7 @@ export default {
         }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
           sessionStorage.setItem('brandType',4);
         }
-        sessionStorage.setItem('proObj',JSON.stringify(list));
+        sessionStorage.setItem('proObj',JSON.stringify(item));
         this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统'}});
       }else{
         if(item.imgqty>0){

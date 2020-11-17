@@ -15,7 +15,7 @@
           <p>产品编号：{{info.erpcode}}</p>
           <p v-if="isShow">
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
-            <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{info.guideprice}}</em></em>
+            <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
           </p>
         </div>
         <div class="right cart-box" v-if="isCart">
@@ -83,7 +83,7 @@ export default {
         this_.isShow = true;
         if(this_.$route.query.title == '订单系统'){
           this_.isCart = false;
-          this_.isShow = false;
+          //this_.isShow = false;
           document.title = '订单系统';
         }
          let obj = JSON.parse(sessionStorage.getItem('proObj'));
