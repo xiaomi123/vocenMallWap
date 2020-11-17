@@ -94,7 +94,7 @@ export default {
         //   this_.init_1();
         // }
         let obj = sessionStorage.getItem('proObj');
-        if(obj.obj != ""){
+        if(obj != ""){
           this_.cartList = JSON.parse(obj);
         }else{
           this_.userInfo = JSON.parse(sessionStorage.getItem('userinfo'));
