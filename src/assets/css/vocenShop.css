@@ -769,6 +769,7 @@ body{
 	display: inline-block;
 	font-size: 1.2rem;
 	color:#656565;
+  word-break: break-all;
 }
 .proLeft_main>i{
 	display: inline-block;
