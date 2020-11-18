@@ -24,7 +24,9 @@
           </p>
           <!-- 订单系统吉利进入价格显示 -->
           <p v-if="isJl">
-            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{cartList.price}}</em>
+            <!-- PC和wap区分价格显示$route.query.price根据url参数price -->
+            <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{$route.query.price}}</em>
+            <em class="text-red" style="font-size: 1.2rem;" v-if="$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{cartList.price}}</em>
           </p>
         </div>
         <div class="right cart-box" v-if="isCart">
@@ -33,7 +35,7 @@
       </div>
     </div>
 
-    <div class="uinn bg-white" style="margin-bottom: 1rem;">
+    <div class="uinn bg-white" style="margin-bottom: 1rem;" v-if="!isJl">
       <h2 class="detail-title">适配车型</h2>
       <van-collapse v-model="activeNames">
         <template v-for="(item,index) in tablepara">
@@ -47,7 +49,7 @@
     </div>
 
     <div class="uinn bg-white">
-      <h2 class="detail-title">图文详情</h2>
+      <h2 class="detail-title" v-if="!isJl">图文详情</h2>
       <div v-html="info.content" id="cvs" style="display: none;"></div>
       <div class="canvImg">
         <img v-for="img in pics" :src="img" />
@@ -119,8 +121,13 @@ export default {
       }else if(sessionStorage.getItem('brandType') == 4){
         Watermark.set('弘途耐用')
       }else if(sessionStorage.getItem('brandType') == 5){
-        Watermark.set('吉利')
+        //Watermark.set('吉利')
         this_.isJl = true;
+      }
+      //PC订单平台吉利进入
+      if(this_.$route.query.title == '订单平台'){
+        this_.isJl = true;
+        document.title = '订单平台';
       }
 
     })
