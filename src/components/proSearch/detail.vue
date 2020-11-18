@@ -17,6 +17,15 @@
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
             <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
           </p>
+          <!-- 订单系统耐用进入价格和指导价显示 -->
+          <p v-if="!isShow && !isCart && !$utils.check.isEmpty(info.currentprice)">
+            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(info.currentprice)}}</em>
+            <em class="guideprice" v-if="!$utils.check.isEmpty(info.guideprice) && info.guideprice != 0">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
+          </p>
+          <!-- 订单系统吉利进入价格显示 -->
+          <p v-if="isJl">
+            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{cartList.price}}</em>
+          </p>
         </div>
         <div class="right cart-box" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
@@ -70,6 +79,7 @@ export default {
       cartTotal : 0 ,//购物车数量
       isCart : false,
       //isMall:true,//用于商城进入购物车隐藏
+      isJl:false,//判断是否从订单系统吉利产品进入
     }
   },
   mounted: function () {
@@ -83,7 +93,7 @@ export default {
         this_.isShow = true;
         if(this_.$route.query.title == '订单系统'){
           this_.isCart = false;
-          //this_.isShow = false;
+          this_.isShow = false;
           document.title = '订单系统';
         }
         //let obj = JSON.parse(sessionStorage.getItem('proObj'));
@@ -108,6 +118,9 @@ export default {
         Watermark.set('江陵耐用')
       }else if(sessionStorage.getItem('brandType') == 4){
         Watermark.set('弘途耐用')
+      }else if(sessionStorage.getItem('brandType') == 5){
+        Watermark.set('吉利')
+        this_.isJl = true;
       }
 
     })

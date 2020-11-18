@@ -296,14 +296,27 @@ export default {
   	//跳转详情
   	toDetail:function(list,item){
   		let this_ = this;
-      if(this_.userInfo.dataset[0].mr003.search("耐用") != -1){
+      if(this_.userInfo.dataset[0].mr003.search("耐用") != -1 || this_.userInfo.dataset[0].mr003.search("吉利") != -1){
         if(this_.userInfo.dataset[0].mr003.search("江陵耐用") != -1){
           sessionStorage.setItem('brandType',3);
         }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
           sessionStorage.setItem('brandType',4);
+        }else if(this_.userInfo.dataset[0].mr003.search("吉利") != -1){
+          sessionStorage.setItem('brandType',5);
         }
         sessionStorage.setItem('proObj',JSON.stringify(item));
-        this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统'}});
+        this_.$api.get({
+          url: this_.$apiUrl.api.ProductImage + "?mb001=" + item.mb001,
+          params: {},
+          success: function (data) {
+            if(data.content.length>0){
+              this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统'}});
+            }else{
+              this_.bus.$emit('tipShow', "暂无产品详情");
+            }
+
+          }
+        });
       }else{
         if(item.imgqty>0){
         	this_.$router.push({path:'/proDetail', query: {ma001:list.num,mb001:item.mb001,mb002:item.mb002,imgqty:item.imgqty}});
