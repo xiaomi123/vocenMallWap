@@ -98,7 +98,7 @@ function apiAxios(options) {
   }).catch(err => {
     bus_.$emit('loading', false);
     let res = err.response
-    //console.log(err)
+    console.log(err)
     if (res) {
       if (res.status === Consts.httpCode.code_400) {} else if (res.status === Consts.httpCode.code_401) {
         router.replace({

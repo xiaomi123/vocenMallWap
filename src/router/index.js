@@ -30,6 +30,8 @@ import YcgqList from '@/components/proSearch/ycgqList'//氧传感器查询
 import SproList from '@/components/proSearch/products'//VIN码查询产品
 import SproList1 from '@/components/proSearch/products1'//VIN码查询产品
 import ModelList from '@/components/proSearch/modelList'//车型列表
+import Robot from '@/components/proSearch/robot/list' //产品列表-机器人
+import RobotDetail from '@/components/proSearch/robot/detail' //产品详情-机器人
 import ProductDetail from '@/components/proSearch/detail'//详情
 import SCart from '@/components/proSearch/cart'//购物车
 import SUserIndex from '@/components/proSearch/userCenter/index'
@@ -173,6 +175,14 @@ const router = new Router({
     path : '/proSearch/modelList',
     name : 'modelList',
     component : ModelList
+  },{
+    path : '/proSearch/robot/list',
+    name : 'robot',
+    component : Robot
+  },{
+    path : '/proSearch/robot/detail',
+    name : 'robotDetail',
+    component : RobotDetail
   },{
     path : '/proSearch/detail',
     name : 'productDetail',

@@ -1,0 +1,121 @@
+.proSearch_container {
+ background-color: #fff;
+}
+.vincode-title{
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+.models-box{
+  /* background-color: #dff0d8; */
+  /* color: #3c763d; */
+  background: rgb(0, 102, 204);
+  color: #FFFFFF;
+  padding:1rem;
+  font-size: 1.4rem;
+}
+/* 车型 */
+.modelsPop{
+  padding: 0 1rem;
+}
+.modelsPop .models-title{
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-align: center;
+  height: 5rem;
+  line-height: 5rem;
+}
+.modelsPop .models-item{
+  border: 1px solid #CCCCCC;
+  padding: 1rem 0.625rem;
+  margin-bottom: 1rem;
+  border-radius: .5rem;
+}
+.modelsPop .active{
+  /* background-color: #dff0d8;
+  border-color: #3c763d;
+  color: #3c763d; */
+  background-color: #0066cc;
+  border-color: #0066cc;
+  color: #fff;
+}
+/* 分类 */
+.cate-box {
+  width: 100%;
+  padding: 1rem 3.5%;
+  background-color: #fff;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.cate-box div{
+  background: #eeeeee;
+  padding: 1rem 1rem 0 1rem;
+}
+/* 产品列表 */
+.list-item{
+  border-bottom: 1px solid #EEEEEE;
+  padding: 1rem 4%;
+}
+.list-item:first-child{
+  padding-top: 0;
+}
+.list-item span{
+  margin: 0 0.625rem 0.625rem 0;
+  word-break: keep-all;
+  display: inline-block;
+}
+.img-box{
+  width: 6rem;
+  height: 6rem;
+  margin-right: 1rem;
+}
+.imgwh{
+  width: 6rem;
+  height: 6rem;
+}
+.pro-title{
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.umar-r{
+  margin-right: 1rem;
+}
+.erpcode-box{
+  border:1px solid #0066CC;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0066CC;
+  border-radius: 1rem;
+}
+.umar-t{
+  margin-top: 0.2rem;
+}
+.ub-pra{
+  position: relative;
+}
+.list-item-mask{
+  width: 100%;
+  background: rgba(0,0,0,0.1);
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.text-right{
+  text-align: right;
+}
+.text-primary{
+  color: #0066CC;
+}
+.sc-text{
+  color: #858585;
+}
+.icon-big{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 2rem;
+  height: 2rem;
+}

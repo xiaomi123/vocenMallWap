@@ -480,12 +480,12 @@
           url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
           params: {},
           success: function (data) {
-            //console.log(data);
+             console.log("------------车型列表---------------");
+            console.log(JSON.stringify(data.centent.tmparr));
             if(data.State){
               this_.tabCurrent = 0;
               //车型信息
-              console.log("------------车型列表---------------");
-              console.log(data.centent.tmparr);
+              //console.log(data.centent.tmparr);
               this_.modelsInfoList = data.centent.tmparr;
               this_.modelsInfo = data.centent.tmparr[0];
               if(this_.modelsInfoList.length > 1){
