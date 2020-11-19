@@ -560,10 +560,10 @@ export default {
               if(this_.userInfo.dataset1[index].ma017 == '204'){
                 //弘途
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_ht01.jpg'),'name':'氧传感器','num':'0098'});
-                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_ht02.jpg')});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_ht02.jpg'),'name':'微汽油泵总成','num':'0088'});
               }else if(this_.userInfo.dataset1[index].ma017 == '205'){
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_jl01.jpg'),'name':'氧传感器','num':'0098'});
-                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_jl02.jpg')});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/naiyong/img_index_jl02.jpg'),'name':'微汽油泵总成','num':'0088'});
               }
             }else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
