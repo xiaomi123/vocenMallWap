@@ -23,7 +23,7 @@
             <em class="guideprice" v-if="!$utils.check.isEmpty(info.guideprice) && info.guideprice != 0">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
           </p>
           <!-- 订单系统吉利进入价格显示 -->
-          <p v-if="isJl">
+          <p v-if="isJl && $utils.check.isEmpty(info.currentprice)">
             <!-- PC和wap区分价格显示$route.query.price根据url参数price -->
             <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{$route.query.price}}</em>
             <em class="text-red" style="font-size: 1.2rem;" v-if="$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{cartList.price}}</em>
