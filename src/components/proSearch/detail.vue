@@ -17,17 +17,12 @@
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
             <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
           </p>
-          <!-- 订单系统耐用进入价格和指导价显示 -->
-          <p v-if="!isShow && !isCart && !$utils.check.isEmpty(info.currentprice)">
-            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(info.currentprice)}}</em>
-            <em class="guideprice" v-if="!$utils.check.isEmpty(info.guideprice) && info.guideprice != 0">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
+          <!-- 订单系统耐用吉利进入价格和指导价显示 -->
+          <p v-if="!isShow && !isCart">
+            <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt($route.query.price)}}</em>
+            <em class="guideprice" v-if="!$utils.check.isEmpty($route.query.guideprice)">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round($route.query.guideprice)}}</em></em>
           </p>
-          <!-- 订单系统吉利进入价格显示 -->
-          <p v-if="isJl && $utils.check.isEmpty(info.currentprice)">
-            <!-- PC和wap区分价格显示$route.query.price根据url参数price -->
-            <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{$route.query.price}}</em>
-            <em class="text-red" style="font-size: 1.2rem;" v-if="$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{cartList.price}}</em>
-          </p>
+
         </div>
         <div class="right cart-box" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
