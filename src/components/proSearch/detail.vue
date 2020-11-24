@@ -17,15 +17,12 @@
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
             <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
           </p>
-          <!-- 订单系统耐用进入价格和指导价显示 -->
-          <p v-if="!isShow && !isCart && !$utils.check.isEmpty(info.currentprice)">
-            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(info.currentprice)}}</em>
-            <em class="guideprice" v-if="!$utils.check.isEmpty(info.guideprice) && info.guideprice != 0">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
+          <!-- 订单系统耐用吉利进入价格和指导价显示 -->
+          <p v-if="!isShow && !isCart">
+            <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt($route.query.price)}}</em>
+            <em class="guideprice" v-if="!$utils.check.isEmpty($route.query.guideprice)">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round($route.query.guideprice)}}</em></em>
           </p>
-          <!-- 订单系统吉利进入价格显示 -->
-          <p v-if="isJl">
-            <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{cartList.price}}</em>
-          </p>
+
         </div>
         <div class="right cart-box" v-if="isCart">
           <cart-view :cartList="cartList" :num="0" :name="0"></cart-view>
@@ -33,7 +30,7 @@
       </div>
     </div>
 
-    <div class="uinn bg-white" style="margin-bottom: 1rem;">
+    <div class="uinn bg-white" style="margin-bottom: 1rem;" v-if="!isJl">
       <h2 class="detail-title">适配车型</h2>
       <van-collapse v-model="activeNames">
         <template v-for="(item,index) in tablepara">
@@ -47,7 +44,7 @@
     </div>
 
     <div class="uinn bg-white">
-      <h2 class="detail-title">图文详情</h2>
+      <h2 class="detail-title" v-if="!isJl">图文详情</h2>
       <div v-html="info.content" id="cvs" style="display: none;"></div>
       <div class="canvImg">
         <img v-for="img in pics" :src="img" />
@@ -119,8 +116,13 @@ export default {
       }else if(sessionStorage.getItem('brandType') == 4){
         Watermark.set('弘途耐用')
       }else if(sessionStorage.getItem('brandType') == 5){
-        Watermark.set('吉利')
+        //Watermark.set('吉利')
         this_.isJl = true;
+      }
+      //PC订单平台吉利进入
+      if(this_.$route.query.title == '订单平台'){
+        this_.isJl = true;
+        document.title = '订单平台';
       }
 
     })
