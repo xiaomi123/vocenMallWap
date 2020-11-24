@@ -105,43 +105,6 @@
       this.$nextTick(function() {
         let this_ = this;
         this_.imgUrl = Consts.apiConfig.imgPath;
-        // let data = [{
-        //   "LevelId":"CSS0318M0002",
-        //   "Manufacturers":"上海大众",
-        //   "Brand":"斯柯达",
-        //   "Series":"昊锐",
-        //   "Models":"昊锐",
-        //   "Year":"2009",
-        //   "EmissionStandard":"国4",
-        //   "ChassisCode":"B6(3T)",
-        //   "ListingYear":"2009",
-        //   "ProducedYear":"2010",
-        //   "IdlingYear":"2011",
-        //   "EngineModel":"CEA",
-        //   "Displacement":"1.8",
-        //   "Induction":"涡轮增压",
-        //   "FuelType":"汽油",
-        //   "TransmissionType":"手动",
-        //   "GearNumber":"5",
-        // },{
-        //   "LevelId":"CSS0318M0003",
-        //   "Manufacturers":"上海大众11",
-        //   "Brand":"斯柯达",
-        //   "Series":"昊锐",
-        //   "Models":"昊锐",
-        //   "Year":"2009",
-        //   "EmissionStandard":"国4",
-        //   "ChassisCode":"B6(3T)",
-        //   "ListingYear":"2009",
-        //   "ProducedYear":"2010",
-        //   "IdlingYear":"2011",
-        //   "EngineModel":"CEA",
-        //   "Displacement":"1.8",
-        //   "Induction":"涡轮增压",
-        //   "FuelType":"汽油",
-        //   "TransmissionType":"手动",
-        //   "GearNumber":"5",
-        // }];
         if(!this_.$utils.check.isEmpty(sessionStorage.getItem('history'))){
           this_.history = JSON.parse(sessionStorage.getItem('history'));
           document.title = this_.history[1] == 4 ? '弘途耐用' : '江陵耐用';
@@ -158,23 +121,23 @@
           this_.getProductByModels();
         }else{
           document.title = this_.$route.query.type == 4 ? '弘途耐用' : '江陵耐用';
-          let data = JSON.parse(this_.$route.query.data);
-          this_.keyWords = data.Additional.Vin;//"LSVCA43T3A2800849";
-          //this_.keyWords = "LSVCA43T3A2800849";
-          //this_.modelsInfoList = data;
-          this_.modelsInfoList = data.Result;
-          if(this_.modelsInfoList.length != 0){
-            this_.modelsInfo = data.Result[0];
-            //this_.modelsInfo = data[0];
-            if(this_.modelsInfoList.length > 1){
-              this_.changeModelIcon = true;
-            }else{
-              this_.changeModelIcon = false;
-            }
-            this_.showModelInfoByVinCode = true;
-            this_.history.push(this_.keyWords,this_.$route.query.type,this_.categoryName,this_.modelsInfo,this_.modelsInfoList);
-            this_.getProductByModels();
-          }
+          this_.keyWords = this_.$route.query.vin;
+          this_.getModels(); //获取车型
+          // let data = JSON.parse(this_.$route.query.data);
+          // this_.keyWords = data.Additional.Vin;//"LVTDH12A7AB091147";
+
+          // this_.modelsInfoList = data.Result;
+          // if(this_.modelsInfoList.length != 0){
+          //   this_.modelsInfo = data.Result[0];
+          //   if(this_.modelsInfoList.length > 1){
+          //     this_.changeModelIcon = true;
+          //   }else{
+          //     this_.changeModelIcon = false;
+          //   }
+          //   this_.showModelInfoByVinCode = true;
+          //   this_.history.push(this_.keyWords,this_.$route.query.type,this_.categoryName,this_.modelsInfo,this_.modelsInfoList);
+          //   this_.getProductByModels();
+          // }
         }
         //关联tab切换
         this_.cateList.forEach((item,index) => {
@@ -202,6 +165,31 @@
       });
     },
     methods: {
+      //获取车型
+      getModels(){
+        let this_ = this;
+        this_.$api.post({
+          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName=&pageindex="+this_.p+"&pagesize="+this_.pageRows,
+          params: {},
+          success: function (data) {
+            console.log(data.centent.tmparr);
+            if(data.State){
+              //车型信息
+              this_.modelsInfoList = data.centent.tmparr;
+              this_.modelsInfo = data.centent.tmparr[0];
+              if(this_.modelsInfoList.length > 1){
+                this_.changeModelIcon = true;
+              }else{
+                this_.changeModelIcon = false;
+              }
+              this_.showModelInfoByVinCode = true;
+              this_.getProductByModels();
+            }else{
+              this_.bus.$emit('tipShow', data.Message);
+            }
+          }
+        });
+      },
       //获取产品缩略图
       getPorductPics(res){
         let this_ = this;
@@ -300,14 +288,14 @@
       //根据车型查询对应的产品
       getProductByModels(){
         let this_ = this;
-        console.log(this_.categoryName);
+        //console.log(this_.modelsInfo.LevelId);
         if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.get({
           url: this_.$apiUrl.api.GetProductsByLevelId+'?levelId=' + this_.modelsInfo.LevelId + '&categoryName='+this_.categoryName+'&pageindex='+this_.p+'&pagesize='+this_.pageRows,
           params: {},
           success: function (data) {
             console.log('产品列表');
-            //console.log(data);
+            console.log(data);
             if(data.State){
               if(data.centent != "" && data.centent != null){
                 let result = JSON.parse(data.centent);

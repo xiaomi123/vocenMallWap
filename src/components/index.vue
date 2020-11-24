@@ -361,7 +361,8 @@ export default {
         params: {},
         success: function (data) {
         	this_.bus.$emit('loading', false);
-
+          console.log('-------------------------');
+          console.log(JSON.stringify(data));
         	for(var i=0;i<data.length;i++){
         		let sortItem = data[i].item;
         		for(var j=0;j<sortItem.length;j++){
