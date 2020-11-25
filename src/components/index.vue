@@ -162,7 +162,7 @@
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em>
 
                   <!-- 新品推荐 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088')"><img src="../assets/images/common/icon_new.png" /></em>
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num == '0142' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em>
                   <!-- 直降 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076')"><img src="../assets/images/common/icon_cut.png" /></em>
                   <!-- 特价 -->
@@ -171,6 +171,8 @@
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em>
                   <!-- 秒杀 -->
                   <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
+                  <!-- 热卖 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em>
                   {{item.name}}
 	  						</router-link>
 	  					</li>
@@ -361,8 +363,6 @@ export default {
         params: {},
         success: function (data) {
         	this_.bus.$emit('loading', false);
-          console.log('-------------------------');
-          console.log(JSON.stringify(data));
         	for(var i=0;i<data.length;i++){
         		let sortItem = data[i].item;
         		for(var j=0;j<sortItem.length;j++){
