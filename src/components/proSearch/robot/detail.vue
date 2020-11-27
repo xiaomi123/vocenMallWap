@@ -59,7 +59,6 @@ export default {
       this_.imgUrl = Consts.apiConfig.imgPath;
       this_.init();
       this_.getParmas(); //适配车型
-
       if(this_.$route.query.type == 3){
         document.title = '江陵耐用';
         Watermark.set('江陵耐用')
@@ -69,6 +68,13 @@ export default {
       }
 
     })
+  },
+  beforeRouteLeave:function (to,from,next){
+    //console.log("to.path-->", to.path);
+    if(to.path == '/proSearch/robot/list') {
+      to.meta.isUseCache = true;
+    }
+    next();
   },
   methods:{
     init(){

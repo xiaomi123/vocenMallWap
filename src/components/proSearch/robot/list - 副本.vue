@@ -105,29 +105,28 @@
       this.$nextTick(function() {
         let this_ = this;
         this_.imgUrl = Consts.apiConfig.imgPath;
-        // if(!this_.$utils.check.isEmpty(sessionStorage.getItem('history'))){
-        //   this_.history = JSON.parse(sessionStorage.getItem('history'));
-        //   sessionStorage.clear();
-        //   document.title = this_.history[1] == 4 ? '弘途耐用' : '江陵耐用';
-        //   this_.keyWords = this_.history[0];
-        //   this_.categoryName = this_.history[2];
-        //   this_.modelsInfo = this_.history[3];
-        //   this_.modelsInfoList = this_.history[4];
-        //   if(this_.modelsInfoList.length > 1){
-        //     this_.changeModelIcon = true;
-        //   }else{
-        //     this_.changeModelIcon = false;
-        //   }
-        //   this_.showModelInfoByVinCode = true;
-        //   this_.getProductByModels();
-        // }else{
-        //   document.title = this_.$route.query.type == 4 ? '弘途耐用' : '江陵耐用';
-        //   this_.keyWords = this_.$route.query.vin;
-        //   this_.history.push(this_.keyWords,this_.$route.query.type,this_.categoryName);
-        //   this_.getModels(); //获取车型
-        //   // this_.keyWords = data.Additional.Vin;//"LVTDH12A7AB091147";
-        // }
-
+        if(!this_.$utils.check.isEmpty(sessionStorage.getItem('history'))){
+          this_.history = JSON.parse(sessionStorage.getItem('history'));
+          sessionStorage.clear();
+          document.title = this_.history[1] == 4 ? '弘途耐用' : '江陵耐用';
+          this_.keyWords = this_.history[0];
+          this_.categoryName = this_.history[2];
+          this_.modelsInfo = this_.history[3];
+          this_.modelsInfoList = this_.history[4];
+          if(this_.modelsInfoList.length > 1){
+            this_.changeModelIcon = true;
+          }else{
+            this_.changeModelIcon = false;
+          }
+          this_.showModelInfoByVinCode = true;
+          this_.getProductByModels();
+        }else{
+          document.title = this_.$route.query.type == 4 ? '弘途耐用' : '江陵耐用';
+          this_.keyWords = this_.$route.query.vin;
+          this_.history.push(this_.keyWords,this_.$route.query.type,this_.categoryName);
+          this_.getModels(); //获取车型
+          // this_.keyWords = data.Additional.Vin;//"LVTDH12A7AB091147";
+        }
         //关联tab切换
         this_.cateList.forEach((item,index) => {
           if(item.desc == this_.categoryName){
@@ -152,22 +151,6 @@
           }
         }
       });
-    },
-    watch:{
-      '$route' (to,from){
-        if(this.$route.path == '/proSearch/robot/detail'){
-          this.routerAlive = true;
-        }else{
-          this.routerAlive = false;
-        }
-      }
-    },
-    activated(){
-      if(!this.$route.meta.isUseCache){
-        document.title = this.$route.query.type == 4 ? '弘途耐用' : '江陵耐用';
-        this.keyWords = this.$route.query.vin;
-        this.getModels(); //获取车型
-      }
     },
     methods: {
       //获取车型

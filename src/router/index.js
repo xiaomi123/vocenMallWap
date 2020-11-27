@@ -178,7 +178,11 @@ const router = new Router({
   },{
     path : '/proSearch/robot/list',
     name : 'robot',
-    component : Robot
+    component : Robot,
+    meta : {
+      keepAlive : true,
+      isUseCache : false
+    }
   },{
     path : '/proSearch/robot/detail',
     name : 'robotDetail',

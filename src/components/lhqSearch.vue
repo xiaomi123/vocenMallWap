@@ -171,7 +171,7 @@
         }
 
         this_.auth(); //获取用户信息
-        
+
 
         if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
           this.keyWords = sessionStorage.getItem('vincode');
