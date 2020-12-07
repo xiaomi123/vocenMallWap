@@ -6,7 +6,7 @@
       <div class="ub ub-ver ub-f1">
         <div style="margin-bottom: 0.5rem;">{{modelsInfo.Manufacturers}}&nbsp;&nbsp;{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.ChassisCode}}</div>
         <div>{{modelsInfo.ProducedYear}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
-        {{modelsInfo.Displacement}}{{modelsInfo.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
+        {{modelsInfo.Displacement}}{{modelsInfo.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}&nbsp;&nbsp;{{modelsInfo.GearNumber}}{{modelsInfo.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
       </div>
       <div class="ub ub-ac" v-show="changeModelIcon" @click="showModels = true">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;" /></div>
     </div>
@@ -18,7 +18,7 @@
           <div :class="model.LevelId == modelsInfo.LevelId ? 'models-item active' : 'models-item'" @click="changeModels(model)">
             <div style="margin-bottom: 0.5rem;">{{model.Manufacturers}}&nbsp;&nbsp;{{model.Brand}}&nbsp;&nbsp;{{model.Models}}&nbsp;&nbsp;{{model.ChassisCode}}</div>
             <div>{{model.ProducedYear}}&nbsp;&nbsp;[{{model.ListingYear}}-{{model.IdlingYear}}]&nbsp;&nbsp;
-            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}</div>
+            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}&nbsp;&nbsp;{{modelsInfo.GearNumber}}{{modelsInfo.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
           </div>
         </block>
       </div>

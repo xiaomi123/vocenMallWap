@@ -44,9 +44,9 @@
       <div class="ub ub-ver ub-f1">
         <div style="margin-bottom: 0.5rem;">{{modelsInfo.Manufacturers}}&nbsp;&nbsp;{{modelsInfo.Brand}}&nbsp;&nbsp;{{modelsInfo.Models}}&nbsp;&nbsp;{{modelsInfo.ChassisCode}}</div>
         <div>{{modelsInfo.ProducedYear}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
-        {{modelsInfo.Displacement}}{{modelsInfo.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}</div>
+        {{modelsInfo.Displacement}}{{modelsInfo.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}&nbsp;&nbsp;{{modelsInfo.GearNumber}}{{modelsInfo.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
       </div>
-      <div class="ub ub-ac" v-show="changeModelIcon" @click="showModels = true">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;" /></div>
+      <div class="ub ub-ac" style="color: red;" v-show="changeModelIcon" @click="showModels = true">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;" /></div>
     </div>
     <!-- 多个车型切换 -->
     <van-popup v-model="showModels" position="bottom" :close-on-popstate="true" :close-on-click-overlay="false" :closeable="true" :safe-area-inset-bottom="true">
@@ -56,7 +56,7 @@
           <div :class="model.LevelId == modelsInfo.LevelId ? 'models-item active' : 'models-item'" @click="changeModels(model)">
             <div style="margin-bottom: 0.5rem;">{{model.Manufacturers}}&nbsp;&nbsp;{{model.Brand}}&nbsp;&nbsp;{{model.Models}}&nbsp;&nbsp;{{model.ChassisCode}}</div>
             <div>{{model.ProducedYear}}&nbsp;&nbsp;[{{model.ListingYear}}-{{model.IdlingYear}}]&nbsp;&nbsp;
-            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}</div>
+            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}&nbsp;&nbsp;{{modelsInfo.GearNumber}}{{modelsInfo.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
           </div>
         </block>
       </div>
@@ -391,7 +391,8 @@
             if(this_.tabCurrent == 0){
               this_.p++;
               if(this_.keyWords != ""){
-                this_.vinCodePros();  //vin码
+                //this_.vinCodePros();  //vin码
+                this_.getProductByModels(); //根据车型levelId查产品
               }else{
                 this_.carsPros();  //品类查询
               }
@@ -485,7 +486,7 @@
             if(data.State){
               this_.tabCurrent = 0;
               //车型信息
-              //console.log(data.centent.tmparr);
+              console.log(data.centent);
               this_.modelsInfoList = data.centent.tmparr;
               this_.modelsInfo = data.centent.tmparr[0];
               if(this_.modelsInfoList.length > 1){
@@ -981,6 +982,8 @@
       },
       //选择车型
       changeModels(item){
+        console.log('--------------------------------------------');
+        console.log(item);
         this.modelsInfo = item;
         this.showModels = false;
         this.p = 1;
@@ -990,19 +993,20 @@
       //根据车型查询对应的产品
       getProductByModels(){
         let this_ = this;
-        console.log(this_.categoryName);
+        console.log('levelId:'+this_.modelsInfo.LevelId+";categoryName:"+this_.categoryName+";pageindex:"+this_.p+";pagesize:"+this_.pageRows);
         if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.get({
           url: this_.$apiUrl.api.GetProductsByLevelId+'?levelId=' + this_.modelsInfo.LevelId + '&categoryName='+this_.categoryName+'&pageindex='+this_.p+'&pagesize='+this_.pageRows,
           params: {},
           success: function (data) {
             console.log('产品列表');
-            console.log(data);
+            // console.log(data);
             if(data.State){
               this_.dataPage = [];
               if(data.centent != "" && data.centent != null){
                 console.log('数据不为空');
                 let result = JSON.parse(data.centent);
+                console.log(result);
                 this_.getMb001s(result);
                 this_.getPorductPics(result);
                 this_.showEmpty = false;
