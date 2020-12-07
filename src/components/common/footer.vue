@@ -45,7 +45,7 @@ export default {
         	this_.cartTotal = data;
         }
       });
-  		
+
   	}
   }
 }

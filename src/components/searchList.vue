@@ -13,7 +13,7 @@
 	  			<span @click="searchDia=false" v-show="!seaCan">取消</span>
 	  		</div>
 	  		<!--查询固定header内容结束-->
-	  		
+
 	  		<!--历史查询记录内容开始-->
 	  		<div class="serch_history" v-show="!searchPl">
 	  			<h2>历史搜索 </h2>
@@ -22,7 +22,7 @@
 		  		</ul>
 	  		</div>
 	  		<!--历史查询记录内容结束-->
-	  		
+
 	  		<!--查询结果内容开始-->
 	  		<div v-show="searchPl">
 		  		<ul class="index_searchList" v-if="searchData.length>0">
@@ -43,7 +43,7 @@
   		</div>
   	</div>
   	<!--搜索弹层内容结束-->
-  	
+
   	<!--主要内容开始-->
   	<div class="product_main searchList_main">
   		<div class="product_head">
@@ -74,7 +74,7 @@
   	</div>
   	<!--主要内容开始-->
   	<footer-view></footer-view>
-  	
+
   </div>
 </template>
 
@@ -100,16 +100,16 @@ export default {
     this.$nextTick(function () {
       let this_ = this;
       this_.keyTxt = this_.searchList.txt;
-      
+
       let paraData = [];
       if(this_.$route.query.name == '全部'){
   			paraData = this_.searchList.data;
   		}else{
   			paraData.push(this_.$route.query);
   		}
-  		
+
       this_.getProduct(paraData);
-      
+
     })
   },
   watch: {
@@ -123,13 +123,13 @@ export default {
 			    this_.searchTime = setTimeout(() => {
 			      this_.seachQuery(curVal);
 			    }, 300);
-	      
+
 	      }
   		}else{
   			this_.seaCan = false;
   			this_.searchData = [];
   		}
-    	
+
     }
   },
   methods:{
@@ -147,7 +147,7 @@ export default {
         }
       });
   	},
-  	
+
   	//产品数据渲染
   	productList:function(data){
   		let this_ = this;
@@ -164,12 +164,12 @@ export default {
 						}else if(this_.userInfo.dataset[0].ma017 == '201'){
 							data[i].imgSrc = require('../assets/images/miniCar/img_index_prows' + data[i].num + '.jpg');
 						}
-					}else if(this_.userInfo.dataset[0].dpt.search("弘途") != -1){
+					}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
 						data[i].imgSrc = require('../assets/images/hongtu/img_index_pro' + data[i].num + '.jpg');
 					}else {
 						data[i].imgSrc = require('../assets/images/miniCar/img_index_pro' + data[i].num + '.jpg');
 					}
-    			
+
     		}else if(this_.userInfo.dataset[0].dpt.search("配件二部") != -1){
     			data[i].imgSrc = require('../assets/images/sedan/img_index_pro' + data[i].num + '.png');
     		}
@@ -177,8 +177,8 @@ export default {
     	this_.proList = data;
     	this_.hisSearch();//历史搜索记录值
   	},
-  	
-  	
+
+
   	//历史搜索记录值
   	hisSearch:function(){
   		let this_ = this;
@@ -189,14 +189,14 @@ export default {
       			this_.hisRecord.splice(i,1);
       		}
       	}
-      	
+
       }
       this_.hisRecord.push(this_.keyTxt);
       localStorage.setItem("hisRecord", JSON.stringify(this_.hisRecord));//历史搜索存值
       this_.hisRecord = this_.hisRecord.reverse().slice(0,10);
   	},
-  	
-  	
+
+
   	//点击”搜索“关键字查询，获取产品列表
   	keySearch:function(){
   		let this_ = this;
@@ -212,7 +212,7 @@ export default {
         }
       });
   	},
-  	
+
   	//跳转详情
   	toDetail:function(list,item){
   		let this_ = this;
@@ -234,15 +234,15 @@ export default {
             }else{
               this_.bus.$emit('tipShow', "暂无产品详情");
             }
-      
+
           }
         });
       }else if(item.imgqty>0){
   			this_.$router.push({path:'/proDetail', query: {ma001:list.num,mb001:item.mb001,mb002:item.mb002}});
   		}
-  		
+
   	},
-  	
+
   	//点击录入框
   	keyFocus:function(){
   		let this_ = this;
@@ -255,7 +255,7 @@ export default {
   			this_.seaCan = false;
   		}
   	},
-  	
+
   	//站内查询
   	seachQuery:function(keyWord){
   		let this_ = this;
@@ -274,7 +274,7 @@ export default {
         }
       });
   	},
-  	
+
   	//清空搜索关键字
   	clearKey:function(){
   		let this_ = this;
@@ -286,7 +286,7 @@ export default {
         this_.$refs.searchEl.focus();
 			});
   	},
-  	
+
   	//点击下拉查询
 		toSearch:function(item){
 			let this_ = this;
@@ -295,7 +295,7 @@ export default {
 			paraData.push(item);
       this_.getProduct(paraData);
 		},
-		
+
 		//点击”查看全部“
 		toSearchAll:function(){
 			let this_ = this;
@@ -303,7 +303,7 @@ export default {
 			let paraData = JSON.parse(sessionStorage.getItem("searchList")).data;
 			this_.getProduct(paraData);
 		}
-  	
+
   }
 }
 </script>

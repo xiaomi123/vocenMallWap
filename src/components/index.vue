@@ -164,9 +164,9 @@
                   <!-- 新品推荐 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num == '0142' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em>
                   <!-- 直降 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076')"><img src="../assets/images/common/icon_cut.png" /></em>
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076' || item.num == '0043' || item.num == '0048')"><img src="../assets/images/common/icon_cut.png" /></em>
                   <!-- 特价 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0075' || item.num == '0078' || item.num == '0080' || item.num == '0043')"><img src="../assets/images/common/icon_tejia.png" /></em>
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0043')"><img src="../assets/images/common/icon_tejia.png" /></em> -->
                   <!-- 热卖 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em>
                   <!-- 秒杀 -->
