@@ -14,7 +14,7 @@
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
           <p v-if="info.productname.indexOf('离合器') > -1">{{info.remark}}</p>
-          <p v-else>oem：{{info.remark}}</p>
+          <p v-else>OEM：{{info.remark}}</p>
           <p v-if="isShow">
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
             <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
