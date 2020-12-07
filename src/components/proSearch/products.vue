@@ -982,8 +982,7 @@
       },
       //选择车型
       changeModels(item){
-        console.log('--------------------------------------------');
-        console.log(item);
+        //console.log(item);
         this.modelsInfo = item;
         this.showModels = false;
         this.p = 1;
@@ -993,7 +992,7 @@
       //根据车型查询对应的产品
       getProductByModels(){
         let this_ = this;
-        console.log('levelId:'+this_.modelsInfo.LevelId+";categoryName:"+this_.categoryName+";pageindex:"+this_.p+";pagesize:"+this_.pageRows);
+        //console.log('levelId:'+this_.modelsInfo.LevelId+";categoryName:"+this_.categoryName+";pageindex:"+this_.p+";pagesize:"+this_.pageRows);
         if(this_.p == 1){this_.bus.$emit('loading', true);}
         this_.$api.get({
           url: this_.$apiUrl.api.GetProductsByLevelId+'?levelId=' + this_.modelsInfo.LevelId + '&categoryName='+this_.categoryName+'&pageindex='+this_.p+'&pagesize='+this_.pageRows,
