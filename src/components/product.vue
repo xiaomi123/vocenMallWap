@@ -301,10 +301,8 @@ export default {
           sessionStorage.setItem('brandType',3);
         }else if(this_.userInfo.dataset[0].mr003.search("弘途耐用") != -1){
           sessionStorage.setItem('brandType',4);
-        }else if(this_.userInfo.dataset[0].mr003.search("吉利") != -1){
+        }else if(this_.userInfo.dataset[0].mr003.search("吉利") != -1 || this_.userInfo.dataset[0].mr003 == '江陵代理(微车)'){
           sessionStorage.setItem('brandType',5);
-        }else{
-          sessionStorage.setItem('brandType',6);
         }
         sessionStorage.setItem('proObj',JSON.stringify(item));
         this_.$api.get({

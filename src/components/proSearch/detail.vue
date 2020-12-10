@@ -17,7 +17,7 @@
             <p>{{info.remark}}</p>
             <p>分离轴承：{{info.remark1}}</p>
           </div>
-          <p v-else style="word-break: break-all;">OEM：{{info.remark}}</p>
+          <p v-else style="word-break: break-all;"><span v-if="!$utils.check.isEmpty(info.remark)">OEM：{{info.remark}}</span></p>
           <p v-if="info.productname.indexOf('氧传感') > -1">总长度：{{info.remark1}}</p>
           <p v-if="isShow">
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
@@ -49,6 +49,17 @@
       </van-collapse>
     </div>
 
+    <div class="uinn bg-white" style="margin-bottom: 1rem;" v-if="isJl">
+      <div class="clearfix" v-if="!$utils.check.isEmpty(info.suitable)" style="padding:0.5rem;">
+        <h2 class="detail-title fl" style="width:20%;padding:0;">适配范围</h2>
+        <p class="fr" style="width:80%;vertical-align: top;">{{info.suitable}}</p>
+      </div>
+      <div class="clearfix" v-if="!$utils.check.isEmpty(info.uqdescription)" style="padding:0.5rem;">
+        <h2 class="detail-title fl" style="width:20%;padding:0;">包装规格</h2>
+        <p class="fl" style="width:80%;vertical-align: top;">{{info.uqdescription}}</p>
+      </div>
+    </div>
+
     <div class="uinn bg-white">
       <h2 class="detail-title" v-if="!isJl">图文详情</h2>
       <div v-html="info.content" id="cvs" style="display: none;"></div>
@@ -56,6 +67,7 @@
         <img v-for="img in pics" :src="img" />
       </div>
     </div>
+
     <!-- 购物车-->
     <router-link :to="{path: '/proSearch/cart'}" v-if="isShow && isCart">
       <div class="fixed-btn"><van-icon name="cart-o" :badge="cartTotal" size="30" color="#ff0000" /></div>

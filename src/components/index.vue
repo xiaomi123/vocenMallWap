@@ -174,7 +174,7 @@
                   <!-- 热卖 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em>
                   <!-- 买十送一 -->
-                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em>
+                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142' || item.num  == '0011')"><img src="../assets/images/common/icon_send.png" /></em>
 
                   {{item.name}}
 	  						</router-link>
@@ -578,6 +578,8 @@ export default {
             }else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
       					//沃森
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniWs12101.jpg'),'name':'水泵','num':'0011'});
+
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniWs120801.jpg'),'name':'齿轮油','num':'0048'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniWs120802.jpg'),'name':'润滑油','num':'0043'});
 
@@ -586,6 +588,8 @@ export default {
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar05.jpg'),'name':'喇叭','num':'0087'});
       				}else if(this_.userInfo.dataset1[index].ma017 == '200'){
       					//江陵
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl12101.jpg'),'name':'水泵','num':'0011'});
+                
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120801.jpg'),'name':'齿轮油','num':'0048'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120802.jpg'),'name':'润滑油','num':'0043'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120803.jpg'),'name':'齿轮油','num':'0048'});
