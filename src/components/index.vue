@@ -173,6 +173,9 @@
                   <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
                   <!-- 热卖 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em>
+                  <!-- 买十送一 -->
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em>
+                  
                   {{item.name}}
 	  						</router-link>
 	  					</li>
@@ -539,6 +542,9 @@ export default {
       			if(this_.userInfo.dataset1[index].dpt.search("吉利") != -1){
       				//吉利
       				if(this_.userInfo.dataset1[index].dpt.search("吉利-吉摩") != -1){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/jili/img_index_jlJem12101.jpg'),'name':'氧传感器','num':'0153'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/jili/img_index_jlJem12102.jpg'),'name':'正时套装','num':'0142'});
+
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1191.jpg'),'name':'玻璃升降器','num':'0155'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1192.jpg'),'name':'方向机','num':'0154'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem1193.jpg'),'name':'减震器','num':'0108'});
@@ -546,6 +552,9 @@ export default {
                 //this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem01.jpg'),'name':'皮带','num':'0140'});
       					//this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlJem02.jpg'),'name':'涨紧轮','num':'0141'});
       				}else if(this_.userInfo.dataset1[index].dpt.search("吉利-沃森") != -1){
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/jili/img_index_jlWs12101.jpg'),'name':'氧传感器','num':'0153'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/jili/img_index_jlWs12102.jpg'),'name':'正时套装','num':'0142'});
+
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1191.jpg'),'name':'玻璃升降器','num':'0155'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1192.jpg'),'name':'方向机','num':'0154'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_jlWs1193.jpg'),'name':'减震器','num':'0108'});
@@ -581,7 +590,7 @@ export default {
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120802.jpg'),'name':'润滑油','num':'0043'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120803.jpg'),'name':'齿轮油','num':'0048'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120804.jpg'),'name':'润滑油','num':'0043'});
-                
+
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_jl629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar06.png'),'name':'喇叭','num':'0087'});

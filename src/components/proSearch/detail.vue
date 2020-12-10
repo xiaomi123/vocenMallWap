@@ -202,6 +202,8 @@ export default {
           //console.log(data);
           if(data.State){
             let result = data.centent.data.data;
+            console.log("ooooooooooooooooooooooooo");
+            console.log(result)
             const set = new Set();
             result.forEach(item => set.add(item.brand));
             let newData = Array.from({length : set.size}, () => []);

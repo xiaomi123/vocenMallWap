@@ -248,6 +248,13 @@ export default {
       this_.dptShow = false;
     　　});
   },
+  watch:{
+    $route(to,from){
+      if(!this.$utils.check.isEmpty(from.query.num)){
+        this.toDetail = false;
+      }
+    }
+  },
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
@@ -621,7 +628,7 @@ export default {
 						    }
 
 						    //是否选中
-						    if((data[i].s_is_sortage == 'False') && (parseInt(data[i].s_qty)>0)){
+						    if((!data[i].s_is_sortage) && (parseInt(data[i].s_qty)>0)){
 						    	data[i].ck = true;
 						    	this_.priceTotal = Number(this_.priceTotal) + Number(data[i].price) * parseInt(data[i].qty);
 						    	this_.qtyTotal = parseInt(this_.qtyTotal) + parseInt(data[i].qty);
@@ -723,7 +730,13 @@ export default {
         }
       });
   		this_.toDetail = true;
-
+      //修改路由，不跳转
+      this.$router.push({
+          path:'/cart',
+          query:{
+            num: this_.rouPag++,
+          }
+      });
   	},
 
   	//提交
