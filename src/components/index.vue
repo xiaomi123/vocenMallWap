@@ -569,11 +569,19 @@ export default {
             }else{
       				if(this_.userInfo.dataset1[index].ma017 == '201'){
       					//沃森
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniWs120801.jpg'),'name':'齿轮油','num':'0048'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniWs120802.jpg'),'name':'润滑油','num':'0043'});
+
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_ws629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar05.jpg'),'name':'喇叭','num':'0087'});
       				}else if(this_.userInfo.dataset1[index].ma017 == '200'){
       					//江陵
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120801.jpg'),'name':'齿轮油','num':'0048'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120802.jpg'),'name':'润滑油','num':'0043'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120803.jpg'),'name':'齿轮油','num':'0048'});
+                this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120804.jpg'),'name':'润滑油','num':'0043'});
+                
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar115.jpg'),'name':'轮毂单元','num':'0076'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar_jl629.jpg'),'name':'汽油泵总成','num':'0088'});
       					this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniCar06.png'),'name':'喇叭','num':'0087'});
