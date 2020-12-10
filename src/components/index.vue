@@ -173,9 +173,10 @@
                   <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
                   <!-- 热卖 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em>
-                  <!-- 买十送一 -->
-                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142' || item.num  == '0011')"><img src="../assets/images/common/icon_send.png" /></em>
-
+                  <!-- 买十送一 吉利氧传感，正时套装-->
+                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em>
+                  <!-- 促销-水泵 -->
+                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num  == '0011')"><img src="../assets/images/common/icon_sale.png" /></em>
                   {{item.name}}
 	  						</router-link>
 	  					</li>
@@ -589,7 +590,7 @@ export default {
       				}else if(this_.userInfo.dataset1[index].ma017 == '200'){
       					//江陵
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl12101.jpg'),'name':'水泵','num':'0011'});
-                
+
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120801.jpg'),'name':'齿轮油','num':'0048'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120802.jpg'),'name':'润滑油','num':'0043'});
                 this_.hotData.push({"imgSrc":require('../assets/images/activity/miniCar/img_index_miniJl120803.jpg'),'name':'齿轮油','num':'0048'});

@@ -310,15 +310,20 @@ export default {
           params: {},
           success: function (data) {
             if(data.content.length>0){
-              let price = '';
-              let guideprice = '';
-              if(!this_.$utils.check.isEmpty(item.price) && item.price != 0){
-                price = item.price;
+              if(!this_.$utils.check.isEmpty(data.content[0].content)){
+                let price = '';
+                let guideprice = '';
+                if(!this_.$utils.check.isEmpty(item.price) && item.price != 0){
+                  price = item.price;
+                }
+                if(!this_.$utils.check.isEmpty(item.guideprice) && item.guideprice != 0 && this_.userInfo.dataset[0].mr003.search("耐用") != -1){
+                  guideprice = item.guideprice;
+                }
+                this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统',price:price,guideprice:guideprice}});
+              }else{
+                this_.bus.$emit('tipShow', "暂无产品详情");
               }
-              if(!this_.$utils.check.isEmpty(item.guideprice) && item.guideprice != 0 && this_.userInfo.dataset[0].mr003.search("耐用") != -1){
-                guideprice = item.guideprice;
-              }
-              this_.$router.push({path:'/proSearch/detail', query: {mb001:item.mb001,title:'订单系统',price:price,guideprice:guideprice}});
+
             }else{
               this_.bus.$emit('tipShow', "暂无产品详情");
             }
