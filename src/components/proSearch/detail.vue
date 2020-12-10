@@ -13,8 +13,12 @@
         <div class="left">
           <p>类型：{{info.productname}}</p>
           <p>产品编号：{{info.erpcode}}</p>
-          <p v-if="info.productname.indexOf('离合器') > -1">{{info.remark}}</p>
-          <p v-else>OEM：{{info.remark}}</p>
+          <div v-if="info.productname.indexOf('离合器') > -1">
+            <p>{{info.remark}}</p>
+            <p>分离轴承：{{info.remark1}}</p>
+          </div>
+          <p v-else style="word-break: break-all;">OEM：{{info.remark}}</p>
+          <p v-if="info.productname.indexOf('氧传感') > -1">总长度：{{info.remark1}}</p>
           <p v-if="isShow">
             <em class="text-red" style="font-size: 1.2rem;">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt(cartList.price)}}</em>
             <em class="guideprice">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round(info.guideprice)}}</em></em>
