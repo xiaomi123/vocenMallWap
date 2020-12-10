@@ -2453,3 +2453,7 @@ body{
 .index_dpt>em{
   color:#ff7f50;
 }
+.index_list>li>a>em.icon_bottom{
+  top: initial;
+  bottom: 2rem;
+}

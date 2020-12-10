@@ -162,7 +162,7 @@
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em>
 
                   <!-- 新品推荐 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num == '0142' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em>
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em>
                   <!-- 直降 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076' || item.num == '0043' || item.num == '0048')"><img src="../assets/images/common/icon_cut.png" /></em>
                   <!-- 特价 -->
@@ -174,8 +174,8 @@
                   <!-- 热卖 -->
                   <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em>
                   <!-- 买十送一 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em>
-                  
+                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em>
+
                   {{item.name}}
 	  						</router-link>
 	  					</li>
