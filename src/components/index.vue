@@ -622,7 +622,10 @@ export default {
   			}
   			this_.$router.push({path:'/product', query: {num:item.num,name:item.name,code:code}});
   		}*/
-  		this_.$router.push({path:'/product', query: {num:item.num,name:item.name}});
+      if(!this_.$utils.check.isEmpty(item.name)){
+        this_.$router.push({path:'/product', query: {num:item.num,name:item.name}});
+      }
+  		
 
   	},
 

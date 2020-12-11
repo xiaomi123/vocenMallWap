@@ -49,15 +49,13 @@
       </van-collapse>
     </div>
 
-    <div class="uinn bg-white" style="margin-bottom: 1rem;" v-if="isJl">
-      <div class="clearfix" v-if="!$utils.check.isEmpty(info.suitable)" style="padding:0.5rem;">
+    <div class="uinn bg-white clearfix" v-if="isJl && !$utils.check.isEmpty($utils.check.trim(info.suitable))" style="padding-top:1rem">
         <h2 class="detail-title fl" style="width:20%;padding:0;">适配范围</h2>
         <p class="fr" style="width:80%;vertical-align: top;">{{info.suitable}}</p>
-      </div>
-      <div class="clearfix" v-if="!$utils.check.isEmpty(info.uqdescription)" style="padding:0.5rem;">
-        <h2 class="detail-title fl" style="width:20%;padding:0;">包装规格</h2>
-        <p class="fl" style="width:80%;vertical-align: top;">{{info.uqdescription}}</p>
-      </div>
+    </div>
+    <div class="uinn bg-white clearfix" style="margin-bottom: 1rem;padding-bottom:1rem;" v-if="isJl && !$utils.check.isEmpty($utils.check.trim(info.uqdescription))">
+      <h2 class="detail-title fl" style="width:20%;padding:0;">包装规格</h2>
+      <p class="fl" style="width:80%;vertical-align: top;">{{info.uqdescription}}</p>
     </div>
 
     <div class="uinn bg-white">
