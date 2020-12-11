@@ -25,7 +25,7 @@
           </p>
           <!-- 订单系统耐用吉利进入价格和指导价显示 -->
           <p v-if="!isShow && !isCart">
-            <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{parseInt($route.query.price)}}</em>
+            <em class="text-red" style="font-size: 1.2rem;" v-if="!$utils.check.isEmpty($route.query.price)">￥</em><em class="text-red" style="font-size: 1.4rem;">{{$route.query.price}}</em>
             <em class="guideprice" v-if="!$utils.check.isEmpty($route.query.guideprice)">指导售价：￥<em style="font-size: 1.4rem;">{{Math.round($route.query.guideprice)}}</em></em>
           </p>
 
@@ -75,6 +75,7 @@
 <script>
 import Consts from '../../api/const.js'
 import Watermark from './../../../static/warterMark.js';
+import '@vant/touch-emulator';
 export default {
   name: 'proDetail',
   data () {

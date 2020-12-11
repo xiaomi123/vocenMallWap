@@ -248,13 +248,6 @@ export default {
       this_.dptShow = false;
     　　});
   },
-  watch:{
-    $route(to,from){
-      if(!this.$utils.check.isEmpty(from.query.num)){
-        this.toDetail = false;
-      }
-    }
-  },
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
@@ -730,13 +723,7 @@ export default {
         }
       });
   		this_.toDetail = true;
-      //修改路由，不跳转
-      this.$router.push({
-          path:'/cart',
-          query:{
-            num: this_.rouPag++,
-          }
-      });
+      
   	},
 
   	//提交

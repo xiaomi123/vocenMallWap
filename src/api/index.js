@@ -49,7 +49,7 @@ function apiAxios(options) {
   let method = options.method
   let url = options.url
   let params = options.params
-  let baseUrl = process.env.BASE_URL
+  let baseUrl = process.env.BASE_URL + '/api/'
   let timeout = Consts.apiConfig.timeout
   let withCredentials = Consts.apiConfig.withCredentials
   let contentType = Consts.apiConfig.contentType

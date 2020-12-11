@@ -59,5 +59,6 @@ export default {
     GetProdctList : "GetProdctList" ,//属性查询
     LoginOut:'LoginOut',//退出登陆
     GetProductsByLevelId : 'GetProductsByLevelId', //根据levelId查询产品
+    GetHot: 'getHot',//获取轮播产品图片
   }
 }

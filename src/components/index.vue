@@ -135,7 +135,7 @@
   			</ul>
   			<h2 v-if="hotData.length>0"><i></i>新品热品</h2>
   			<ul>
-  				<li v-for="list in hotData"><a href="javascript:void(0);" @click="toProduct(list)"><img :src="list.imgSrc" alt="" /></a></li>
+  				<li v-for="list in hotData"><a href="javascript:void(0);" @click="toProduct(list)"><img :src="baseUrl+list.imgSrc" alt="" /></a></li>
   			</ul>
   		</div>
   		<!--活动内容结束-->
@@ -226,13 +226,14 @@ export default {
     	noReadNum:0,//未读消息
     	hisRecord:[],//历史搜索
       proNot:false,
+      baseUrl:'',//图片连接拼接用
     }
   },
   mounted: function () {
     this.$nextTick(function () {
       let this_ = this;
       this_.bus.$emit('footer', true);//底部footer
-
+      this_.baseUrl = process.env.BASE_URL;
       //送积分弹层
       if(this_.userInfo.dataset[0].give == 1){
       	//this_.giveShow = true;
@@ -505,7 +506,20 @@ export default {
         	}
       		//无活动
       		this_.hotData = [];
-      		if(this_.userInfo.dataset1[index].dpt.search("配件二部") != -1){
+          this_.bus.$emit('loading', true);
+          this_.$api.get({
+            url: this_.$apiUrl.api.GetHot + '?ma015=' + this_.userInfo.dataset1[index].ma015 + '&ma017=' + this_.userInfo.dataset1[index].ma017,
+            params: {},
+            success: function (data) {
+              this_.bus.$emit('loading', false);
+              console.log(data)
+              if(data.State){
+                this_.hotData = data.centent;
+              }
+
+            }
+          });
+      		/*if(this_.userInfo.dataset1[index].dpt.search("配件二部") != -1){
       			//轿车
       			if(this_.userInfo.dataset1[index].dpt.search("现代") != -1){
       				//韩系
@@ -605,7 +619,7 @@ export default {
       				}
 
       			}
-      		}
+      		}*/
 
         }
       });
@@ -625,8 +639,6 @@ export default {
       if(!this_.$utils.check.isEmpty(item.name)){
         this_.$router.push({path:'/product', query: {num:item.num,name:item.name}});
       }
-  		
-
   	},
 
   	//活动-活动产品跳转
