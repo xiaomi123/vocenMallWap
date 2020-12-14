@@ -60,5 +60,6 @@ export default {
     LoginOut:'LoginOut',//退出登陆
     GetProductsByLevelId : 'GetProductsByLevelId', //根据levelId查询产品
     GetHot: 'getHot',//获取轮播产品图片
-  }
+  },
+  imgUrl:'http://120.76.144.84:8088',//图片公共地址
 }

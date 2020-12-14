@@ -203,6 +203,7 @@ export default {
     	dptLogo:'',
     	storagePlan:'',//提交订单生成预览
       cartsNum:[],//购物车总数
+      rouPag:0,//修改路由不跳转
     }
   },
   created:function(){
@@ -247,6 +248,13 @@ export default {
     　　document.addEventListener('click',(e)=>{
       this_.dptShow = false;
     　　});
+  },
+  watch:{
+    $route(to,from){
+      if(!this.$utils.check.isEmpty(from.query.num)){
+        this.toDetail = false;
+      }
+    }
   },
   mounted: function () {
     this.$nextTick(function () {
@@ -723,7 +731,14 @@ export default {
         }
       });
   		this_.toDetail = true;
-      
+      //修改路由，不跳转
+      this.$router.push({
+          path:'/proSearch/cart',
+          query:{
+            num: this_.rouPag++,
+          }
+      });
+
   	},
 
   	//提交

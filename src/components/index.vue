@@ -135,7 +135,8 @@
   			</ul>
   			<h2 v-if="hotData.length>0"><i></i>新品热品</h2>
   			<ul>
-  				<li v-for="list in hotData"><a href="javascript:void(0);" @click="toProduct(list)"><img :src="baseUrl+list.imgSrc" alt="" /></a></li>
+  				<!-- <li v-for="list in hotData"><a href="javascript:void(0);" @click="toProduct(list)"><img :src="baseUrl+list.imgSrc" alt="" /></a></li> -->
+          <li v-for="list in hotData"><a href="javascript:void(0);" @click="toProduct(list)"><img :src="list.imgSrc" alt="" /></a></li>
   			</ul>
   		</div>
   		<!--活动内容结束-->
@@ -154,30 +155,33 @@
   					<h2>{{list.name}}</h2>
 	  				<ul class="index_list clearfix">
 	  					<li v-for="item in list.item">
-	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}" v-if='!(item.num == "1030" && proNot)'>
-	  							<span><img :src="item.imgSrc" /></span>
-	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
+	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}">
+	  							<span><img :src="$apiUrl.imgUrl + item.imgSrc" /></span>
+                  <em v-if="!$utils.check.isEmpty(item.tag)" :class="item.pos == '2' ? 'cut' : 'cut icon_bottom'"><img :src="$apiUrl.imgUrl + item.tag" /></em>
+                  {{item.name}}
+
+	  							<!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
 	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em> -->
 
                   <!-- 新品推荐 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em>
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em> -->
                   <!-- 直降 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076' || item.num == '0043' || item.num == '0048')"><img src="../assets/images/common/icon_cut.png" /></em>
-                  <!-- 特价 -->
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076' || item.num == '0043' || item.num == '0048')"><img src="../assets/images/common/icon_cut.png" /></em> -->
+                  <!-- 特价//展示不显示 -->
                   <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0043')"><img src="../assets/images/common/icon_tejia.png" /></em> -->
                   <!-- 热卖 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em>
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em> -->
                   <!-- 秒杀 -->
                   <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
                   <!-- 热卖 -->
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em>
+                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em> -->
                   <!-- 买十送一 吉利氧传感，正时套装-->
-                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em>
+                  <!-- <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em> -->
                   <!-- 促销-水泵 -->
-                  <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num  == '0011')"><img src="../assets/images/common/icon_sale.png" /></em>
-                  {{item.name}}
+                  <!-- <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num  == '0011')"><img src="../assets/images/common/icon_sale.png" /></em>
+                  {{item.name}} -->
 	  						</router-link>
 	  					</li>
 	  				</ul>
@@ -225,7 +229,6 @@ export default {
     	activeData:[],//活动图数据
     	noReadNum:0,//未读消息
     	hisRecord:[],//历史搜索
-      proNot:false,
       baseUrl:'',//图片连接拼接用
     }
   },
@@ -233,7 +236,6 @@ export default {
     this.$nextTick(function () {
       let this_ = this;
       this_.bus.$emit('footer', true);//底部footer
-      this_.baseUrl = process.env.BASE_URL;
       //送积分弹层
       if(this_.userInfo.dataset[0].give == 1){
       	//this_.giveShow = true;
@@ -257,9 +259,6 @@ export default {
       	this_.hisRecord = JSON.parse(localStorage.getItem("hisRecord")).reverse().slice(0,10);
       }
 
-      if(this_.userInfo.dataset[0].ma001 == "2310002" || this_.userInfo.dataset[0].ma001 == "2510039" || this_.userInfo.dataset[0].ma001 == "2410009" || this_.userInfo.dataset[0].ma001 == "2510035" || this_.userInfo.dataset[0].ma001 == "2526046"){
-        this_.proNot = true;
-      }
 
     })
   },
@@ -368,7 +367,7 @@ export default {
         params: {},
         success: function (data) {
         	this_.bus.$emit('loading', false);
-        	for(var i=0;i<data.length;i++){
+        	/*for(var i=0;i<data.length;i++){
         		let sortItem = data[i].item;
         		for(var j=0;j<sortItem.length;j++){
       				if(this_.userInfo.dataset[0].dpt.search("配件一部") != -1){
@@ -397,7 +396,7 @@ export default {
 	        			}
 	        		}
 		        }
-        	}
+        	}*/
         	this_.proSort = data;
         }
       });
@@ -506,7 +505,7 @@ export default {
         	}
       		//无活动
       		this_.hotData = [];
-          this_.bus.$emit('loading', true);
+          /*this_.bus.$emit('loading', true);
           this_.$api.get({
             url: this_.$apiUrl.api.GetHot + '?ma015=' + this_.userInfo.dataset1[index].ma015 + '&ma017=' + this_.userInfo.dataset1[index].ma017,
             params: {},
@@ -518,8 +517,8 @@ export default {
               }
 
             }
-          });
-      		/*if(this_.userInfo.dataset1[index].dpt.search("配件二部") != -1){
+          });*/
+      		if(this_.userInfo.dataset1[index].dpt.search("配件二部") != -1){
       			//轿车
       			if(this_.userInfo.dataset1[index].dpt.search("现代") != -1){
       				//韩系
@@ -619,7 +618,7 @@ export default {
       				}
 
       			}
-      		}*/
+      		}
 
         }
       });

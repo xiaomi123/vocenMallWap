@@ -33,7 +33,7 @@
   	<!--主要内容开始-->
   	<div class="product_main">
   		<div class="product_cont" v-for="list in proList">
-  			<h2 class="product_title"><span><img :src="list.imgSrc" alt="" /></span>{{list.name}}</h2>
+  			<h2 class="product_title"><span><img :src="$apiUrl.imgUrl+list.imgSrc" alt="" /></span>{{list.name}}</h2>
 	  	  <ul class="product_list">
 	  	  	<li v-for="(item,index) in list.pro" @click="toDetail(list,item)">
 	  	  		<div class="product_left">
@@ -265,10 +265,10 @@ export default {
         	let dataArr = {
         		"name":name,
         		"num":type,
-        		"pro":data,
-        		"imgSrc":''
+        		"pro":data.centent,
+        		"imgSrc":data.dicitem[0].item[0].imgSrc
         	};
-        	dataArr.imgSrc = '';
+        	/*dataArr.imgSrc = '';
 	    		if(this_.userInfo.dataset[0].dpt.search("配件一部") != -1){
 						//油品判断
 						if(dataArr.num == '0043' || dataArr.num == '0046' || dataArr.num == '0048' || dataArr.num == '0072'){
@@ -285,7 +285,7 @@ export default {
 
 	    		}else if(this_.userInfo.dataset[0].dpt.search("配件二部") != -1){
 	    			dataArr.imgSrc = require('../assets/images/sedan/img_index_pro' +dataArr.num + '.png');
-	    		}
+	    		}*/
         	this_.proList.push(dataArr);
         	this_.isLoad = true;
         }

@@ -56,7 +56,7 @@
   			</div>
   		</div>
   		<div class="product_cont"  v-for="list in proList">
-  			<h2 class="product_title"><span><img :src="list.imgSrc" alt="" /></span>{{list.name}}</h2>
+  			<h2 class="product_title"><span><img :src="$apiUrl.imgUrl + list.imgSrc" alt="" /></span>{{list.name}}</h2>
 	  	  <ul class="product_list">
 	  	  	<li v-for="(item,index) in list.pro" @click="toDetail(list,item)">
 	  	  		<div class="product_left">
@@ -155,24 +155,24 @@ export default {
     		for(var j=0;j<data[i].pro.length;j++){
     			data[i].pro[j].cartType = 'product';
     		}
-    		data[i].imgSrc = '';
-    		if(this_.userInfo.dataset[0].dpt.search("配件一部") != -1){
-					//油品判断
-					if(data[i].num == '0043' || data[i].num == '0046' || data[i].num == '0048' || data[i].num == '0072'){
-						if(this_.userInfo.dataset[0].ma017 == '200'){
-							data[i].imgSrc = require('../assets/images/miniCar/img_index_projl' + data[i].num + '.jpg');
-						}else if(this_.userInfo.dataset[0].ma017 == '201'){
-							data[i].imgSrc = require('../assets/images/miniCar/img_index_prows' + data[i].num + '.jpg');
-						}
-					}else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
-						data[i].imgSrc = require('../assets/images/hongtu/img_index_pro' + data[i].num + '.jpg');
-					}else {
-						data[i].imgSrc = require('../assets/images/miniCar/img_index_pro' + data[i].num + '.jpg');
-					}
+    	// 	data[i].imgSrc = '';
+    	// 	if(this_.userInfo.dataset[0].dpt.search("配件一部") != -1){
+					// //油品判断
+					// if(data[i].num == '0043' || data[i].num == '0046' || data[i].num == '0048' || data[i].num == '0072'){
+					// 	if(this_.userInfo.dataset[0].ma017 == '200'){
+					// 		data[i].imgSrc = require('../assets/images/miniCar/img_index_projl' + data[i].num + '.jpg');
+					// 	}else if(this_.userInfo.dataset[0].ma017 == '201'){
+					// 		data[i].imgSrc = require('../assets/images/miniCar/img_index_prows' + data[i].num + '.jpg');
+					// 	}
+					// }else if(this_.userInfo.dataset[0].dpt.search("耐用") != -1){
+					// 	data[i].imgSrc = require('../assets/images/hongtu/img_index_pro' + data[i].num + '.jpg');
+					// }else {
+					// 	data[i].imgSrc = require('../assets/images/miniCar/img_index_pro' + data[i].num + '.jpg');
+					// }
 
-    		}else if(this_.userInfo.dataset[0].dpt.search("配件二部") != -1){
-    			data[i].imgSrc = require('../assets/images/sedan/img_index_pro' + data[i].num + '.png');
-    		}
+    	// 	}else if(this_.userInfo.dataset[0].dpt.search("配件二部") != -1){
+    	// 		data[i].imgSrc = require('../assets/images/sedan/img_index_pro' + data[i].num + '.png');
+    	// 	}
     	}
     	this_.proList = data;
     	this_.hisSearch();//历史搜索记录值
