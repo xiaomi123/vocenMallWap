@@ -47,7 +47,7 @@
         <li class='lhq' @click="openWin(0)"><div>离合器套装</div></li>
         <li class='ycg' @click="openWin(2)"><div>氧传感器</div></li>
         <li class='dhxq' @click="openWin(1)"><div>点火线圈</div></li>
-        <li class='qyb' @click="openWin(3)"><div>燃油泵总成<p>火热预定中</p></div></li>
+        <li class='qyb' @click="openWin(3)"><div>燃油泵总成<p>火热销售中</p></div></li>
         <li class='shuibeng'>
           <p>水泵<br>正在开发中...</p>
           <router-link to="/proSearch/lhqList">水泵</router-link>

@@ -17,6 +17,7 @@
 	  				<ul  v-if="item.data.rows.length>0" class="cart_detList" v-show="item.isShow">
 	  					<li v-for="list in shortage[index].data.rows">
 	  						<p>
+                  {{list.th004}}</br>
 	  							{{list.oem}}{{list.th005}}</br>
 	  							{{list.th006}}</br>
 	  							<em>{{list.a_title}}</em>
@@ -84,7 +85,7 @@
 	  	  			<i class="iconfont yes">&#xe6c2;</i>
 	  	  		</span>
 	  	  		<div class="product_left">
-	  	  			{{item.mb002New}}
+	  	  			{{item.mb001}}&ensp;{{item.mb002New}}
 	  	  			<em>{{item.s_oem}}</em><br />
 	  	  			<i>{{item.mb003New}}</i><br />
 	  	  			<span>
