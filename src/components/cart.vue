@@ -47,7 +47,7 @@
 	  		<!--品牌切换内容开始-->
 				<div class="dpt_contain">
 					<div class="index_dpt">
-						<span @click.stop="dptShow = !dptShow"><img :src="dptLogo" alt="" /></span>
+						<span @click.stop="dptShow = !dptShow" style="display: inline-block;padding:1rem 0;"><img :src="dptLogo" alt="" /></span>
 						<em :class="dptShow?'iconfont dptBot tran':'iconfont dptBot'" @click.stop="dptShow = !dptShow">&#xe604;</em>
 						<i v-show="dptShow"></i>
 						<transition name="ul">
@@ -304,7 +304,7 @@ export default {
   			this_.getCart(i,'1','count');
   			if((this_.userInfo.dataset[0].ma015 == this_.userInfo.dataset1[i].ma015) && (this_.userInfo.dataset[0].ma017 == this_.userInfo.dataset1[i].ma017)){
   				this_.dptIndex = i;
-  				this_.swithLogo(this_.userInfo.dataset1[i].ma017,this_.userInfo.dataset1[i].dpt);
+  				this_.swithLogo(this_.userInfo.dataset1[i].ma017,this_.userInfo.dataset1[i].ma015,this_.userInfo.dataset1[i].dpt);
   				this_.dptChange(i);
   			}
   		}
@@ -319,9 +319,10 @@ export default {
   			this_.dptIndex = index;//品牌index
 
 	  		//logo切换
+        let ma015 = this_.userInfo.dataset1[index].ma015;
 	  		let ma017 = this_.userInfo.dataset1[index].ma017;
 	  		let dpt = this_.userInfo.dataset1[index].dpt;
-				this_.swithLogo(ma017,dpt);
+				this_.swithLogo(ma017,ma015,dpt);
 
 	  		if(this_.userInfo.dataset1[index].dpt.search("配件二部") != -1){
 					this_.userInfo.dataset[0].c_dpt = '轿车';
@@ -349,45 +350,49 @@ export default {
   	},
 
   	//logo切换
-  	swithLogo:function(ma017,dpt){
+  	swithLogo:function(ma017,ma015,dpt){
   		let this_ = this;
-  		if(ma017 == '200' || ma017 == '205'){
-				//江陵
-				this_.dptLogo = require('../assets/images/logo/img_index_logoJl.png');
-			}else if(ma017 == '201' || ma017 == '210'){
-				//沃森
-				if(dpt.search("丰田") != -1){
-					this_.dptLogo = require('../assets/images/logo/img_index_logoRxWs.png');
-				}else{
-					this_.dptLogo = require('../assets/images/logo/img_index_logoWcWs.png');
-				}
+      let imgsrc = '/uploadfile/image/logo/img_' + ma017 + '_' + ma015 + '_02.png';
+      this_.dptLogo = this_.$apiUrl.imgUrl + imgsrc;
 
-			}else if(ma017 == '211'){
-				//韩系智选
-				this_.dptLogo = require('../assets/images/logo/img_index_logoHxZx.png');
-			}else if(ma017 == '212'){
-				//秀泰
-				if(dpt.search("丰田") != -1){
-					//日系秀泰
-					this_.dptLogo = require('../assets/images/logo/img_index_logoRxXt.png');
-				}else{
-					//韩系秀泰
-					this_.dptLogo = require('../assets/images/logo/img_index_logoHxXt.png');
-				}
 
-			}else if(ma017 == '213'){
-				//韩系吉尔摩
-				this_.dptLogo = require('../assets/images/logo/img_index_logoHxJem.png');
-			}else if(ma017 == '202'){
-				//吉利沃森
-				this_.dptLogo = require('../assets/images/logo/img_index_logoJlWs.png');
-			}else if(ma017 == '203'){
-				//吉利吉尔摩
-				this_.dptLogo = require('../assets/images/logo/img_index_logoJlJem.png');
-			}else if(ma017 == '204'){
-				//微车弘涂
-				this_.dptLogo = require('../assets/images/logo/img_index_logoWcHt.png');
-			}
+  	// 	if(ma017 == '200' || ma017 == '205'){
+			// 	//江陵
+			// 	this_.dptLogo = require('../assets/images/logo/img_index_logoJl.png');
+			// }else if(ma017 == '201' || ma017 == '210'){
+			// 	//沃森
+			// 	if(dpt.search("丰田") != -1){
+			// 		this_.dptLogo = require('../assets/images/logo/img_index_logoRxWs.png');
+			// 	}else{
+			// 		this_.dptLogo = require('../assets/images/logo/img_index_logoWcWs.png');
+			// 	}
+
+			// }else if(ma017 == '211'){
+			// 	//韩系智选
+			// 	this_.dptLogo = require('../assets/images/logo/img_index_logoHxZx.png');
+			// }else if(ma017 == '212'){
+			// 	//秀泰
+			// 	if(dpt.search("丰田") != -1){
+			// 		//日系秀泰
+			// 		this_.dptLogo = require('../assets/images/logo/img_index_logoRxXt.png');
+			// 	}else{
+			// 		//韩系秀泰
+			// 		this_.dptLogo = require('../assets/images/logo/img_index_logoHxXt.png');
+			// 	}
+
+			// }else if(ma017 == '213'){
+			// 	//韩系吉尔摩
+			// 	this_.dptLogo = require('../assets/images/logo/img_index_logoHxJem.png');
+			// }else if(ma017 == '202'){
+			// 	//吉利沃森
+			// 	this_.dptLogo = require('../assets/images/logo/img_index_logoJlWs.png');
+			// }else if(ma017 == '203'){
+			// 	//吉利吉尔摩
+			// 	this_.dptLogo = require('../assets/images/logo/img_index_logoJlJem.png');
+			// }else if(ma017 == '204'){
+			// 	//微车弘涂
+			// 	this_.dptLogo = require('../assets/images/logo/img_index_logoWcHt.png');
+			// }
   	},
 
 
