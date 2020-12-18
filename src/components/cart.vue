@@ -715,10 +715,10 @@ export default {
   			this_.bus.$emit('tipShow', '请选择产品！');
   			return false;
   		}
-      console.log('**********************************');
-      console.log(this_.subCartsInfo);
-      console.log('ma017:'+this_.userInfo.dataset[0].ma017);
-      console.log('storagePlan:'+this_.storagePlan);
+      // console.log('**********************************');
+      // console.log(this_.subCartsInfo);
+      // console.log('ma017:'+this_.userInfo.dataset[0].ma017);
+      // console.log('storagePlan:'+this_.storagePlan);
       this_.$api.post({
         url: this_.$apiUrl.api.PlaceOrder + '?ma017=' + this_.userInfo.dataset[0].ma017 + '&type=' + this_.storagePlan,
         params:this_.subCartsInfo,
