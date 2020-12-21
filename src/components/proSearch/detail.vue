@@ -128,19 +128,24 @@ export default {
       this_.init();
       this_.getParmas(); //适配车型
 
-      if(sessionStorage.getItem('brandType') == 3){
+      let brandType = '';
+      //PC订单平台吉利进入
+      if(this_.$route.query.title == '订单平台'){
+        document.title = '订单平台';
+        brandType = this_.$route.query.brandType;
+      }else{
+        brandType = sessionStorage.getItem('brandType');
+      }
+
+      if(brandType == 3){
         Watermark.set('江陵耐用')
-      }else if(sessionStorage.getItem('brandType') == 4){
+      }else if(brandType == 4){
         Watermark.set('弘途耐用')
-      }else if(sessionStorage.getItem('brandType') == 5){
+      }else if(brandType == 5){
         //Watermark.set('吉利')
         this_.isJl = true;
       }
-      //PC订单平台吉利进入
-      if(this_.$route.query.title == '订单平台'){
-        this_.isJl = true;
-        document.title = '订单平台';
-      }
+
 
     })
   },
