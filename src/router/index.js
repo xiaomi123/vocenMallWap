@@ -46,6 +46,10 @@ import LhqHome from '@/components/lhqhome'//离合器查询--旧版本（无用�
 
 import Wxlogin from '@/components/wxlogin'//微信公众号登陆页面
 
+//轿车查询
+import SedanSearch from '@/components/sedanSearch/index'//主页
+import VinCode from '@/components/sedanSearch/vinCode'//拍照vincode识别
+
 Vue.use(Router)
 
 const router = new Router({
@@ -223,6 +227,14 @@ const router = new Router({
     path : '/proSearch/userCenter/orderDetail',
     name : 'sOrderDetail',
     component : SOrderDetail
+  },{
+    path : '/sedanSearch/index',
+    name : 'SedanSearch',
+    component : SedanSearch
+  },{
+    path : '/sedanSearch/vinCode',
+    name : 'vinCode',
+    component : VinCode
   },{
     	path: '/wxlogin',
       name: 'wxlogin',

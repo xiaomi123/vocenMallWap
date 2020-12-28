@@ -143,6 +143,11 @@
 
   		<!--产品分类内容开始-->
   		<div class="index_sort clearfix" ref="sysSort" v-show="tabArr[tabIndex] == '产品'">
+
+        <!-- 轿车查询入口内容开始 -->
+        <!-- <router-link :to="{path: '/sedanSearch/index'}" class="index_model">车型查询<i class="iconfont">&#xe60d;</i></router-link> -->
+        <!-- 轿车查询入口内容结束 -->
+
   			<div class="index_sort_left" ref="sysLeft">
   				<ul class="index_xt">
   					<li v-for="(item,index) in proSort" :class="sortIndex == index ? 'active' : ''" @click="toSystem('#anchor-'+index,index)">

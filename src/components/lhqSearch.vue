@@ -149,6 +149,14 @@
         let this_ = this;
         //document.title = this_.$route.query.title;
         if(!this_.$utils.check.isEmpty(this_.$route.query.type)){
+
+          //判断包装盒二维码扫码进入
+          if(this_.$route.query.openid == 'oebYB1tgs_QNGMTpaYPMi7zA1D7U' && this_.$route.query.type == '3'){
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx243ef871c7a70933&redirect_uri=http://api.vocen.com.cn/api/CheckUser&response_type=code&scope=snsapi_userinfo&state=3#wechat_redirect';
+          }else if(this_.$route.query.openid == 'o-Uoa1mCZaVBF9f82mRgqMhZz6KM' && this_.$route.query.type == '4'){
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6f33ec2db3999170&redirect_uri=http://api.vocen.com.cn/api/CheckUser&response_type=code&scope=snsapi_userinfo&state=4#wechat_redirect';
+          }
+
           sessionStorage.setItem('brandType',this_.$route.query.type);
           if(this_.$route.query.type == '3'){
             sessionStorage.setItem('pageTitle',"江陵耐用查询系统");
@@ -399,12 +407,12 @@
 
               }
             } else{
-              this_.isLogin = true;
-              this_.isShowFooter = false;
+                this_.isLogin = true;
+                this_.isShowFooter = false;
 
-              this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
-              this_.showText = true;
-              //this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
+                this_.showTextDesc = "本系统为专业查询系统，为授权客户提供专属服务。您当前为游客身份，需登陆后方可查询";
+                this_.showText = true;
+                //this.$router.push({path:'/wxlogin', query: {target:'search',openid:this.$route.query.openid,type:this.$route.query.type}});
 
             }
           }

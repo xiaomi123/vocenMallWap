@@ -2457,3 +2457,17 @@ body{
   top: initial;
   bottom: 2rem;
 }
+.index_model{
+  display: block;
+  padding:0 4%;
+  font-size:1.3rem;
+  color:#656565;
+  text-align: right;
+  padding-bottom:0.8rem;
+}
+.index_model i{
+  display: inline-block;
+  font-size:2.4rem;
+  color:#0057ed;
+  margin-left:0.8rem;
+}

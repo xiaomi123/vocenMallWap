@@ -8,7 +8,7 @@
         <div>{{modelsInfo.ProducedYear}}&nbsp;&nbsp;[{{modelsInfo.ListingYear}}-{{modelsInfo.IdlingYear}}]&nbsp;&nbsp;
         {{modelsInfo.Displacement}}{{modelsInfo.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{modelsInfo.EngineModel}}&nbsp;&nbsp;{{modelsInfo.GearNumber}}{{modelsInfo.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
       </div>
-      <div class="ub ub-ac" v-show="changeModelIcon" @click="showModels = true">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;" /></div>
+      <div class="ub ub-ac" v-show="changeModelIcon" @click="showModels = true" style="color:red">切换车型<van-icon class="ub" name="arrow-down" size="1.5rem" style="margin-left: 0.5rem;color:red" /></div>
     </div>
     <!-- 多个车型切换 -->
     <van-popup v-model="showModels" position="bottom" :close-on-popstate="true" :close-on-click-overlay="false" :closeable="true" :safe-area-inset-bottom="true">
@@ -18,7 +18,7 @@
           <div :class="model.LevelId == modelsInfo.LevelId ? 'models-item active' : 'models-item'" @click="changeModels(model)">
             <div style="margin-bottom: 0.5rem;">{{model.Manufacturers}}&nbsp;&nbsp;{{model.Brand}}&nbsp;&nbsp;{{model.Models}}&nbsp;&nbsp;{{model.ChassisCode}}</div>
             <div>{{model.ProducedYear}}&nbsp;&nbsp;[{{model.ListingYear}}-{{model.IdlingYear}}]&nbsp;&nbsp;
-            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}&nbsp;&nbsp;{{modelsInfo.GearNumber}}{{modelsInfo.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
+            {{model.Displacement}}{{model.Induction == '自然吸气' ? 'L' : 'T'}}&nbsp;&nbsp;{{model.EngineModel}}&nbsp;&nbsp;{{model.GearNumber}}{{model.TransmissionType == '手动' ? 'MT' : 'AT'}}</div>
           </div>
         </block>
       </div>
