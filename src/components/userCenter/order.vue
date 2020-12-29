@@ -8,7 +8,7 @@
 			</ul>
 			<!--订单状态切换内容结束-->
   		<ul class="order_list">
-  			<li v-for="item in orderList">
+  			<li v-for="(item,index) in orderList">
   				<h2>{{item.s_type}}<span>{{item.s_code}}</span><em>{{item.s_state}}</em></h2>
   				<div class="order_cont">
   					<ul class="order_det">
@@ -81,7 +81,7 @@ export default {
 		      }
 		    }
 			});
-			
+
     });
   },
   created:function(){
@@ -95,9 +95,11 @@ export default {
         success: function (data) {
         	this_.bus.$emit('loading', false);
         	this_.orderList[para.curIndex].s_state_no = 4;
+          this_.orderList[para.curIndex].s_state = '已送达';
+          this_.bus.$emit('tipOk', data.Message);
         }
      });
-  		
+
     });
   },
   methods:{
@@ -110,7 +112,7 @@ export default {
   		this_.isLoad = false;
   		this_.GetOrder(index,this_.pagIndex);//订单查询
   	},
-  	
+
   	//查询订单
   	GetOrder:function(index,pagIndex){
   		let this_ = this;
@@ -127,7 +129,7 @@ export default {
         	}else{
         		this_.orderList = this_.orderList.concat(data.data);
         	}
-        	
+
         }
       });
   	},
@@ -138,16 +140,14 @@ export default {
   		//this_.confirmOk(s_c_id,s_id);
   		//console.log(s_c_id)
   	},
-  	
+
   	//查看详情
   	orderDet:function(listIte){
   		let this_ = this;
   		sessionStorage.setItem("orderItem", JSON.stringify(listIte));
   		this_.$router.push('/userCenter/orderDetail');
   	},
-  	
+
   }
 }
 </script>
-
-

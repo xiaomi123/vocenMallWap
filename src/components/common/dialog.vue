@@ -35,6 +35,7 @@ export default {
     	this_.btn = data.btn;
     	this_.title = data.title;
     	this_.content = data.content;
+      this_.curIndex = data.curIndex;
     	this_.s_c_id = data.s_c_id;
     	this_.s_id = data.s_id;
     });
