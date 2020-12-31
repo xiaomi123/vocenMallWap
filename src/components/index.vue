@@ -117,7 +117,13 @@
   	<!--主要内容开始-->
   	<div class="index_main">
   		<!--nav内容开始-->
-  		<ul class="index_nav clearfix">
+  		<ul :class="userInfo.dataset[0].dpt.search('配件二部现代') != -1 ? 'index_nav navNew clearfix' : 'index_nav clearfix'">
+        <li v-if="userInfo.dataset[0].dpt.search('配件二部现代') != -1">
+        	<router-link :to="{path: '/activity/integral'}">
+        		<span><img src="../assets/images/common/icon_index_nav5.png" alt="" /></span>
+        		积分兑换
+        	</router-link>
+        </li>
   			<li v-for="(item,index) in navArr">
   				<router-link :to="{path: item.toPath}">
   					<span><img :src="item.icon" alt="" /></span>
@@ -145,7 +151,7 @@
   		<div class="index_sort clearfix" ref="sysSort" v-show="tabArr[tabIndex] == '产品'">
 
         <!-- 轿车查询入口内容开始 -->
-        <!-- <router-link :to="{path: '/sedanSearch/index'}" class="index_model">车型查询<i class="iconfont">&#xe60d;</i></router-link> -->
+        <router-link v-if="userInfo.dataset[0].dpt.search('配件二部') != -1" :to="{path: '/sedanSearch/index'}" class="index_model">车型查询<i class="iconfont">&#xe60d;</i></router-link>
         <!-- 轿车查询入口内容结束 -->
 
   			<div class="index_sort_left" ref="sysLeft">
@@ -160,34 +166,16 @@
   					<h2>{{list.name}}</h2>
 	  				<ul class="index_list clearfix">
 	  					<li v-for="item in list.item">
-	  						<router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}">
+	  						<router-link :to="{path: '/activity/index', query: {mb005:item.num}}" v-if="list.name=='清仓专区'">
 	  							<span><img :src="$apiUrl.imgUrl + item.imgSrc" /></span>
                   <em v-if="!$utils.check.isEmpty(item.tag)" :class="item.pos == '2' ? 'cut' : 'cut icon_bottom'"><img :src="$apiUrl.imgUrl + item.tag" /></em>
                   {{item.name}}
-
-	  							<!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1017' || item.num == '1070' || item.num == '1073' || item.num == '1056' || item.num == '1045' || item.num == '1047' || item.num == '1046')"><img src="../assets/images/common/icon_cut.png" /></em>
-	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('现代') != -1) && (item.num == '1086')"><img src="../assets/images/common/icon_hot.png" /></em>
-	  							<em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '德马赫产品')"><img src="../assets/images/common/icon_hot02.png" /></em>
-                  <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件二部') != -1) && (list.name == '联保产品') && item.num == '1073'"><img src="../assets/images/common/icon_hot02.png" /></em> -->
-
-                  <!-- 新品推荐 -->
-                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0088' || item.num  == '0140' || item.num  == '0141')"><img src="../assets/images/common/icon_new.png" /></em> -->
-                  <!-- 直降 -->
-                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0076' || item.num == '0043' || item.num == '0048')"><img src="../assets/images/common/icon_cut.png" /></em> -->
-                  <!-- 特价//展示不显示 -->
-                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0043')"><img src="../assets/images/common/icon_tejia.png" /></em> -->
-                  <!-- 热卖 -->
-                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_hot02.png" /></em> -->
-                  <!-- 秒杀 -->
-                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0098')"><img src="../assets/images/common/icon_miaosha.png" /></em> -->
-                  <!-- 热卖 -->
-                  <!-- <em class="cut" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0101' || item.num  == '0102' || item.num  == '0108' || item.num  == '0155' || item.num  == '0154')"><img src="../assets/images/common/icon_jicai.png" /></em> -->
-                  <!-- 买十送一 吉利氧传感，正时套装-->
-                  <!-- <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num == '0153' || item.num  == '0142')"><img src="../assets/images/common/icon_send.png" /></em> -->
-                  <!-- 促销-水泵 -->
-                  <!-- <em class="cut icon_bottom" v-show="(userInfo.dataset[0].dpt.search('配件一部') != -1) && (item.num  == '0011')"><img src="../assets/images/common/icon_sale.png" /></em>
-                  {{item.name}} -->
 	  						</router-link>
+                <router-link :to="{path: '/product', query: {num:item.num,name:item.name,title:list.name}}" v-else>
+                	<span><img :src="$apiUrl.imgUrl + item.imgSrc" /></span>
+                  <em v-if="!$utils.check.isEmpty(item.tag)" :class="item.pos == '2' ? 'cut' : 'cut icon_bottom'"><img :src="$apiUrl.imgUrl + item.tag" /></em>
+                  {{item.name}}
+                </router-link>
 	  					</li>
 	  				</ul>
   				</div>
@@ -235,6 +223,13 @@ export default {
     	noReadNum:0,//未读消息
     	hisRecord:[],//历史搜索
       baseUrl:'',//图片连接拼接用
+      clearArr:{
+        clear210:['1070','1004','1064','1045','1056','1060','1009','1046','1044'],//韩系沃森--发电机，水泵，冷凝器，暖风机-------------清仓
+        clear213:['1070','1004','1064','1045','1056','1060','1052','1061'],//韩系吉尔摩--发电机，胶套，水箱框架-------------清仓
+        clear211:['1070','1004','1064','1045','1056','1060','1009','1052','1061','1055'],//韩系智选--发电机，胶套，水箱框架，水泵，拉线类-------------清仓
+        clear212:['1070','1004','1064','1045','1056','1052','1031','1051','1019'],//韩系秀泰--胶套，点火线圈，汽油泵总成，皮带-------------清仓
+      }
+
     }
   },
   mounted: function () {
@@ -372,6 +367,22 @@ export default {
         params: {},
         success: function (data) {
         	this_.bus.$emit('loading', false);
+
+          for(var i=0;i<data.length;i++){
+            let sortItem = data[i].item;
+            for(var j=0;j<sortItem.length;j++){
+              //轿车韩系清仓处理
+              if(this_.userInfo.dataset[0].dpt.search("配件二部") != -1){
+                if(data[i].name == '清仓专区'){
+                  if((this_.clearArr['clear'+ this_.userInfo.dataset1[index].ma017]).indexOf(sortItem[j].num) == -1){
+                    sortItem.splice(j,1);
+                  }
+                }
+              }
+
+            }
+          }
+
         	/*for(var i=0;i<data.length;i++){
         		let sortItem = data[i].item;
         		for(var j=0;j<sortItem.length;j++){
@@ -516,7 +527,7 @@ export default {
             params: {},
             success: function (data) {
               this_.bus.$emit('loading', false);
-              console.log(data)
+              //console.log(data)
               if(data.State){
                 this_.hotData = data.centent;
               }

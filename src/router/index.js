@@ -22,6 +22,7 @@ import Seckill from '@/components/activity/seckill'//秒杀
 import BuyHistory from '@/components/buyHistory'//购买历史
 import Shortage from '@/components/shortage'//缺货提醒
 import News from '@/components/news'//缺货提醒
+import Integral from '@/components/activity/integral'//积分兑换
 
 import LhqSearch from '@/components/lhqSearch'//离合器查询
 import LhqList from '@/components/proSearch/lhqList'//离合器查询
@@ -139,6 +140,10 @@ const router = new Router({
     	path: '/activity/seckill',
       name: 'seckill',
       component: Seckill
+    },{
+    	path: '/activity/integral',
+      name: 'integral',
+      component: Integral
     },{
     	path: '/buyHistory',
       name: 'buyHistory',

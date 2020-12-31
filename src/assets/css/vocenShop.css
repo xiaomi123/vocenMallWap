@@ -447,6 +447,11 @@ body{
 	width:62%;
 	margin:0 auto;
 }
+.index_nav>li:nth-child(1)>a>span{
+	background: -webkit-gradient(linear, left top, left bottom, from(#cd1884), to(#ec058f));
+  background: linear-gradient(top, #cd1884, #ec058f);
+  background: -webkit-linear-gradient(top, #cd1884, #ec058f);
+}
 .index_nav>li:nth-child(2)>a>span{
 	background: linear-gradient(top,#0380f7,#0656eb);
   background: -webkit-linear-gradient(top,#0380f7,#0656eb);
@@ -2470,4 +2475,11 @@ body{
   font-size:2.4rem;
   color:#0057ed;
   margin-left:0.8rem;
+}
+.navNew>li{
+  width:18.4%;
+  margin-right:2%;
+}
+.navNew>li>a{
+  font-size:1rem;
 }

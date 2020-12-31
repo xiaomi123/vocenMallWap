@@ -90,7 +90,18 @@
                 <em>{{item.s_oem}}</em><br />
                 <i>{{item.mb003New}}</i><br />
                 <span>
-                  <em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
+                  <em :class="{oldPrice:item.tj}" v-if="item.backprice != item.price">￥{{item.backprice}}</em>
+                  <em v-if="item.backprice != item.price">
+                    {{(item.tj && item.i_type_no != '5' && item.i_type_no != '8'  && item.i_type_no != '9') ?'特价':''}}
+                  </em>
+                  
+                  {{(item.tj && item.i_type_no == '5')?'五折':''}}
+                  {{(item.tj && item.i_type_no == '8')?'八折':''}}
+                  {{(item.tj && item.i_type_no == '9')?'九折':''}}
+                  <em>￥{{item.price}}</em>
+
+
+                  <!-- <em :class="{oldPrice:item.tj}">￥{{item.price}}</em> -->
                   <!--{{item.tj?'特价￥':''}}
                   {{item.tj?item.aprice:''}}-->
                   {{item.i_type_no=='2'?'限时秒杀':''}}
@@ -127,7 +138,10 @@
               <i>{{item.mb003New}}</i><br />
               <span>
                 <em :class="{oldPrice:item.tj}">￥{{item.price}}</em>
-                {{item.tj?'特价￥':''}}
+                {{(item.tj && item.i_type_no != '5' && item.i_type_no != '8'  && item.i_type_no != '9') ?'特价￥':''}}
+                {{(item.tj && item.i_type_no == '5')?'五折￥':''}}
+                {{(item.tj && item.i_type_no == '8')?'八折￥':''}}
+                {{(item.tj && item.i_type_no == '9')?'九折￥':''}}
                 {{item.tj?item.aprice:''}}
                 {{item.i_type_no=='2'?'限时秒杀':''}}
                 {{item.i_type_no=='3'?'满减':''}}
@@ -602,7 +616,7 @@ export default {
 
 							  //显示价格
 							  data[i].tj = false;
-						    if(data[i].i_type_no == '1' || data[i].i_type_no == '4'){
+						    if(data[i].i_type_no == '1' || data[i].i_type_no == '4' || data[i].i_type_no == '5' || data[i].i_type_no == '8' || data[i].i_type_no == '9'){
 							  	//特价
 							  	data[i].tj = true;
 							  	//有最大限购

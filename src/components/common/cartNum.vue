@@ -65,7 +65,13 @@ export default {
   				if(!this_.$utils.check.isEmpty(this_.cartList.i_limit_qty) && (Number(this_.cartList.qty)>=Number(this_.cartList.i_limit_qty))){
 				  	this_.cartList.price = this_.cartList.i_price;
 				  }else{
-				  	this_.cartList.price = this_.cartList.backprice;
+            //购物车清仓活动（购物车出现价格赋值问题添加）
+            if(this_.cartList.i_type_no == '1' || this_.cartList.i_type_no == '5' || this_.cartList.i_type_no == '8' || this_.cartList.i_type_no == '9'){
+              this_.cartList.price = this_.cartList.i_price;
+            }else{
+              this_.cartList.price = this_.cartList.backprice;
+            }
+				  	//this_.cartList.price = this_.cartList.backprice;
 				  }
   				this_.bus.$emit('cartChange',{chNum:parseInt(this_.cartList.m_st_qty),chPrice:Number(this_.cartList.price),type:'cut'});
   			}
@@ -93,7 +99,13 @@ export default {
 	  				if(!this_.$utils.check.isEmpty(this_.cartList.i_limit_qty) && (Number(this_.cartList.qty)>=Number(this_.cartList.i_limit_qty))){
 					  	this_.cartList.price = this_.cartList.i_price;
 					  }else{
-					  	this_.cartList.price = this_.cartList.backprice;
+              //购物车清仓活动（购物车出现价格赋值问题添加）
+              if(this_.cartList.i_type_no == '1' || this_.cartList.i_type_no == '5' || this_.cartList.i_type_no == '8' || this_.cartList.i_type_no == '9'){
+                this_.cartList.price = this_.cartList.i_price;
+              }else{
+                this_.cartList.price = this_.cartList.backprice;
+              }
+					  	//this_.cartList.price = this_.cartList.backprice;
 					  }
 	  				this_.bus.$emit('cartChange',{chNum:parseInt(this_.cartList.qty),chPrice:Number(this_.cartList.price),type:'cut'});
 	  			}
@@ -136,7 +148,13 @@ export default {
   				if(!this_.$utils.check.isEmpty(this_.cartList.i_limit_qty) && (Number(this_.cartList.qty)>=Number(this_.cartList.i_limit_qty))){
 				  	this_.cartList.price = this_.cartList.i_price;
 				  }else{
-				  	this_.cartList.price = this_.cartList.backprice;
+            //购物车清仓活动（购物车出现价格赋值问题添加）
+            if(this_.cartList.i_type_no == '1' || this_.cartList.i_type_no == '5' || this_.cartList.i_type_no == '8' || this_.cartList.i_type_no == '9'){
+              this_.cartList.price = this_.cartList.i_price;
+            }else{
+              this_.cartList.price = this_.cartList.backprice;
+            }
+
 				  }
   				this_.bus.$emit('cartChange',{chNum:parseInt(mQty),chPrice:Number(this_.cartList.price),type:'add'});
   			}
@@ -232,7 +250,7 @@ export default {
   		if(this_.cartList.a_type_no == '2'){
   			//秒杀
 		  	price = this_.cartList.price;
-		  }else if(this_.cartList.a_type_no == '1' || this_.cartList.a_type_no == '4'){
+		  }else if(this_.cartList.a_type_no == '1' || this_.cartList.a_type_no == '4' || this_.cartList.a_type_no == '5' || this_.cartList.a_type_no == '8' || this_.cartList.a_type_no == '9'){
 		  	//特价
 		  	//price = this_.cartList.aprice;
 		  	price = this_.$utils.check.isEmpty(this_.cartList.aprice) ? this_.cartList.price : this_.cartList.aprice;//价格
@@ -242,6 +260,12 @@ export default {
 			  		price = this_.cartList.price;
 			  	}
 		  	}
+        if(!this_.$utils.check.isEmpty(this_.cartList.i_limit_qty) && (Number(this_.cartList.qty)>=Number(this_.cartList.i_limit_qty)) && !this_.$utils.check.isEmpty(this_.cartList.aprice)){
+        	price = this_.cartList.price;
+        }else{
+        	price = this_.cartList.backprice;
+        }
+
 		  } else{
 		  	price = this_.$utils.check.isEmpty(this_.cartList.aprice) ? this_.cartList.price : this_.cartList.aprice;//价格
 		  }

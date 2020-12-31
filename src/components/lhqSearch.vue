@@ -28,7 +28,7 @@
             <img class="icon-scanner" src="../assets/images/common/scanner.png" @click="btnShow()" />
             <span @click="winProduct(0)">查询</span>
           </p>
-          <label style="color: #666666;">VIN码：如LFV3B28R1C3080426</label>
+          <label style="color: #666666;">请输入17位车架号或上传清晰图片（前风挡VIN/铭牌/行驶证等）</label>
       </div>
       <div class="clearfix tag-item">
         <p>
@@ -507,7 +507,8 @@
       //     url: this_.$apiUrl.api.VinOCR,
       //     params: {
       //       imgcode : imgcode,
-      //       openid : sessionStorage.getItem('openid')
+      //       openid : sessionStorage.getItem('openid'),
+	  //       platfrom : 'platfrom'
       //     },
       //     success: function (data) {
       //       console.log(data);

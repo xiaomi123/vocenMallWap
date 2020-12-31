@@ -174,7 +174,7 @@
       getModels(){
         let this_ = this;
         this_.$api.post({
-          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName=&pageindex="+this_.p+"&pagesize="+this_.pageRows,
+          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName=&pageindex="+this_.p+"&pagesize="+this_.pageRows + '&platfrom=PTYW',
           params: {},
           success: function (data) {
             console.log(data.centent.tmparr);

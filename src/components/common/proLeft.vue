@@ -21,7 +21,13 @@
       </em>
     </label>
 
-    <label v-if="userInfo.dataset[0].dpt.search('配件二部') != -1">{{proItem02.tj?'特价￥'+proItem02.aprice:''}}</label>
+    <label v-if="userInfo.dataset[0].dpt.search('配件二部') != -1">
+      {{(proItem02.tj && proItem02.a_type_no != '5' && proItem02.a_type_no != '8' && proItem02.a_type_no != '9') ?'特价￥'+proItem02.aprice:''}}
+      {{(proItem02.tj && proItem02.a_type_no == '5') ?'五折￥'+proItem02.aprice:''}}
+      {{(proItem02.tj && proItem02.a_type_no == '8') ?'八折￥'+proItem02.aprice:''}}
+      {{(proItem02.tj && proItem02.a_type_no == '9') ?'九折￥'+proItem02.aprice:''}}
+    </label>
+
     <label v-if='proItem02.guideprice != 0 && userInfo.dataset[0].dpt.search("配件一部吉利") != -1'>{{'集采价￥'+proItem02.guideprice}}</label>
     <label  v-if='proItem02.guideprice != 0 && userInfo.dataset[0].dpt.search("配件一部耐用") != -1' style="font-size:1.1rem;color:#999">{{'指导售价￥'+ Math.round(proItem02.guideprice)}}</label>
 
@@ -92,7 +98,7 @@ export default {
 		  	}
 
 		  //}
-		  if(this_.proItem.a_type_no == '1' || this_.proItem.a_type_no == '4'){
+		  if(this_.proItem.a_type_no == '1' || this_.proItem.a_type_no == '4' || this_.proItem.a_type_no == '5' || this_.proItem.a_type_no == '8' || this_.proItem.a_type_no == '9'){
 		  	//特价
 		  	this_.proItem.tj = true;
 		  	//有最大限购

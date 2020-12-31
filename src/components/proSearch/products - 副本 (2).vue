@@ -17,7 +17,7 @@
           <img class="icon-scanner" src="../../assets/images/common/scanner.png" @click="show = true" />
           <span @click="searchByVin()">查询</span>
         </p>
-        <label style="color: #666666;">VIN码：如LFV3B28R1C3080426</label>
+        <label style="color: #666666;">请输入17位车架号或上传清晰图片（前风挡VIN/铭牌/行驶证等）</label>
       </div>
       <div  class="clearfix tag-item ub-pra">
         <van-icon name="bulb-o" size="2em" class="icon" color="#CCCCCC" id="attr" />
@@ -537,7 +537,7 @@
         console.log(this_.categoryName+";vincode查询");
         this_.bus.$emit('loading', true);
         this_.$api.post({
-          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName,
+          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+this_.categoryName + '&platfrom=PTYW',
           params: {},
           success: function (data) {
             console.log(data);
@@ -932,7 +932,8 @@
           url: this_.$apiUrl.api.VinOCR,
           params: {
             imgcode : imgcode,
-            openid : sessionStorage.getItem('openid')
+            openid : sessionStorage.getItem('openid'),
+			platfrom : 'PTYW'
           },
           success: function (data) {
             console.log(data);

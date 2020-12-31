@@ -1,6 +1,6 @@
 <template>
   <div class="com_container">
-  	<div class="dpt_content">
+  	<div class="dpt_content" style="padding:0.7rem 4%;">
 			<!--品牌tab切换内容开始-->
   		<dptList-view @changetab="changetab"></dptList-view>
   		<!--品牌tab切换内容结束-->

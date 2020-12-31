@@ -72,7 +72,8 @@
           url: this_.$apiUrl.api.VinOCR,
           params: {
             imgcode : this_.imageData.split(',')[1],
-            openid : sessionStorage.getItem('openid')
+            openid : sessionStorage.getItem('openid'),
+			platfrom : 'PTYW'
           },
           success: function (data) {
             console.log(data);

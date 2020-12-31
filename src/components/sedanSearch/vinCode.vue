@@ -70,7 +70,8 @@
           url: this_.$apiUrl.api.VinOCR,
           params: {
             imgcode : this_.imageData.split(',')[1],
-            openid : ''
+            openid : '',
+            platfrom: 'PTEJ'
           },
           success: function (data) {
             if(data.State){

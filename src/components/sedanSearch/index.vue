@@ -17,7 +17,7 @@
             <img class="icon-scanner" src="../../assets/images/common/scanner.png" @click="btnShow()" />
             <span @click="winProduct(0)">查询</span>
           </p>
-          <label style="color: #666666;">VIN码：如LFV3B28R1C3080426</label>
+          <label style="color: #666666;">请输入17位车架号或上传清晰图片（前风挡VIN/铭牌/行驶证等）</label>
       </div>
     </div>
     <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" @select="onSelect"></van-action-sheet>
@@ -216,7 +216,7 @@
         let this_ = this;
         this_.bus.$emit('loading', true);
         this_.$api.post({
-          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+"&pageindex="+this_.p+"&pagesize="+this_.pageRows,
+          url: this_.$apiUrl.api.VinCode+'?vincode=' + this_.keyWords + "&categoryName="+"&pageindex="+this_.p+"&pagesize="+this_.pageRows + '&platfrom=PTEJ',
           params: {},
           success: function (data) {
             this_.bus.$emit('loading', false);
