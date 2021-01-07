@@ -2483,3 +2483,6 @@ body{
 .navNew>li>a{
   font-size:1rem;
 }
+.navNew .noOpen{
+  right:159px;
+}

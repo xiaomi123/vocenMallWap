@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog">
+  <div class="dialog sedan_cont">
     <header class="dialog-nav">
       <em class="iconfont" @click="back()">&#xe601;</em>
       <h1 class="dialog-title">VIN码识别</h1>
@@ -115,4 +115,10 @@
   position:inherit;
   height: 100%;
 }
+  @media screen and (min-width: 1200px) {
+      .sedan_cont{
+        width:800px;
+        margin:0 auto;
+      }
+  }
 </style>

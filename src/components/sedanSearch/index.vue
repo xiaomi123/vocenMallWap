@@ -1,5 +1,5 @@
 <template>
-  <div class="proSearch_container">
+  <div class="sedan_cont">
     <div class="proSearch_banner" v-if="swiperList.length>0">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" style="height: 17rem;">
         <van-swipe-item v-for='item of swiperList' :key='item.id'>
@@ -91,6 +91,10 @@
     mounted: function() {
       this.$nextTick(function() {
         let this_ = this;
+        if(!this_.$utils.check.isEmpty(this_.$route.query.token)){
+          sessionStorage.setItem("token", this_.$route.query.token);
+          this_.actions = [{name: '上传VIN图片'}];
+        }
         this_.loadSwiper();
         if(!this_.$utils.check.isEmpty(sessionStorage.getItem('vincode'))){
           this_.keyWords = sessionStorage.getItem('vincode');
@@ -161,6 +165,7 @@
           let dataUrl = canvas.toDataURL( 'image/jpeg', compressRate);
           sessionStorage.setItem('vinImg',dataUrl);
           this_.$router.push({path:'/sedanSearch/vinCode'});
+
         }
        reader.readAsDataURL(img1);
       },
@@ -272,5 +277,15 @@
     background-color: #dff0d8;
     border-color: #3c763d;
     color: #3c763d;
+  }
+  @media screen and (min-width: 1200px) {
+      .sedan_cont,.van-action-sheet {
+        width:800px;
+        margin:0 auto;
+      }
+      .van-action-sheet{
+        left:50%;
+        margin-left:-400px;
+      }
   }
 </style>
